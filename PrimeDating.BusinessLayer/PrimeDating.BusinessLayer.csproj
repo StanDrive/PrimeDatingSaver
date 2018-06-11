@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstraper.cs" />
+    <Compile Include="DailyData.cs" />
     <Compile Include="DailyDataService.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Interfaces\IDailyDataService.cs" />

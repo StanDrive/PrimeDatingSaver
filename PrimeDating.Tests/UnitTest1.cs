@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
@@ -11,9 +12,13 @@ namespace PrimeDating.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var json = "{ id: \"1a\", date: \"2018-05-17 19:36:43\", someName: \"testname\", names: [ \"one\", \"two\" ] }";
+            var json = "0.2";
 
-            var result = JsonConvert.DeserializeObject<Daily>(json);
+            decimal value;
+
+            var res = decimal.TryParse(json, NumberStyles.Any, new CultureInfo("en-US"), out value);
+
+
         }
 
     }

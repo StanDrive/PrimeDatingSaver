@@ -1,12 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrimeDating.DataAccess.Models
 {
-    internal class Men
+    public class Men
     {
         [Key]
         [Range(1, 9999999, ErrorMessage = "Value must be between 1 to 9999999")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [MaxLength(100)]

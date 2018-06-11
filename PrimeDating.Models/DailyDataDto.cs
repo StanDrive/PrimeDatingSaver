@@ -10,6 +10,8 @@ namespace PrimeDating.Models
 
         public List<GirlDto> Girls { get; set; }
 
+        public List<GiftDto> Gifts { get; set; }
+
         public List<MenDto> Men { get; set; }
 
         public List<PaymentsStatisticDto> PaymentsStatistic { get; set; }

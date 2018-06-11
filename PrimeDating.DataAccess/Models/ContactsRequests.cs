@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrimeDating.DataAccess.Models
 {
-    internal class ContactsRequests
+    public class ContactsRequests
     {
         [Key]
         public int Id { get; set; }

@@ -2,7 +2,7 @@
 
 namespace PrimeDating.DataAccess.Models
 {
-    internal class ContactsRequestStatuses
+    public class ContactsRequestStatuses
     {
         [Required]
         public int Id { get; set; }

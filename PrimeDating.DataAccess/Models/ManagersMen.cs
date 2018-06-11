@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PrimeDating.DataAccess.Models
 {
     [Table("Managers_Men")]
-    internal class ManagersMen
+    public class ManagersMen
     {
         [Key]
         [Column(Order = 1)]

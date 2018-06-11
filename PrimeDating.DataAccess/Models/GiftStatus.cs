@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PrimeDating.DataAccess.Models
 {
     [Table("Dictionary_GiftStatus")]
-    internal class GiftStatus
+    public class GiftStatus
     {
         [Key]
         public int Id { get; set; }

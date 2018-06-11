@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,17 +74,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201806062106369_Initial.cs" />
-    <Compile Include="Migrations\201806062106369_Initial.Designer.cs">
-      <DependentUpon>201806062106369_Initial.cs</DependentUpon>
+    <Compile Include="Bootstraper.cs" />
+    <Compile Include="DataAccessFactory.cs" />
+    <Compile Include="DictionaryDataService.cs" />
+    <Compile Include="GirlsDataService.cs" />
+    <Compile Include="Interfaces\IAdminAreaDataService.cs" />
+    <Compile Include="Interfaces\IDataAccessFactory.cs" />
+    <Compile Include="Interfaces\IDictionaryDataService.cs" />
+    <Compile Include="Interfaces\IGirlsDataService.cs" />
+    <Compile Include="Interfaces\IManagerDataService.cs" />
+    <Compile Include="Interfaces\IMenDataService.cs" />
+    <Compile Include="ManagerDataService.cs" />
+    <Compile Include="MenDataService.cs" />
+    <Compile Include="Migrations\201806112009479_Initial.cs" />
+    <Compile Include="Migrations\201806112009479_Initial.Designer.cs">
+      <DependentUpon>201806112009479_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="AdminAreaDataService.cs" />
     <Compile Include="Models\AdminAreas.cs" />
+    <Compile Include="Models\PaymentTypes.cs" />
     <Compile Include="Models\ContactsRequests.cs" />
     <Compile Include="Models\ContactsRequestStatuses.cs" />
-    <Compile Include="Models\CorrespondenceDailyBalance.cs" />
     <Compile Include="Models\GiftOrders.cs" />
     <Compile Include="Models\GiftStatus.cs" />
+    <Compile Include="Models\Logging.cs" />
     <Compile Include="Models\Orders.cs" />
     <Compile Include="Models\Gifts.cs" />
     <Compile Include="Models\Girls.cs" />
@@ -97,6 +113,7 @@
     <Compile Include="Models\MeetingRequestStatuses.cs" />
     <Compile Include="Models\Men.cs" />
     <Compile Include="Models\MenGirls.cs" />
+    <Compile Include="Models\Payments.cs" />
     <Compile Include="Models\Penalties.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\Managers.cs" />
@@ -111,8 +128,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806062106369_Initial.resx">
-      <DependentUpon>201806062106369_Initial.cs</DependentUpon>
+    <ProjectReference Include="..\PrimeDating.Models\PrimeDating.Models.csproj">
+      <Project>{1123CE32-88C0-4CBD-9D7F-1CA9A0E15C3D}</Project>
+      <Name>PrimeDating.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201806112009479_Initial.resx">
+      <DependentUpon>201806112009479_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

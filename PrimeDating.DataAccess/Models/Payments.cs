@@ -4,9 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrimeDating.DataAccess.Models
 {
-    internal class CorrespondenceDailyBalance
+    public class Payments
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -19,18 +20,24 @@ namespace PrimeDating.DataAccess.Models
         public int ManagerId { get; set; }
 
         [Required]
-        public DateTime BalanceDate { get; set; }
+        public int PaymentTypeId { get; set; }
 
         [Required]
-        public decimal Balance { get; set; }
+        public DateTime Date { get; set; }
 
-        [ForeignKey("AdminAreaId")]
-        public AdminAreas AdminArea { get; set; }
+        [Required]
+        public decimal Amount { get; set; }
 
         [ForeignKey("GirlId")]
         public Girls Girl { get; set; }
 
         [ForeignKey("ManagerId")]
         public Managers Manager { get; set; }
+
+        [ForeignKey("PaymentTypeId")]
+        public PaymentTypes PaymentType { get; set; }
+
+        [ForeignKey("AdminAreaId")]
+        public AdminAreas AdminArea { get; set; }
     }
 }

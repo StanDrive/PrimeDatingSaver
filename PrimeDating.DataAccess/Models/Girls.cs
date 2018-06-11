@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrimeDating.DataAccess.Models
 {
-    internal class Girls
+    public class Girls
     {
         [Key]
-        [Range(1, 9999999, ErrorMessage = "Value must be between 1 to 9999999")]
+        [Range(1, 99999999, ErrorMessage = "Value must be between 1 to 9999999")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [Required]

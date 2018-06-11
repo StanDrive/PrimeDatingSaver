@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PrimeDating.DataAccess.Models
 {
-    internal class Kids
+    public class Kids
     {
         [Key]
         public int Id { get; set; }

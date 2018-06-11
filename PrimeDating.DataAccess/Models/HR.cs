@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrimeDating.DataAccess.Models
 {
-    internal class HR
+    [Table("HR")]
+    public class HR
     {
         [Key]
         [Range(10000, 99999, ErrorMessage = "Value must be between 10000 to 99999")]

@@ -4,11 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrimeDating.DataAccess.Models
 {
-    internal class Managers
+    public class Managers
     {
         [Key]
-        [Range(1000, 99999, ErrorMessage = "Value must be between 10000 to 99999")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
+
+        [Required]
+        public int AdminAreaId { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -59,5 +62,8 @@ namespace PrimeDating.DataAccess.Models
 
         [ForeignKey("RoleId")]
         public Roles Role { get; set; }
+
+        [ForeignKey("AdminAreaId")]
+        public AdminAreas AdminArea { get; set; }
     }
 }

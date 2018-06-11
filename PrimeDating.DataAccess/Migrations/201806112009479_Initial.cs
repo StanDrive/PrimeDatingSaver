@@ -53,7 +53,7 @@ namespace PrimeDating.DataAccess.Migrations
                 "dbo.Girls",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false),
                         AssignedManagerId = c.Int(nullable: false),
                         Passport = c.String(nullable: false, maxLength: 8),
                         LastName = c.String(maxLength: 100),
@@ -98,7 +98,8 @@ namespace PrimeDating.DataAccess.Migrations
                 "dbo.Managers",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false),
+                        AdminAreaId = c.Int(nullable: false),
                         LastName = c.String(nullable: false, maxLength: 100),
                         FirstName = c.String(nullable: false, maxLength: 100),
                         Patronymic = c.String(maxLength: 100),
@@ -116,7 +117,9 @@ namespace PrimeDating.DataAccess.Migrations
                         RoleId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AdminAreas", t => t.AdminAreaId)
                 .ForeignKey("dbo.Dictionary_Roles", t => t.RoleId)
+                .Index(t => t.AdminAreaId)
                 .Index(t => t.RoleId);
             
             CreateTable(
@@ -132,7 +135,7 @@ namespace PrimeDating.DataAccess.Migrations
                 "dbo.Men",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false),
                         LastName = c.String(maxLength: 100),
                         FirstName = c.String(nullable: false, maxLength: 100),
                         Patronymic = c.String(maxLength: 100),
@@ -150,29 +153,10 @@ namespace PrimeDating.DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.CorrespondenceDailyBalances",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        AdminAreaId = c.Int(nullable: false),
-                        GirlId = c.Int(nullable: false),
-                        ManagerId = c.Int(nullable: false),
-                        BalanceDate = c.DateTime(nullable: false),
-                        Balance = c.Decimal(nullable: false, precision: 18, scale: 2),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AdminAreas", t => t.AdminAreaId)
-                .ForeignKey("dbo.Girls", t => t.GirlId)
-                .ForeignKey("dbo.Managers", t => t.ManagerId)
-                .Index(t => t.AdminAreaId)
-                .Index(t => t.GirlId)
-                .Index(t => t.ManagerId);
-            
-            CreateTable(
                 "dbo.Orders",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 50),
                         Description = c.String(maxLength: 500),
                         Picture = c.String(maxLength: 2000),
@@ -183,7 +167,7 @@ namespace PrimeDating.DataAccess.Migrations
                 "dbo.Gifts",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false),
                         GiftLink = c.String(nullable: false, maxLength: 2000),
                         GiftStatusUpdateDate = c.DateTime(nullable: false),
                         GiftStatusId = c.Int(nullable: false),
@@ -215,6 +199,18 @@ namespace PrimeDating.DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.GirlsImages",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Url = c.String(nullable: false, maxLength: 2000),
+                        GirlId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Girls", t => t.GirlId)
+                .Index(t => t.GirlId);
+            
+            CreateTable(
                 "dbo.Girls_Kids",
                 c => new
                     {
@@ -239,7 +235,19 @@ namespace PrimeDating.DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.HRs",
+                "dbo.GirlsPassportScans",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        GirlId = c.Int(nullable: false),
+                        Url = c.String(nullable: false, maxLength: 2000),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Girls", t => t.GirlId)
+                .Index(t => t.GirlId);
+            
+            CreateTable(
+                "dbo.HR",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -260,6 +268,60 @@ namespace PrimeDating.DataAccess.Migrations
                         Name = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Logging",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        DateTime = c.DateTime(nullable: false),
+                        Level = c.String(maxLength: 10),
+                        Message = c.String(maxLength: 1000),
+                        Exception = c.String(maxLength: 1000),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Managers_Girls",
+                c => new
+                    {
+                        GirlId = c.Int(nullable: false),
+                        ManagerId = c.Int(nullable: false),
+                        Creation = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.GirlId, t.ManagerId })
+                .ForeignKey("dbo.Girls", t => t.GirlId)
+                .ForeignKey("dbo.Managers", t => t.ManagerId)
+                .Index(t => t.GirlId)
+                .Index(t => t.ManagerId);
+            
+            CreateTable(
+                "dbo.Managers_Kids",
+                c => new
+                    {
+                        ManagerId = c.Int(nullable: false),
+                        KidId = c.Int(nullable: false),
+                        Creation = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.ManagerId, t.KidId })
+                .ForeignKey("dbo.Kids", t => t.KidId)
+                .ForeignKey("dbo.Managers", t => t.ManagerId)
+                .Index(t => t.ManagerId)
+                .Index(t => t.KidId);
+            
+            CreateTable(
+                "dbo.Managers_Men",
+                c => new
+                    {
+                        ManagerId = c.Int(nullable: false),
+                        ManId = c.Int(nullable: false),
+                        Creation = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.ManagerId, t.ManId })
+                .ForeignKey("dbo.Men", t => t.ManId)
+                .ForeignKey("dbo.Managers", t => t.ManagerId)
+                .Index(t => t.ManagerId)
+                .Index(t => t.ManId);
             
             CreateTable(
                 "dbo.MeetingRequests",
@@ -309,6 +371,37 @@ namespace PrimeDating.DataAccess.Migrations
                 .Index(t => t.GirlId);
             
             CreateTable(
+                "dbo.Payments",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        AdminAreaId = c.Int(nullable: false),
+                        GirlId = c.Int(nullable: false),
+                        ManagerId = c.Int(nullable: false),
+                        PaymentTypeId = c.Int(nullable: false),
+                        Date = c.DateTime(nullable: false),
+                        Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AdminAreas", t => t.AdminAreaId)
+                .ForeignKey("dbo.Girls", t => t.GirlId)
+                .ForeignKey("dbo.Managers", t => t.ManagerId)
+                .ForeignKey("dbo.Dictionary_PaymentTypes", t => t.PaymentTypeId)
+                .Index(t => t.AdminAreaId)
+                .Index(t => t.GirlId)
+                .Index(t => t.ManagerId)
+                .Index(t => t.PaymentTypeId);
+            
+            CreateTable(
+                "dbo.Dictionary_PaymentTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 200),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Penalties",
                 c => new
                     {
@@ -327,61 +420,17 @@ namespace PrimeDating.DataAccess.Migrations
                 .Index(t => t.GirlId)
                 .Index(t => t.ManagerId);
             
-            CreateTable(
-                "dbo.Managers_Girls",
-                c => new
-                    {
-                        GirlId = c.Int(nullable: false),
-                        ManagerId = c.Int(nullable: false),
-                        Creation = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.GirlId, t.ManagerId })
-                .ForeignKey("dbo.Girls", t => t.GirlId)
-                .ForeignKey("dbo.Managers", t => t.ManagerId)
-                .Index(t => t.GirlId)
-                .Index(t => t.ManagerId);
-            
-            CreateTable(
-                "dbo.Managers_Kids",
-                c => new
-                    {
-                        ManagerId = c.Int(nullable: false),
-                        KidId = c.Int(nullable: false),
-                        Creation = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.ManagerId, t.KidId })
-                .ForeignKey("dbo.Kids", t => t.KidId)
-                .ForeignKey("dbo.Managers", t => t.ManagerId)
-                .Index(t => t.ManagerId)
-                .Index(t => t.KidId);
-            
-            CreateTable(
-                "dbo.Managers_Men",
-                c => new
-                    {
-                        ManagerId = c.Int(nullable: false),
-                        ManId = c.Int(nullable: false),
-                        Creation = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.ManagerId, t.ManId })
-                .ForeignKey("dbo.Men", t => t.ManId)
-                .ForeignKey("dbo.Managers", t => t.ManagerId)
-                .Index(t => t.ManagerId)
-                .Index(t => t.ManId);
-            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Managers_Men", "ManagerId", "dbo.Managers");
-            DropForeignKey("dbo.Managers_Men", "ManId", "dbo.Men");
-            DropForeignKey("dbo.Managers_Kids", "ManagerId", "dbo.Managers");
-            DropForeignKey("dbo.Managers_Kids", "KidId", "dbo.Kids");
-            DropForeignKey("dbo.Managers_Girls", "ManagerId", "dbo.Managers");
-            DropForeignKey("dbo.Managers_Girls", "GirlId", "dbo.Girls");
             DropForeignKey("dbo.Penalties", "ManagerId", "dbo.Managers");
             DropForeignKey("dbo.Penalties", "GirlId", "dbo.Girls");
             DropForeignKey("dbo.Penalties", "AdminAreaId", "dbo.AdminAreas");
+            DropForeignKey("dbo.Payments", "PaymentTypeId", "dbo.Dictionary_PaymentTypes");
+            DropForeignKey("dbo.Payments", "ManagerId", "dbo.Managers");
+            DropForeignKey("dbo.Payments", "GirlId", "dbo.Girls");
+            DropForeignKey("dbo.Payments", "AdminAreaId", "dbo.AdminAreas");
             DropForeignKey("dbo.Men_Girls", "ManId", "dbo.Men");
             DropForeignKey("dbo.Men_Girls", "GirlId", "dbo.Girls");
             DropForeignKey("dbo.MeetingRequests", "MeetingRequestStatusId", "dbo.Dictionary_MeetingRequestStatuses");
@@ -389,33 +438,37 @@ namespace PrimeDating.DataAccess.Migrations
             DropForeignKey("dbo.MeetingRequests", "ManId", "dbo.Men");
             DropForeignKey("dbo.MeetingRequests", "GirlId", "dbo.Girls");
             DropForeignKey("dbo.MeetingRequests", "AdminAreaId", "dbo.AdminAreas");
+            DropForeignKey("dbo.Managers_Men", "ManagerId", "dbo.Managers");
+            DropForeignKey("dbo.Managers_Men", "ManId", "dbo.Men");
+            DropForeignKey("dbo.Managers_Kids", "ManagerId", "dbo.Managers");
+            DropForeignKey("dbo.Managers_Kids", "KidId", "dbo.Kids");
+            DropForeignKey("dbo.Managers_Girls", "ManagerId", "dbo.Managers");
+            DropForeignKey("dbo.Managers_Girls", "GirlId", "dbo.Girls");
+            DropForeignKey("dbo.GirlsPassportScans", "GirlId", "dbo.Girls");
             DropForeignKey("dbo.Girls_Kids", "KidId", "dbo.Kids");
             DropForeignKey("dbo.Girls_Kids", "GirlId", "dbo.Girls");
+            DropForeignKey("dbo.GirlsImages", "GirlId", "dbo.Girls");
             DropForeignKey("dbo.Gifts", "GiftStatusId", "dbo.Dictionary_GiftStatus");
             DropForeignKey("dbo.Gifts", "ManagerId", "dbo.Managers");
             DropForeignKey("dbo.Gifts", "ManId", "dbo.Men");
             DropForeignKey("dbo.Gifts", "GirlId", "dbo.Girls");
             DropForeignKey("dbo.Gifts", "AdminAreaId", "dbo.AdminAreas");
-            DropForeignKey("dbo.CorrespondenceDailyBalances", "ManagerId", "dbo.Managers");
-            DropForeignKey("dbo.CorrespondenceDailyBalances", "GirlId", "dbo.Girls");
-            DropForeignKey("dbo.CorrespondenceDailyBalances", "AdminAreaId", "dbo.AdminAreas");
             DropForeignKey("dbo.ContactsRequests", "ManagerId", "dbo.Managers");
             DropForeignKey("dbo.ContactsRequests", "ManId", "dbo.Men");
             DropForeignKey("dbo.ContactsRequests", "GirlId", "dbo.Girls");
             DropForeignKey("dbo.Girls", "AssignedManagerId", "dbo.Managers");
             DropForeignKey("dbo.Managers", "RoleId", "dbo.Dictionary_Roles");
+            DropForeignKey("dbo.Managers", "AdminAreaId", "dbo.AdminAreas");
             DropForeignKey("dbo.Girls", "AdminAreaId", "dbo.AdminAreas");
             DropForeignKey("dbo.ContactsRequests", "ContactsRequestStatusId", "dbo.ContactsRequestStatuses");
             DropForeignKey("dbo.ContactsRequests", "AdminAreaId", "dbo.AdminAreas");
-            DropIndex("dbo.Managers_Men", new[] { "ManId" });
-            DropIndex("dbo.Managers_Men", new[] { "ManagerId" });
-            DropIndex("dbo.Managers_Kids", new[] { "KidId" });
-            DropIndex("dbo.Managers_Kids", new[] { "ManagerId" });
-            DropIndex("dbo.Managers_Girls", new[] { "ManagerId" });
-            DropIndex("dbo.Managers_Girls", new[] { "GirlId" });
             DropIndex("dbo.Penalties", new[] { "ManagerId" });
             DropIndex("dbo.Penalties", new[] { "GirlId" });
             DropIndex("dbo.Penalties", new[] { "AdminAreaId" });
+            DropIndex("dbo.Payments", new[] { "PaymentTypeId" });
+            DropIndex("dbo.Payments", new[] { "ManagerId" });
+            DropIndex("dbo.Payments", new[] { "GirlId" });
+            DropIndex("dbo.Payments", new[] { "AdminAreaId" });
             DropIndex("dbo.Men_Girls", new[] { "GirlId" });
             DropIndex("dbo.Men_Girls", new[] { "ManId" });
             DropIndex("dbo.MeetingRequests", new[] { "MeetingRequestStatusId" });
@@ -423,17 +476,23 @@ namespace PrimeDating.DataAccess.Migrations
             DropIndex("dbo.MeetingRequests", new[] { "GirlId" });
             DropIndex("dbo.MeetingRequests", new[] { "ManId" });
             DropIndex("dbo.MeetingRequests", new[] { "AdminAreaId" });
+            DropIndex("dbo.Managers_Men", new[] { "ManId" });
+            DropIndex("dbo.Managers_Men", new[] { "ManagerId" });
+            DropIndex("dbo.Managers_Kids", new[] { "KidId" });
+            DropIndex("dbo.Managers_Kids", new[] { "ManagerId" });
+            DropIndex("dbo.Managers_Girls", new[] { "ManagerId" });
+            DropIndex("dbo.Managers_Girls", new[] { "GirlId" });
+            DropIndex("dbo.GirlsPassportScans", new[] { "GirlId" });
             DropIndex("dbo.Girls_Kids", new[] { "KidId" });
             DropIndex("dbo.Girls_Kids", new[] { "GirlId" });
+            DropIndex("dbo.GirlsImages", new[] { "GirlId" });
             DropIndex("dbo.Gifts", new[] { "ManagerId" });
             DropIndex("dbo.Gifts", new[] { "GirlId" });
             DropIndex("dbo.Gifts", new[] { "ManId" });
             DropIndex("dbo.Gifts", new[] { "AdminAreaId" });
             DropIndex("dbo.Gifts", new[] { "GiftStatusId" });
-            DropIndex("dbo.CorrespondenceDailyBalances", new[] { "ManagerId" });
-            DropIndex("dbo.CorrespondenceDailyBalances", new[] { "GirlId" });
-            DropIndex("dbo.CorrespondenceDailyBalances", new[] { "AdminAreaId" });
             DropIndex("dbo.Managers", new[] { "RoleId" });
+            DropIndex("dbo.Managers", new[] { "AdminAreaId" });
             DropIndex("dbo.Girls", new[] { "AdminAreaId" });
             DropIndex("dbo.Girls", new[] { "AssignedManagerId" });
             DropIndex("dbo.ContactsRequests", new[] { "ContactsRequestStatusId" });
@@ -441,21 +500,25 @@ namespace PrimeDating.DataAccess.Migrations
             DropIndex("dbo.ContactsRequests", new[] { "ManagerId" });
             DropIndex("dbo.ContactsRequests", new[] { "GirlId" });
             DropIndex("dbo.ContactsRequests", new[] { "AdminAreaId" });
-            DropTable("dbo.Managers_Men");
-            DropTable("dbo.Managers_Kids");
-            DropTable("dbo.Managers_Girls");
             DropTable("dbo.Penalties");
+            DropTable("dbo.Dictionary_PaymentTypes");
+            DropTable("dbo.Payments");
             DropTable("dbo.Men_Girls");
             DropTable("dbo.Dictionary_MeetingRequestStatuses");
             DropTable("dbo.MeetingRequests");
+            DropTable("dbo.Managers_Men");
+            DropTable("dbo.Managers_Kids");
+            DropTable("dbo.Managers_Girls");
+            DropTable("dbo.Logging");
             DropTable("dbo.Dictionary_HRStatuses");
-            DropTable("dbo.HRs");
+            DropTable("dbo.HR");
+            DropTable("dbo.GirlsPassportScans");
             DropTable("dbo.Kids");
             DropTable("dbo.Girls_Kids");
+            DropTable("dbo.GirlsImages");
             DropTable("dbo.Dictionary_GiftStatus");
             DropTable("dbo.Gifts");
             DropTable("dbo.Orders");
-            DropTable("dbo.CorrespondenceDailyBalances");
             DropTable("dbo.Men");
             DropTable("dbo.Dictionary_Roles");
             DropTable("dbo.Managers");

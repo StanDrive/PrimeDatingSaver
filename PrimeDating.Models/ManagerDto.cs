@@ -4,7 +4,7 @@ namespace PrimeDating.Models
 {
     public class ManagerDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Email { get; set; }
 

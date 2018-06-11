@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PrimeDating.Models
+﻿namespace PrimeDating.Models
 {
     public class PaymentItemDto
     {
@@ -10,6 +8,6 @@ namespace PrimeDating.Models
 
         public string Bonuses { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }

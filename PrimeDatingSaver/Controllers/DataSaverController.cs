@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Data.Entity.Validation;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using PrimeDating.BusinessLayer;
 using PrimeDating.BusinessLayer.Interfaces;
@@ -24,7 +27,7 @@ namespace PrimeDatingSaver.Controllers
         [HttpPost]
         public HttpResponseMessage UploadDailyData(DailyDataDto data)
         {
-            _logger.Info($"DataSaverController.UploadDailyData");
+            _logger.Info("DataSaverController.UploadDailyData");
 
             try
             {
@@ -37,6 +40,22 @@ namespace PrimeDatingSaver.Controllers
                 _logger.WarningException(ex.Message, ex);
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ex.GetErrorMessage());
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var message = new StringBuilder();
+
+                message.AppendLine("Validation Error:");
+
+                foreach (var validationError in ex.EntityValidationErrors.SelectMany(t=> t.ValidationErrors))
+                {
+                    message.AppendLine(
+                        $"PropertyName: {validationError.PropertyName}, Error: {validationError.ErrorMessage}");
+                }
+
+                _logger.ErrorException($"{ex.Message}. {message}", ex);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, $"{ex.GetErrorMessage()}. {message}");
             }
             catch (Exception ex)
             {

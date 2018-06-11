@@ -15,13 +15,21 @@ namespace PrimeDating.DataAccess
 
         public DbSet<ContactsRequests> ContactsRequests { get; set; }
 
-        public DbSet<ContactsRequestStatuses> ContactsRequestStatuses { get; set; }
+        public DbSet<GirlsImages> GirlsImages { get; set; }
 
-        public DbSet<CorrespondenceDailyBalance> CorrespondenceDailyBalance { get; set; }
+        public DbSet<ContactsRequestStatuses> ContactsRequestStatuses { get; set; }
 
         public DbSet<Orders> Gifts { get; set; }
 
+        public DbSet<GiftStatus> GiftStatuses { get; set; }
+
+        public DbSet<GirlsPassportScans> GirlsPassportScans { get; set; }
+
         public DbSet<Gifts> GiftsOrders { get; set; }
+
+        public DbSet<Payments> Payments { get; set; }
+
+        public DbSet<PaymentTypes> PaymentTypes { get; set; }
 
         public DbSet<Girls> Girls { get; set; }
 
@@ -45,12 +53,14 @@ namespace PrimeDating.DataAccess
 
         public DbSet<Roles> Roles { get; set; }
 
-        public DbSet<Managers> Translators { get; set; }
+        public DbSet<Managers> Managers { get; set; }
 
-        public DbSet<ManagersGirls> TranslatorsGirls { get; set; }
+        public DbSet<ManagersGirls> ManagersGirls { get; set; }
 
-        public DbSet<ManagersKids> TranslatorsKids { get; set; }
+        public DbSet<ManagersKids> ManagersKids { get; set; }
 
-        public DbSet<ManagersMen> TranslatorsMen { get; set; }
+        public DbSet<ManagersMen> ManagersMen { get; set; }
+
+        public DbSet<Logging> Logging { get; set; }
     }
 }
