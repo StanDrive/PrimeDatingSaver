@@ -143,9 +143,9 @@ namespace PrimeDating.DataAccess.Migrations
                         Location = c.String(nullable: false, maxLength: 150),
                         Phone = c.String(maxLength: 20),
                         MartialStatus = c.String(nullable: false, maxLength: 25),
-                        Children = c.String(nullable: false, maxLength: 150),
+                        Children = c.String(maxLength: 150),
                         Religion = c.String(nullable: false, maxLength: 50),
-                        Education = c.String(nullable: false, maxLength: 50),
+                        Education = c.String(maxLength: 50),
                         WorkPlace = c.String(nullable: false, maxLength: 100),
                         Drinking = c.String(nullable: false, maxLength: 50),
                         Smoking = c.String(nullable: false, maxLength: 50),
@@ -153,15 +153,19 @@ namespace PrimeDating.DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Orders",
+                "dbo.GiftOrders",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 50),
-                        Description = c.String(maxLength: 500),
-                        Picture = c.String(maxLength: 2000),
+                        GiftId = c.Int(nullable: false),
+                        OrderId = c.Int(nullable: false),
+                        Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => new { t.GiftId, t.OrderId })
+                .ForeignKey("dbo.Gifts", t => t.GiftId)
+                .ForeignKey("dbo.Orders", t => t.OrderId)
+                .Index(t => t.GiftId)
+                .Index(t => t.OrderId);
             
             CreateTable(
                 "dbo.Gifts",
@@ -172,7 +176,6 @@ namespace PrimeDating.DataAccess.Migrations
                         GiftStatusUpdateDate = c.DateTime(nullable: false),
                         GiftStatusId = c.Int(nullable: false),
                         AdminAreaId = c.Int(nullable: false),
-                        GiftReceivedDate = c.DateTime(nullable: false),
                         ManId = c.Int(nullable: false),
                         GirlId = c.Int(nullable: false),
                         ManagerId = c.Int(nullable: false),
@@ -195,6 +198,17 @@ namespace PrimeDating.DataAccess.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 30),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Orders",
+                c => new
+                    {
+                        Id = c.Int(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 50),
+                        Description = c.String(maxLength: 500),
+                        Picture = c.String(maxLength: 2000),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -448,6 +462,8 @@ namespace PrimeDating.DataAccess.Migrations
             DropForeignKey("dbo.Girls_Kids", "KidId", "dbo.Kids");
             DropForeignKey("dbo.Girls_Kids", "GirlId", "dbo.Girls");
             DropForeignKey("dbo.GirlsImages", "GirlId", "dbo.Girls");
+            DropForeignKey("dbo.GiftOrders", "OrderId", "dbo.Orders");
+            DropForeignKey("dbo.GiftOrders", "GiftId", "dbo.Gifts");
             DropForeignKey("dbo.Gifts", "GiftStatusId", "dbo.Dictionary_GiftStatus");
             DropForeignKey("dbo.Gifts", "ManagerId", "dbo.Managers");
             DropForeignKey("dbo.Gifts", "ManId", "dbo.Men");
@@ -491,6 +507,8 @@ namespace PrimeDating.DataAccess.Migrations
             DropIndex("dbo.Gifts", new[] { "ManId" });
             DropIndex("dbo.Gifts", new[] { "AdminAreaId" });
             DropIndex("dbo.Gifts", new[] { "GiftStatusId" });
+            DropIndex("dbo.GiftOrders", new[] { "OrderId" });
+            DropIndex("dbo.GiftOrders", new[] { "GiftId" });
             DropIndex("dbo.Managers", new[] { "RoleId" });
             DropIndex("dbo.Managers", new[] { "AdminAreaId" });
             DropIndex("dbo.Girls", new[] { "AdminAreaId" });
@@ -516,9 +534,10 @@ namespace PrimeDating.DataAccess.Migrations
             DropTable("dbo.Kids");
             DropTable("dbo.Girls_Kids");
             DropTable("dbo.GirlsImages");
+            DropTable("dbo.Orders");
             DropTable("dbo.Dictionary_GiftStatus");
             DropTable("dbo.Gifts");
-            DropTable("dbo.Orders");
+            DropTable("dbo.GiftOrders");
             DropTable("dbo.Men");
             DropTable("dbo.Dictionary_Roles");
             DropTable("dbo.Managers");

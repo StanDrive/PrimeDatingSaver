@@ -6,12 +6,11 @@ namespace PrimeDating.DataAccess.Models
     public class GiftOrders
     {
         [Key]
-        public int Id { get; set; }
-
-        [Required]
+        [Column(Order = 1)]
         public int GiftId { get; set; }
 
-        [Required]
+        [Key]
+        [Column(Order = 2)]
         public int OrderId { get; set; }
 
         [Required]

@@ -17,15 +17,17 @@ namespace PrimeDating.DataAccess
 
         public DbSet<GirlsImages> GirlsImages { get; set; }
 
+        public DbSet<Orders> Orders { get; set; }
+
         public DbSet<ContactsRequestStatuses> ContactsRequestStatuses { get; set; }
 
-        public DbSet<Orders> Gifts { get; set; }
+        public DbSet<Gifts> Gifts { get; set; }
 
         public DbSet<GiftStatus> GiftStatuses { get; set; }
 
         public DbSet<GirlsPassportScans> GirlsPassportScans { get; set; }
 
-        public DbSet<Gifts> GiftsOrders { get; set; }
+        public DbSet<GiftOrders> GiftOrders { get; set; }
 
         public DbSet<Payments> Payments { get; set; }
 

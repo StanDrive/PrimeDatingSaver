@@ -3,8 +3,8 @@ using PrimeDating.DataAccess.Models;
 
 namespace PrimeDating.DataAccess.Interfaces
 {
-    public interface IMenDataService
+    public interface IPaymentsDataService
     {
-        void AddOrUpdateMen(List<Men> men);
+        void AddOrUpdatePayments(List<Payments> payments);
     }
 }

@@ -24,9 +24,6 @@ namespace PrimeDating.DataAccess.Models
         public int AdminAreaId { get; set; }
 
         [Required]
-        public DateTime GiftReceivedDate { get; set; }
-
-        [Required]
         public int ManId { get; set; }
 
         [Required]

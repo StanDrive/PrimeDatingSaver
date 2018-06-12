@@ -5,15 +5,15 @@ using PrimeDating.DataAccess.Models;
 
 namespace PrimeDating.DataAccess
 {
-    internal class MenDataService : IMenDataService
+    internal class OrdersDataService : IOrdersDataService
     {
-        public void AddOrUpdateMen(List<Men> men)
+        public void AddOrUpdateOrders(List<Orders> orders)
         {
             using (var context = new PrimeDatingContext())
             {
-                foreach (var man in men)
+                foreach (var order in orders)
                 {
-                    context.Men.AddOrUpdate(man);
+                    context.Orders.AddOrUpdate(order);
                 }
 
                 context.SaveChanges();

@@ -13,6 +13,8 @@ namespace PrimeDating.BusinessLayer
 
         public List<Gifts> Gifts { get; set; }
 
+        public List<GiftOrders> GiftOrders { get; set; }
+
         public List<Men> Men { get; set; }
 
         public List<Payments> Payments { get; set; }
@@ -22,5 +24,7 @@ namespace PrimeDating.BusinessLayer
         public List<GirlsImages> GirlImages { get; set; }
 
         public List<ManagersGirls> ManagersGirls { get; set; }
+
+        public List<Orders> Orders { get; set; }
     }
 }

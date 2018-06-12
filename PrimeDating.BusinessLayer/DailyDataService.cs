@@ -36,7 +36,13 @@ namespace PrimeDating.BusinessLayer
 
         private IManagerDataService ManagerDataService => _dataAccessFactory.GetManagerDataService();
 
-        private IMenDataService MenDataService => _dataAccessFactory.GetManagerDataService();
+        private IMenDataService MenDataService => _dataAccessFactory.GetMenDataService();
+
+        private IOrdersDataService OrdersDataService => _dataAccessFactory.GetOrdersDataService();
+
+        private IGiftsDataService GiftsDataService => _dataAccessFactory.GetGiftsDataService();
+
+        private IPaymentsDataService PaymentsDataService => _dataAccessFactory.GetPaymentsDataService();
 
         public DailyDataService(ILogger logger, IDataAccessFactory dataAccessFactory)
         {
@@ -60,14 +66,39 @@ namespace PrimeDating.BusinessLayer
             UpdateManagersGirlsReference(dailyData.ManagersGirls);
 
             UpdateMenData(dailyData.Men);
+
+            UpdateOrdersData(dailyData.Orders);
+
+            UpdateGiftsData(dailyData.Gifts);
+
+            UpdateGiftOrdersData(dailyData.GiftOrders);
+
+            UpdatePaymentsData(dailyData.Payments);
         }
 
-        private void UpdateMen(List<Men> men)
+        private void UpdatePaymentsData(List<Payments> payments)
         {
-            foreach (var man in men)
-            {
-                
-            }
+            PaymentsDataService.AddOrUpdatePayments(payments);
+        }
+
+        private void UpdateGiftOrdersData(List<GiftOrders> giftOrders)
+        {
+            GiftsDataService.AddOrUpdateGiftOrders(giftOrders);
+        }
+
+        private void UpdateGiftsData(List<Gifts> gifts)
+        {
+            GiftsDataService.AddOrUpdateGifts(gifts);
+        }
+
+        private void UpdateOrdersData(List<Orders> orders)
+        {
+            OrdersDataService.AddOrUpdateOrders(orders);
+        }
+
+        private void UpdateMenData(List<Men> men)
+        {
+            MenDataService.AddOrUpdateMen(men);
         }
 
         private void UpdateManagersGirlsReference(List<ManagersGirls> managersGirls)
@@ -126,9 +157,48 @@ namespace PrimeDating.BusinessLayer
                 GirlsPassportScans = ValidateAndReturnGirlsPassportScans(data.Girls),
                 GirlImages = ValidateAndReturnGirlsImages(data.Girls),
                 ManagersGirls = GetManagersGirlsReference(data.Girls),
+                Orders = ValidateAndReturnOrders(data.Gifts),
+                GiftOrders = ValidateAndReturnGiftOrders(data.Gifts)
             };
 
             return result;
+        }
+
+        private List<GiftOrders> ValidateAndReturnGiftOrders(List<GiftDto> gifts)
+        {
+            var validationMessage = new StringBuilder();
+
+            var giftOrders = (from gift in gifts
+                from giftOrder in gift.Orders
+                select new GiftOrders
+                {
+                    GiftId = int.Parse(gift.GiftId),
+                    OrderId = int.Parse(giftOrder.OrderId),
+                    Amount = GetDecimal(giftOrder.OrderAmount, validationMessage),
+                    Price = GetDecimal(giftOrder.OrderPrice, validationMessage)
+                }).ToList();
+
+            if (!string.IsNullOrWhiteSpace(validationMessage.ToString()))
+            {
+                throw new PrimeDatingException("GiftOrders entities validation error:\r\n" + validationMessage);
+            }
+
+            return giftOrders;
+        }
+
+        private List<Orders> ValidateAndReturnOrders(List<GiftDto> gifts)
+        {
+            var orders = new List<Orders>();
+
+            foreach (var order in gifts.SelectMany(t => t.Orders))
+            {
+                if (!orders.Exists(t => t.Id == int.Parse(order.OrderId)))
+                {
+                    orders.Add(new Orders{Id = int.Parse(order.OrderId), Name = order.OrderName});
+                }
+            }
+
+            return orders;
         }
 
         private List<ManagersGirls> GetManagersGirlsReference(List<GirlDto> girls)

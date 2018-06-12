@@ -77,18 +77,22 @@
     <Compile Include="Bootstraper.cs" />
     <Compile Include="DataAccessFactory.cs" />
     <Compile Include="DictionaryDataService.cs" />
+    <Compile Include="GiftsDataService.cs" />
     <Compile Include="GirlsDataService.cs" />
     <Compile Include="Interfaces\IAdminAreaDataService.cs" />
     <Compile Include="Interfaces\IDataAccessFactory.cs" />
     <Compile Include="Interfaces\IDictionaryDataService.cs" />
+    <Compile Include="Interfaces\IGiftsDataService.cs" />
     <Compile Include="Interfaces\IGirlsDataService.cs" />
     <Compile Include="Interfaces\IManagerDataService.cs" />
     <Compile Include="Interfaces\IMenDataService.cs" />
+    <Compile Include="Interfaces\IOrdersDataService.cs" />
+    <Compile Include="Interfaces\IPaymentsDataService.cs" />
     <Compile Include="ManagerDataService.cs" />
     <Compile Include="MenDataService.cs" />
-    <Compile Include="Migrations\201806112009479_Initial.cs" />
-    <Compile Include="Migrations\201806112009479_Initial.Designer.cs">
-      <DependentUpon>201806112009479_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201806120921384_Initial.cs" />
+    <Compile Include="Migrations\201806120921384_Initial.Designer.cs">
+      <DependentUpon>201806120921384_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="AdminAreaDataService.cs" />
@@ -120,6 +124,8 @@
     <Compile Include="Models\ManagersGirls.cs" />
     <Compile Include="Models\ManagersKids.cs" />
     <Compile Include="Models\ManagersMen.cs" />
+    <Compile Include="OrdersDataService.cs" />
+    <Compile Include="PaymentsDataService.cs" />
     <Compile Include="PrimeDatingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -134,8 +140,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806112009479_Initial.resx">
-      <DependentUpon>201806112009479_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806120921384_Initial.resx">
+      <DependentUpon>201806120921384_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

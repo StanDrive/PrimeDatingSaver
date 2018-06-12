@@ -12,6 +12,10 @@ namespace PrimeDating.DataAccess
             container.RegisterType<IGirlsDataService, GirlsDataService>();
             container.RegisterType<IManagerDataService, ManagerDataService>();
             container.RegisterType<IDataAccessFactory, DataAccessFactory>();
+            container.RegisterType<IMenDataService, MenDataService>();
+            container.RegisterType<IOrdersDataService, OrdersDataService>();
+            container.RegisterType<IGiftsDataService, GiftsDataService>();
+            container.RegisterType<IPaymentsDataService, PaymentsDataService>();
         }
     }
 }

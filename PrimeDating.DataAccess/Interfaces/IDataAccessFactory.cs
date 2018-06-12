@@ -9,5 +9,13 @@
         IGirlsDataService GetGirlsDataService();
 
         IManagerDataService GetManagerDataService();
+
+        IMenDataService GetMenDataService();
+
+        IOrdersDataService GetOrdersDataService();
+
+        IGiftsDataService GetGiftsDataService();
+
+        IPaymentsDataService GetPaymentsDataService();
     }
 }

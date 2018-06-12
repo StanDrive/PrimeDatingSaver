@@ -23,5 +23,25 @@ namespace PrimeDating.DataAccess
         {
             return new ManagerDataService();
         }
+
+        public IMenDataService GetMenDataService()
+        {
+            return new MenDataService();
+        }
+
+        public IOrdersDataService GetOrdersDataService()
+        {
+            return new OrdersDataService();
+        }
+
+        public IGiftsDataService GetGiftsDataService()
+        {
+            return new GiftsDataService();
+        }
+
+        public IPaymentsDataService GetPaymentsDataService()
+        {
+            return new PaymentsDataService();
+        }
     }
 }

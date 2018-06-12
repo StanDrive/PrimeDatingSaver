@@ -35,7 +35,6 @@ namespace PrimeDating.DataAccess.Models
         [MaxLength(25)]
         public string MartialStatus { get; set; }
 
-        [Required]
         [MaxLength(150)]
         public string Children { get; set; }
 
@@ -43,7 +42,6 @@ namespace PrimeDating.DataAccess.Models
         [MaxLength(50)]
         public string Religion { get; set; }
 
-        [Required]
         [MaxLength(50)]
         public string Education { get; set; }
         
