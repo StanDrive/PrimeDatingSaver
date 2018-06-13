@@ -88,46 +88,23 @@
     <Compile Include="Interfaces\IMenDataService.cs" />
     <Compile Include="Interfaces\IOrdersDataService.cs" />
     <Compile Include="Interfaces\IPaymentsDataService.cs" />
+    <Compile Include="Interfaces\IQueryFluent.cs" />
+    <Compile Include="Interfaces\IQueryObject.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="ManagerDataService.cs" />
     <Compile Include="MenDataService.cs" />
-    <Compile Include="Migrations\201806120921384_Initial.cs" />
-    <Compile Include="Migrations\201806120921384_Initial.Designer.cs">
-      <DependentUpon>201806120921384_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201806130940409_Initial.cs" />
+    <Compile Include="Migrations\201806130940409_Initial.Designer.cs">
+      <DependentUpon>201806130940409_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="AdminAreaDataService.cs" />
-    <Compile Include="Models\AdminAreas.cs" />
-    <Compile Include="Models\PaymentTypes.cs" />
-    <Compile Include="Models\ContactsRequests.cs" />
-    <Compile Include="Models\ContactsRequestStatuses.cs" />
-    <Compile Include="Models\GiftOrders.cs" />
-    <Compile Include="Models\GiftStatus.cs" />
-    <Compile Include="Models\Logging.cs" />
-    <Compile Include="Models\Orders.cs" />
-    <Compile Include="Models\Gifts.cs" />
-    <Compile Include="Models\Girls.cs" />
-    <Compile Include="Models\GirlsImages.cs" />
-    <Compile Include="Models\GirlsKids.cs" />
-    <Compile Include="Models\GirlsPassportScans.cs" />
-    <Compile Include="Models\HR.cs" />
-    <Compile Include="Models\HRStatuses.cs" />
-    <Compile Include="Models\Images.cs" />
-    <Compile Include="Models\Kids.cs" />
-    <Compile Include="Models\MeetingRequests.cs" />
-    <Compile Include="Models\MeetingRequestStatuses.cs" />
-    <Compile Include="Models\Men.cs" />
-    <Compile Include="Models\MenGirls.cs" />
-    <Compile Include="Models\Payments.cs" />
-    <Compile Include="Models\Penalties.cs" />
-    <Compile Include="Models\Roles.cs" />
-    <Compile Include="Models\Managers.cs" />
-    <Compile Include="Models\ManagersGirls.cs" />
-    <Compile Include="Models\ManagersKids.cs" />
-    <Compile Include="Models\ManagersMen.cs" />
     <Compile Include="OrdersDataService.cs" />
     <Compile Include="PaymentsDataService.cs" />
     <Compile Include="PrimeDatingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryFluent.cs" />
+    <Compile Include="Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -140,8 +117,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806120921384_Initial.resx">
-      <DependentUpon>201806120921384_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806130940409_Initial.resx">
+      <DependentUpon>201806130940409_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using PrimeDating.DataAccess.Models;
+using PrimeDating.Models.Database;
 
 namespace PrimeDating.BusinessLayer
 {

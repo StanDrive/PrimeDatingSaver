@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity.Migrations;
 using PrimeDating.DataAccess.Interfaces;
-using PrimeDating.DataAccess.Models;
+using PrimeDating.Models.Database;
 
 namespace PrimeDating.DataAccess
 {

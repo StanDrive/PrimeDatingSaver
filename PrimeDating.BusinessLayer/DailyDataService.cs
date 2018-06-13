@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.DataAccess.Interfaces;
-using PrimeDating.DataAccess.Models;
 using PrimeDating.Models;
+using PrimeDating.Models.Database;
 
 namespace PrimeDating.BusinessLayer
 {

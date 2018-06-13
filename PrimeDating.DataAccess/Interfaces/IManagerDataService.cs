@@ -1,4 +1,4 @@
-﻿using PrimeDating.DataAccess.Models;
+﻿using PrimeDating.Models.Database;
 
 namespace PrimeDating.DataAccess.Interfaces
 {

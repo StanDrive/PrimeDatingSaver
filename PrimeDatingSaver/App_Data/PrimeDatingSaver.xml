@@ -1,0 +1,267 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PrimeDatingSaver</name>
+    </assembly>
+    <members>
+        <member name="T:PrimeDatingSaver.Controllers.AdminAreasServiceController">
+            <summary>
+            AdminAreasServiceController
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AdminAreasServiceController.#ctor(PrimeDating.BusinessLayer.Interfaces.IEntityService{PrimeDating.Models.Database.AdminAreas},PrimeDating.BusinessLayer.Interfaces.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.AdminAreasServiceController"/> class.
+            </summary>
+            <param name="entityService">The entity service.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AdminAreasServiceController.Find(System.Int32)">
+            <summary>
+            Finds entity by specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AdminAreasServiceController.SelectQuery(System.String)">
+            <summary>
+            Select entities by query.
+            </summary>
+            <param name="query">The query.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AdminAreasServiceController.Insert(PrimeDating.Models.Database.AdminAreas)">
+            <summary>
+            Inserts the specified entity.
+            </summary>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AdminAreasServiceController.InsertRange(System.Collections.Generic.List{PrimeDating.Models.Database.AdminAreas})">
+            <summary>
+            Inserts the range of entities.
+            </summary>
+            <param name="entities">The entities.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AdminAreasServiceController.Update(PrimeDating.Models.Database.AdminAreas)">
+            <summary>
+            Updates the specified entity.
+            </summary>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AdminAreasServiceController.Delete(System.Int32)">
+            <summary>
+            Deletes the specified entity by identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AdminAreasServiceController.GetAll">
+            <summary>
+            Gets all entities.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PrimeDatingSaver.Controllers.GiftOrdersController">
+            <summary>
+            GiftOrdersController
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GiftOrdersController.#ctor(PrimeDating.BusinessLayer.Interfaces.IEntityService{PrimeDating.Models.Database.GiftOrders},PrimeDating.BusinessLayer.Interfaces.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.GiftOrdersController"/> class.
+            </summary>
+            <param name="entityService">The entity service.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GiftOrdersController.Find(System.Int32)">
+            <summary>
+            Finds entity by specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GiftOrdersController.SelectQuery(System.String)">
+            <summary>
+            Select entities by query.
+            </summary>
+            <param name="query">The query.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GiftOrdersController.Insert(PrimeDating.Models.Database.GiftOrders)">
+            <summary>
+            Inserts the specified entity.
+            </summary>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GiftOrdersController.InsertRange(System.Collections.Generic.List{PrimeDating.Models.Database.GiftOrders})">
+            <summary>
+            Inserts the range of entities.
+            </summary>
+            <param name="entities">The entities.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GiftOrdersController.Update(PrimeDating.Models.Database.GiftOrders)">
+            <summary>
+            Updates the specified entity.
+            </summary>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GiftOrdersController.Delete(System.Int32)">
+            <summary>
+            Deletes the specified entity by identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GiftOrdersController.GetAll">
+            <summary>
+            Gets all entities.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PrimeDatingSaver.Controllers.GirlsServiceController">
+            <summary>
+            GirlsServiceController
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GirlsServiceController.#ctor(PrimeDating.BusinessLayer.Interfaces.IEntityService{PrimeDating.Models.Database.Girls},PrimeDating.BusinessLayer.Interfaces.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.GirlsServiceController"/> class.
+            </summary>
+            <param name="entityService">The entity service.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GirlsServiceController.Find(System.Int32)">
+            <summary>
+            Finds entity by specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GirlsServiceController.SelectQuery(System.String)">
+            <summary>
+            Select entities by query.
+            </summary>
+            <param name="query">The query.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GirlsServiceController.Insert(PrimeDating.Models.Database.Girls)">
+            <summary>
+            Inserts the specified entity.
+            </summary>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GirlsServiceController.InsertRange(System.Collections.Generic.List{PrimeDating.Models.Database.Girls})">
+            <summary>
+            Inserts the range of entities.
+            </summary>
+            <param name="entities">The entities.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GirlsServiceController.Update(PrimeDating.Models.Database.Girls)">
+            <summary>
+            Updates the specified entity.
+            </summary>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GirlsServiceController.Delete(System.Int32)">
+            <summary>
+            Deletes the specified entity by identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.GirlsServiceController.GetAll">
+            <summary>
+            Gets all entities.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PrimeDatingSaver.Controllers.DataSaverController">
+            <summary>
+            DataSaverController
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.DataSaverController.#ctor(PrimeDating.BusinessLayer.Interfaces.IDailyDataService,PrimeDating.BusinessLayer.Interfaces.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.DataSaverController"/> class.
+            </summary>
+            <param name="dailyDataService">The daily data service.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.DataSaverController.UploadDailyData(PrimeDating.Models.DailyDataDto)">
+            <summary>
+            Uploads the daily data.
+            </summary>
+            <param name="data">The data.</param>
+            <returns></returns>
+        </member>
+        <member name="T:PrimeDatingSaver.Controllers.ManagersServiceController">
+            <summary>
+            ManagersServiceController
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ManagersServiceController.#ctor(PrimeDating.BusinessLayer.Interfaces.IEntityService{PrimeDating.Models.Database.Managers},PrimeDating.BusinessLayer.Interfaces.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.ManagersServiceController"/> class.
+            </summary>
+            <param name="entityService">The entity service.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ManagersServiceController.Find(System.Int32)">
+            <summary>
+            Finds entity by specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ManagersServiceController.SelectQuery(System.String)">
+            <summary>
+            Select entities by query.
+            </summary>
+            <param name="query">The query.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ManagersServiceController.Insert(PrimeDating.Models.Database.Managers)">
+            <summary>
+            Inserts the specified entity.
+            </summary>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ManagersServiceController.InsertRange(System.Collections.Generic.List{PrimeDating.Models.Database.Managers})">
+            <summary>
+            Inserts the range of entities.
+            </summary>
+            <param name="entities">The entities.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ManagersServiceController.Update(PrimeDating.Models.Database.Managers)">
+            <summary>
+            Updates the specified entity.
+            </summary>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ManagersServiceController.Delete(System.Int32)">
+            <summary>
+            Deletes the specified entity by identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ManagersServiceController.GetAll">
+            <summary>
+            Gets all entities.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

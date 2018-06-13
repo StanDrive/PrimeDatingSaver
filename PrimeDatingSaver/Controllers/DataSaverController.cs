@@ -11,12 +11,21 @@ using PrimeDating.Models;
 
 namespace PrimeDatingSaver.Controllers
 {
+    /// <summary>
+    /// DataSaverController
+    /// </summary>
+    [RoutePrefix("api/datasaver")]
     public class DataSaverController : ApiController
     {
         private readonly IDailyDataService _dailyDataService;
 
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataSaverController"/> class.
+        /// </summary>
+        /// <param name="dailyDataService">The daily data service.</param>
+        /// <param name="logger">The logger.</param>
         public DataSaverController(IDailyDataService dailyDataService, ILogger logger)
         {
             _dailyDataService = dailyDataService;
@@ -24,7 +33,13 @@ namespace PrimeDatingSaver.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Uploads the daily data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         [HttpPost]
+        [Route("UploadDailyData")]
         public HttpResponseMessage UploadDailyData(DailyDataDto data)
         {
             _logger.Info("DataSaverController.UploadDailyData");
@@ -63,7 +78,6 @@ namespace PrimeDatingSaver.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.GetErrorMessage());
             }
-
         }
     }
 }
