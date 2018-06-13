@@ -12,6 +12,11 @@ namespace PrimeDatingSaver.Controllers
     [RoutePrefix("api/gifts")]
     public class GiftsController : BaseServiceController<Gifts>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GiftsController"/> class.
+        /// </summary>
+        /// <param name="entityService">The entity service.</param>
+        /// <param name="logger">The logger.</param>
         public GiftsController(IEntityService<Gifts> entityService, ILogger logger)
             : base(entityService, logger)
         {

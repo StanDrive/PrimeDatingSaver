@@ -284,6 +284,15 @@ namespace PrimeDating.DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Images",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Url = c.String(nullable: false, maxLength: 2000),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Logging",
                 c => new
                     {
@@ -528,6 +537,7 @@ namespace PrimeDating.DataAccess.Migrations
             DropTable("dbo.Managers_Kids");
             DropTable("dbo.Managers_Girls");
             DropTable("dbo.Logging");
+            DropTable("dbo.Images");
             DropTable("dbo.Dictionary_HRStatuses");
             DropTable("dbo.HR");
             DropTable("dbo.GirlsPassportScans");

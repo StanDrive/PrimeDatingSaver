@@ -7,32 +7,32 @@ using PrimeDating.Models.Database;
 namespace PrimeDatingSaver.Controllers
 {
     /// <summary>
-    /// GiftOrdersController
+    /// ManagersGirlsServiceController
     /// </summary>
-    [RoutePrefix("api/GiftOrders")]
-    public class GiftOrdersController : BaseServiceController<GiftOrders>
+    [RoutePrefix("api/managersgirls")]
+    public class ManagersGirlsServiceController : BaseServiceController<ManagersGirls>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GiftOrdersController"/> class.
+        /// Initializes a new instance of the <see cref="ManagersGirlsServiceController"/> class.
         /// </summary>
         /// <param name="entityService">The entity service.</param>
         /// <param name="logger">The logger.</param>
-        public GiftOrdersController(IEntityService<GiftOrders> entityService, ILogger logger)
+        public ManagersGirlsServiceController(IEntityService<ManagersGirls> entityService, ILogger logger)
             : base(entityService, logger)
-        {
+        {            
         }
 
         /// <summary>
         /// Finds entity by specified identifier.
         /// </summary>
-        /// <param name="giftId">The gift identifier.</param>
-        /// <param name="orderId">The order identifier.</param>
+        /// <param name="girlId">The girl identifier.</param>
+        /// <param name="managerId">The manager identifier.</param>
         /// <returns></returns>
         [HttpGet]
         [Route("find")]
-        public HttpResponseMessage Find(int giftId, int orderId)
+        public HttpResponseMessage Find(int girlId, int managerId)
         {
-            return base.Find(giftId, orderId);
+            return base.Find(girlId, managerId);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace PrimeDatingSaver.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("Insert")]
-        public override HttpResponseMessage Insert(GiftOrders entity)
+        public override HttpResponseMessage Insert(ManagersGirls entity)
         {
             return base.Insert(entity);
         }
@@ -66,7 +66,7 @@ namespace PrimeDatingSaver.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("insertrange")]
-        public override HttpResponseMessage InsertRange(List<GiftOrders> entities)
+        public override HttpResponseMessage InsertRange(List<ManagersGirls> entities)
         {
             return base.InsertRange(entities);
         }
@@ -78,7 +78,7 @@ namespace PrimeDatingSaver.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("update")]
-        public override HttpResponseMessage Update(GiftOrders entity)
+        public override HttpResponseMessage Update(ManagersGirls entity)
         {
             return base.Update(entity);
         }
@@ -86,14 +86,14 @@ namespace PrimeDatingSaver.Controllers
         /// <summary>
         /// Deletes the specified entity by identifier.
         /// </summary>
-        /// <param name="giftId">The gift identifier.</param>
-        /// <param name="orderId">The order identifier.</param>
+        /// <param name="girlId">The girl identifier.</param>
+        /// <param name="managerId">The manager identifier.</param>
         /// <returns></returns>
         [HttpDelete]
         [Route("delete")]
-        public HttpResponseMessage Delete(int giftId, int orderId)
+        public HttpResponseMessage Delete(int girlId, int managerId)
         {
-            return base.Delete(giftId, orderId);
+            return base.Delete(girlId, managerId);
         }
 
         /// <summary>

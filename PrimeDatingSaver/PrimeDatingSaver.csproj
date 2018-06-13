@@ -201,9 +201,24 @@
     <Compile Include="Controllers\BaseServiceController.cs" />
     <Compile Include="Controllers\GiftOrdersController.cs" />
     <Compile Include="Controllers\GiftsController.cs" />
+    <Compile Include="Controllers\GiftStatusServiceController.cs" />
+    <Compile Include="Controllers\GirlsImagesServiceController.cs" />
+    <Compile Include="Controllers\GirlsPassportScansServiceController.cs" />
     <Compile Include="Controllers\GirlsServiceController.cs" />
     <Compile Include="Controllers\DataSaverController.cs" />
+    <Compile Include="Controllers\HrServiceController.cs" />
+    <Compile Include="Controllers\HrStatusesServiceController.cs" />
+    <Compile Include="Controllers\ImagesServiceController.cs" />
+    <Compile Include="Controllers\ManagersGirlsServiceController.cs" />
     <Compile Include="Controllers\ManagersServiceController.cs" />
+    <Compile Include="Controllers\MeetingRequestsServiceController.cs" />
+    <Compile Include="Controllers\MeetingRequestStatusesServiceController.cs" />
+    <Compile Include="Controllers\MenServiceController.cs" />
+    <Compile Include="Controllers\OrdersServiceController.cs" />
+    <Compile Include="Controllers\PaymentsServiceController.cs" />
+    <Compile Include="Controllers\PaymentTypesServiceController.cs" />
+    <Compile Include="Controllers\PenaltiesServiceController.cs" />
+    <Compile Include="Controllers\RolesServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

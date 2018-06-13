@@ -25,6 +25,21 @@ namespace PrimeDating.DataAccess
             container.RegisterType<IRepository<AdminAreas>, Repository<AdminAreas>>();
             container.RegisterType<IRepository<GiftOrders>, Repository<GiftOrders>>();
             container.RegisterType<IRepository<Gifts>, Repository<Gifts>>();
+            container.RegisterType<IRepository<GiftStatus>, Repository<GiftStatus>>();
+            container.RegisterType<IRepository<GirlsImages>, Repository<GirlsImages>>();
+            container.RegisterType<IRepository<GirlsPassportScans>, Repository<GirlsPassportScans>>();
+            container.RegisterType<IRepository<HR>, Repository<HR>>();
+            container.RegisterType<IRepository<HRStatuses>, Repository<HRStatuses>>();
+            container.RegisterType<IRepository<Images>, Repository<Images>>();
+            container.RegisterType<IRepository<ManagersGirls>, Repository<ManagersGirls>>();
+            container.RegisterType<IRepository<MeetingRequests>, Repository<MeetingRequests>>();
+            container.RegisterType<IRepository<MeetingRequestStatuses>, Repository<MeetingRequestStatuses>>();
+            container.RegisterType<IRepository<Men>, Repository<Men>>();
+            container.RegisterType<IRepository<Orders>, Repository<Orders>>();
+            container.RegisterType<IRepository<Payments>, Repository<Payments>>();
+            container.RegisterType<IRepository<PaymentTypes>, Repository<PaymentTypes>>();
+            container.RegisterType<IRepository<Penalties>, Repository<Penalties>>();
+            container.RegisterType<IRepository<Roles>, Repository<Roles>>();
         }
     }
 }

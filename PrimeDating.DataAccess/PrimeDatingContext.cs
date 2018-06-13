@@ -19,6 +19,8 @@ namespace PrimeDating.DataAccess
 
         public DbSet<Orders> Orders { get; set; }
 
+        public DbSet<Images> Images { get; set; }
+
         public DbSet<ContactsRequestStatuses> ContactsRequestStatuses { get; set; }
 
         public DbSet<Gifts> Gifts { get; set; }
