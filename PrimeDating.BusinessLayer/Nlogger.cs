@@ -22,14 +22,7 @@ namespace PrimeDating.BusinessLayer
 
             var baseDir = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
 
-            try
-            {
-                LogManager.Configuration = new XmlLoggingConfiguration(Path.Combine(baseDir, "Nlog.config"));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            LogManager.Configuration = new XmlLoggingConfiguration(Path.Combine(baseDir, "Nlog.config"));
 
             Logger = LogManager.GetLogger("*");
         }
