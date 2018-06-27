@@ -259,6 +259,11 @@ namespace PrimeDating.BusinessLayer
         {
             var validationMessage = new StringBuilder();
 
+            if (payments == null || !payments.Any())
+            {
+                throw new PrimeDatingException("Payments entities validation error: Payments data is empty");
+            }
+
             var result = (from payment in payments
                 from paymentStatistic in payment.Statistic.Where(t => t.Key != UnnecessaryPaymentType)
                 from paymentStatisticType in paymentStatistic.Value
@@ -266,7 +271,7 @@ namespace PrimeDating.BusinessLayer
                 {
                     GirlId = GetIntValueFromDto(payment.Id, validationMessage,
                         string.Format(_cannotConvertToIntMessage, "id", payment.Id)),
-                    Date = GetDate(paymentStatisticType.Date, validationMessage),
+                    Date = GetDate(paymentStatisticType.Date, validationMessage) ?? throw new PrimeDatingException($"Can't parse date from '{paymentStatisticType.Date}'"),
                     Amount = GetDecimal(paymentStatisticType.Bonuses, validationMessage),
                     ManagerId = GetIntValueFromDto(paymentStatisticType.Id, validationMessage,
                         string.Format(_cannotConvertToIntMessage, "id", paymentStatisticType.Id)),
@@ -318,6 +323,11 @@ namespace PrimeDating.BusinessLayer
         {
             var validationMessage = new StringBuilder();
 
+            if (men == null || !men.Any())
+            {
+                throw new PrimeDatingException("Men entities validation error: Men data is empty");
+            }
+
             var result = men.Select(menDto => new Men
             {
                 FirstName = CheckStringPropertyValidity(menDto.Name, validationMessage, "name"),
@@ -342,7 +352,7 @@ namespace PrimeDating.BusinessLayer
             return result;
         }
 
-        private DateTime GetDate(string date, StringBuilder validationMessage)
+        private DateTime? GetDate(string date, StringBuilder validationMessage)
         {
             date = date.Replace("-0001", "1900");
 
@@ -351,14 +361,27 @@ namespace PrimeDating.BusinessLayer
                 return result;
             }
 
+            if (int.TryParse(date, out var year))
+            {
+                if (year >= 1900 && year <= DateTime.Now.Year)
+                {
+                    return new DateTime(year, 1, 1);
+                }
+            }
+
             validationMessage.AppendLine($"Unable to get date from value '{date}'");
 
-            return DateTime.MinValue;
+            return null;
         }
 
         private List<Gifts> ValidateAndReturnGifts(List<GiftDto> gifts, int adminAreaId)
         {
             var validationMessage = new StringBuilder();
+
+            if (gifts == null || !gifts.Any())
+            {
+                throw new PrimeDatingException("Gifts entities validation error: Gifts data is empty");
+            }
 
             var result = gifts.Select(giftDto => new Gifts
             {
@@ -404,6 +427,11 @@ namespace PrimeDating.BusinessLayer
         {
             var validationMessage = new StringBuilder();
 
+            if (managers == null || !managers.Any())
+            {
+                throw new PrimeDatingException("Managers entities validation error: managers data is empty");
+            }
+
             var result = managers.Select(managerDto => new Managers
             {
                 Id = GetIntValueFromDto(managerDto.Id, validationMessage,
@@ -446,6 +474,11 @@ namespace PrimeDating.BusinessLayer
         {
             var validationMessage = new StringBuilder();
 
+            if (girls == null || !girls.Any())
+            {
+                throw new PrimeDatingException("Girls entities validation error: Girls data is empty");
+            }
+            
             var result = girls.Select(girlDto => new Girls
                 {
                     Id = GetIntValueFromDto(girlDto.GirlId, validationMessage,

@@ -12,13 +12,20 @@ namespace PrimeDating.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var json = "0.2";
+            var date = "2019";
 
-            decimal value;
+            if (DateTime.TryParse(date, out var result))
+            {
+                
+            }
 
-            var res = decimal.TryParse(json, NumberStyles.Any, new CultureInfo("en-US"), out value);
-
-
+            if (int.TryParse(date, out var year))
+            {
+                if (year >= 1900 && year <= DateTime.Now.Year)
+                {
+                    
+                }
+            }
         }
 
     }

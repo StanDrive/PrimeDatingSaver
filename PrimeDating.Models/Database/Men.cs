@@ -21,8 +21,7 @@ namespace PrimeDating.Models.Database
         [MaxLength(100)]
         public string Patronymic { get; set; }
 
-        [Required]
-        public DateTime BirthDay { get; set; }
+        public DateTime? BirthDay { get; set; }
 
         [Required]
         [MaxLength(150)]

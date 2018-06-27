@@ -139,7 +139,7 @@ namespace PrimeDating.DataAccess.Migrations
                         LastName = c.String(maxLength: 100),
                         FirstName = c.String(nullable: false, maxLength: 100),
                         Patronymic = c.String(maxLength: 100),
-                        BirthDay = c.DateTime(nullable: false),
+                        BirthDay = c.DateTime(),
                         Location = c.String(nullable: false, maxLength: 150),
                         Phone = c.String(maxLength: 20),
                         MartialStatus = c.String(nullable: false, maxLength: 25),
