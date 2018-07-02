@@ -35,7 +35,7 @@ namespace PrimeDating.Reports
 
         public Stream GirlsReport(DateTime startPeriod, DateTime endPeriod)
         {
-            _logger.Debug($"ReportsFactory.TranslatorsReport [startPeriod: {startPeriod}, endPeriod: {endPeriod}]");
+            _logger.Debug($"GirlsReports.TranslatorsReport [startPeriod: {startPeriod}, endPeriod: {endPeriod}]");
 
             if (startPeriod > endPeriod)
             {

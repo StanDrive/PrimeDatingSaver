@@ -10,5 +10,7 @@ namespace PrimeDating.DataAccess.Interfaces
         List<Payments> GetPaymentsWithinRange(DateTime startDate, DateTime endDate);
 
         List<PaymentTypes> GetPaymentTypes();
+
+        List<Logging> GetLogsByPeriod(DateTime startDate, DateTime endDate);
     }
 }

@@ -10,13 +10,23 @@ using PrimeDating.Models;
 
 namespace PrimeDatingSaver.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TEntity">The type of the entity.</typeparam>
+    /// <seealso cref="System.Web.Http.ApiController" />
     public abstract class BaseServiceController<TEntity> : ApiController
-        where TEntity : class, IObjectState
+            where TEntity : class, IObjectState
     {
         private readonly IEntityService<TEntity> _entityService;
 
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseServiceController{TEntity}"/> class.
+        /// </summary>
+        /// <param name="entityService">The entity service.</param>
+        /// <param name="logger">The logger.</param>
         protected BaseServiceController(IEntityService<TEntity> entityService, ILogger logger)
         {
             _entityService = entityService;
@@ -24,6 +34,11 @@ namespace PrimeDatingSaver.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Finds the specified key values.
+        /// </summary>
+        /// <param name="keyValues">The key values.</param>
+        /// <returns></returns>
         public virtual HttpResponseMessage Find(params object[] keyValues)
         {
             var values = keyValues != null && keyValues.Any()
@@ -44,6 +59,11 @@ namespace PrimeDatingSaver.Controllers
             }
         }
 
+        /// <summary>
+        /// Selects the query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
         public virtual HttpResponseMessage SelectQuery(string query)
         {
             _logger.Info($"{typeof(TEntity).Name}Controller.SelectQuery [Query: {query}]");
@@ -60,6 +80,11 @@ namespace PrimeDatingSaver.Controllers
             }
         }
 
+        /// <summary>
+        /// Inserts the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
         public virtual HttpResponseMessage Insert(TEntity entity)
         {
             _logger.Info($"{typeof(TEntity).Name}Controller.Insert");
@@ -78,6 +103,11 @@ namespace PrimeDatingSaver.Controllers
             }
         }
 
+        /// <summary>
+        /// Inserts the range.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
+        /// <returns></returns>
         public virtual HttpResponseMessage InsertRange(List<TEntity> entities)
         {
             _logger.Info($"{typeof(TEntity).Name}Controller.InsertRange");
@@ -96,6 +126,11 @@ namespace PrimeDatingSaver.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
         public virtual HttpResponseMessage Update(TEntity entity)
         {
             _logger.Info($"{typeof(TEntity).Name}Controller.Update");
@@ -114,6 +149,11 @@ namespace PrimeDatingSaver.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes the specified key values.
+        /// </summary>
+        /// <param name="keyValues">The key values.</param>
+        /// <returns></returns>
         public virtual HttpResponseMessage Delete(params object[] keyValues)
         {
             var values = keyValues != null && keyValues.Any()
@@ -136,6 +176,10 @@ namespace PrimeDatingSaver.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <returns></returns>
         public virtual HttpResponseMessage GetAll()
         {
             _logger.Info($"{typeof(TEntity).Name}Controller.GetAll");

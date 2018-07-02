@@ -45,7 +45,7 @@ namespace PrimeDatingSaver.Controllers
         [Route(@"translators/{startDate:regex(^\d{2}-\d{2}-\d{4}$)}/{endDate:regex(^\d{2}-\d{2}-\d{4}$)}")]
         public HttpResponseMessage GetTranslatorsReport(string startDate, string endDate)
         {
-            _logger.Debug($"ReportsFactory.GetTranslatorsReport [startPeriod: {startDate}, endPeriod: {endDate}]");
+            _logger.Info($"ReportsFactory.GetTranslatorsReport [startPeriod: {startDate}, endPeriod: {endDate}]");
 
             const string dateFormat = "dd-MM-yyyy";
             try
@@ -103,7 +103,7 @@ namespace PrimeDatingSaver.Controllers
         [Route(@"girls/{startDate:regex(^\d{2}-\d{2}-\d{4}$)}/{endDate:regex(^\d{2}-\d{2}-\d{4}$)}")]
         public HttpResponseMessage GetGirlsReport(string startDate, string endDate)
         {
-            _logger.Debug($"ReportsFactory.GetGirlsReport [startPeriod: {startDate}, endPeriod: {endDate}]");
+            _logger.Info($"ReportsFactory.GetGirlsReport [startPeriod: {startDate}, endPeriod: {endDate}]");
 
             const string dateFormat = "dd-MM-yyyy";
             try

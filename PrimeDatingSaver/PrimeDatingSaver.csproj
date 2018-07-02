@@ -222,6 +222,7 @@
     <Compile Include="Controllers\HrServiceController.cs" />
     <Compile Include="Controllers\HrStatusesServiceController.cs" />
     <Compile Include="Controllers\ImagesServiceController.cs" />
+    <Compile Include="Controllers\LoggingController.cs" />
     <Compile Include="Controllers\ManagersGirlsServiceController.cs" />
     <Compile Include="Controllers\ManagersServiceController.cs" />
     <Compile Include="Controllers\MeetingRequestsServiceController.cs" />

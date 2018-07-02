@@ -40,5 +40,13 @@ namespace PrimeDating.DataAccess
                 return context.PaymentTypes.ToList();
             }
         }
+
+        public List<Logging> GetLogsByPeriod(DateTime startDate, DateTime endDate)
+        {
+            using (var context = new PrimeDatingContext())
+            {
+                return context.Logging.Where(t => t.DateTime >= startDate && t.DateTime <= endDate).ToList();
+            }
+        }
     }
 }

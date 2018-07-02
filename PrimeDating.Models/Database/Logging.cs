@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PrimeDating.Models.Database
 {
     [Table("Logging")]
-    public class Logging
+    public class Logging : Entity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

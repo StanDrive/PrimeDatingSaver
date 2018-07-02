@@ -6,11 +6,15 @@
 
         private readonly IGirlsReports _girlsReports;
 
-        public ReportsBuilder(ITranslatorsReports translatorsReports, IGirlsReports girlsReports)
+        private readonly ILoggingReports _loggingReports;
+
+        public ReportsBuilder(ITranslatorsReports translatorsReports, IGirlsReports girlsReports, ILoggingReports loggingReports)
         {
             _translatorsReports = translatorsReports;
 
             _girlsReports = girlsReports;
+
+            _loggingReports = loggingReports;
         }
 
         public ITranslatorsReports GetTranslatorsReports()
@@ -21,6 +25,11 @@
         public IGirlsReports GetGirlsReports()
         {
             return _girlsReports;
+        }
+
+        public ILoggingReports GetLoggingReports()
+        {
+            return _loggingReports;
         }
     }
 }

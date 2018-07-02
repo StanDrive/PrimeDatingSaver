@@ -13,5 +13,11 @@
         /// </summary>
         /// <returns></returns>
         IGirlsReports GetGirlsReports();
+
+        /// <summary>
+        /// Gets the logging reports.
+        /// </summary>
+        /// <returns></returns>
+        ILoggingReports GetLoggingReports();
     }
 }

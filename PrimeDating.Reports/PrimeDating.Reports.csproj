@@ -130,7 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstraper.cs" />
+    <Compile Include="ILoggingReports.cs" />
     <Compile Include="ISpreadsheetBuilder.cs" />
+    <Compile Include="LoggingReports.cs" />
     <Compile Include="ReportsBuilder.cs" />
     <Compile Include="GirlsReports.cs" />
     <Compile Include="IGirlsReports.cs" />

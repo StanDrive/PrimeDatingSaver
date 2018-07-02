@@ -36,7 +36,7 @@ namespace PrimeDating.Reports
 
         public Stream TranslatorsReport(DateTime startPeriod, DateTime endPeriod)
         {
-            _logger.Debug($"ReportsFactory.TranslatorsReport [startPeriod: {startPeriod}, endPeriod: {endPeriod}]");
+            _logger.Debug($"TranslatorsReports.TranslatorsReport [startPeriod: {startPeriod}, endPeriod: {endPeriod}]");
 
             if (startPeriod > endPeriod)
             {
