@@ -4,6 +4,11 @@
         <name>PrimeDatingSaver</name>
     </assembly>
     <members>
+        <member name="T:PrimeDatingSaver.SwaggerConfig">
+            <summary>
+            SwaggerConfig
+            </summary>
+        </member>
         <member name="T:PrimeDatingSaver.Controllers.AdminAreasServiceController">
             <summary>
             AdminAreasServiceController
@@ -1166,6 +1171,39 @@
             Gets all entities.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:PrimeDatingSaver.Controllers.ReportsController">
+            <summary>
+            ReportsController
+            </summary>
+            <seealso cref="T:System.Web.Http.ApiController" />
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.#ctor(PrimeDating.Reports.IReportsBuilder,PrimeDating.BusinessLayer.Interfaces.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.ReportsController" /> class.
+            </summary>
+            <param name="reportsBuilder">The reports builder.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetTranslatorsReport(System.String,System.String)">
+            <summary>
+            Gets the translators report.
+            </summary>
+            <param name="startDate">The start date.</param>
+            <param name="endDate">The end date.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">
+            </exception>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetGirlsReport(System.String,System.String)">
+            <summary>
+            Gets the girls report.
+            </summary>
+            <param name="startDate">The start date.</param>
+            <param name="endDate">The end date.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">
+            </exception>
         </member>
         <member name="T:PrimeDatingSaver.Controllers.RolesServiceController">
             <summary>

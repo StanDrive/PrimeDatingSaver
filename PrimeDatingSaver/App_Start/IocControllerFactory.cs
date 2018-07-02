@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Unity;
@@ -21,7 +22,14 @@ namespace PrimeDatingSaver
                 return _container.Resolve(controllerType) as IController;
             }
 
-            return base.GetControllerInstance(requestContext, null);
+            try
+            {
+                return base.GetControllerInstance(requestContext, null);
+            }
+            catch (HttpException)
+            {
+                return null;
+            }
         }
     }
 }

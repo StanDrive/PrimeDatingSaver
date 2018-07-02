@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using PrimeDating.BusinessLayer;
+using PrimeDating.DataAccess;
+using PrimeDating.DataAccess.Interfaces;
+using PrimeDating.Reports;
 
 namespace PrimeDating.Tests
 {
@@ -12,32 +17,10 @@ namespace PrimeDating.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var date = "2019";
+            //var service = new TranslatorsReports(new ReportsData(), new Nlogger());
 
-            if (DateTime.TryParse(date, out var result))
-            {
-                
-            }
-
-            if (int.TryParse(date, out var year))
-            {
-                if (year >= 1900 && year <= DateTime.Now.Year)
-                {
-                    
-                }
-            }
+            //var res = service.GetTranslatorsReportData(new DateTime(2018, 5, 25), new DateTime(2018, 6, 1));
         }
 
-    }
-
-    public class Daily
-    {
-        public int Id { get; set; }
-
-        public int SomeName { get; set; }
-
-        public List<int> Names { get; set; }
-
-        public DateTime date { get; set; }
     }
 }

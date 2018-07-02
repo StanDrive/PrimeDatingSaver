@@ -8,6 +8,9 @@ using System;
 
 namespace PrimeDatingSaver
 {
+    /// <summary>
+    /// SwaggerConfig
+    /// </summary>
     public class SwaggerConfig
     {
         public static void Register()

@@ -27,6 +27,8 @@ namespace PrimeDatingSaver
 
             Bootstraper.Register(container);
 
+            PrimeDating.Reports.Bootstraper.Register(container);
+
             GlobalConfiguration.Configuration.DependencyResolver = new UnityResolver(container);
 
             ControllerBuilder.Current.SetControllerFactory(new IocControllerFactory(container));

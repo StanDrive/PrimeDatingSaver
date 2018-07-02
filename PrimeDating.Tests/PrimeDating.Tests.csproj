@@ -99,12 +99,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="Nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PrimeDating.BusinessLayer\PrimeDating.BusinessLayer.csproj">
+      <Project>{F9F01070-66B1-4711-B130-B98444EE8762}</Project>
+      <Name>PrimeDating.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrimeDating.DataAccess\PrimeDating.DataAccess.csproj">
+      <Project>{0801C257-15EA-4368-95AD-173E13F91535}</Project>
+      <Name>PrimeDating.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PrimeDating.Models\PrimeDating.Models.csproj">
       <Project>{1123ce32-88c0-4cbd-9d7f-1ca9a0e15c3d}</Project>
       <Name>PrimeDating.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrimeDating.Reports\PrimeDating.Reports.csproj">
+      <Project>{1FCC457E-5CA4-4889-B85A-910B450674A4}</Project>
+      <Name>PrimeDating.Reports</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

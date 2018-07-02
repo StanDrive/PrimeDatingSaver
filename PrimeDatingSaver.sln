@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimeDating.Models", "Prime
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelTools", "ExcelTools\ExcelTools.csproj", "{5AC2D32E-75AE-43EF-BDF1-BEC9F752007E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimeDating.Reports", "PrimeDating.Reports\PrimeDating.Reports.csproj", "{1FCC457E-5CA4-4889-B85A-910B450674A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{5AC2D32E-75AE-43EF-BDF1-BEC9F752007E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AC2D32E-75AE-43EF-BDF1-BEC9F752007E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AC2D32E-75AE-43EF-BDF1-BEC9F752007E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FCC457E-5CA4-4889-B85A-910B450674A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FCC457E-5CA4-4889-B85A-910B450674A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FCC457E-5CA4-4889-B85A-910B450674A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FCC457E-5CA4-4889-B85A-910B450674A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
