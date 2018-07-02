@@ -9,6 +9,7 @@ namespace PrimeDating.Reports
             container.RegisterType<ITranslatorsReports, TranslatorsReports>();
             container.RegisterType<IGirlsReports, GirlsReports>();
             container.RegisterType<IReportsBuilder, ReportsBuilder>();
+            container.RegisterType<ISpreadsheetBuilder, SpreadsheetBuilder>();
         }
     }
 }

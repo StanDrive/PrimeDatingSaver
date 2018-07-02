@@ -130,12 +130,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstraper.cs" />
+    <Compile Include="ISpreadsheetBuilder.cs" />
     <Compile Include="ReportsBuilder.cs" />
     <Compile Include="GirlsReports.cs" />
     <Compile Include="IGirlsReports.cs" />
     <Compile Include="IReportsBuilder.cs" />
     <Compile Include="ITranslatorsReports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpreadsheetBuilder.cs" />
     <Compile Include="TranslatorsReports.cs" />
   </ItemGroup>
   <ItemGroup>

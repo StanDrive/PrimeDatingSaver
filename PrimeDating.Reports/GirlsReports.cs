@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using DocumentFormat.OpenXml.Packaging;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.DataAccess.Interfaces;
 using PrimeDating.Models.Database;
@@ -18,14 +17,18 @@ namespace PrimeDating.Reports
 
         private readonly ILogger _logger;
 
+        private readonly ISpreadsheetBuilder _spreadsheetBuilder;
+
         private readonly List<PaymentTypes> _paymentTypes;
         #endregion
 
-        public GirlsReports(IReportsData reportsData, ILogger logger)
+        public GirlsReports(IReportsData reportsData, ILogger logger, ISpreadsheetBuilder spreadsheetBuilder)
         {
             _reportsData = reportsData;
 
             _logger = logger;
+
+            _spreadsheetBuilder = spreadsheetBuilder;
 
             _paymentTypes = GetPaymentTypes();
         }
@@ -34,9 +37,9 @@ namespace PrimeDating.Reports
         {
             _logger.Debug($"ReportsFactory.TranslatorsReport [startPeriod: {startPeriod}, endPeriod: {endPeriod}]");
 
-            if (startPeriod >= endPeriod)
+            if (startPeriod > endPeriod)
             {
-                throw new ArgumentException("startPeriod must be lower than endPeriod");
+                throw new ArgumentException("startPeriod can't be bigger than endPeriod");
             }
 
             if (endPeriod - startPeriod > TimeSpan.FromDays(31))
@@ -46,88 +49,10 @@ namespace PrimeDating.Reports
 
             var reportData = GetGirlsReportData(startPeriod, endPeriod);
 
-            var memoryStream = new MemoryStream();
-
-            using (var objSpreadsheet =
-                SpreadsheetDocument.Create(memoryStream, DocumentFormat.OpenXml.SpreadsheetDocumentType.Workbook))
-            {
-                objSpreadsheet.AddWorkbookPart();
-
-                objSpreadsheet.WorkbookPart.Workbook =
-                    new DocumentFormat.OpenXml.Spreadsheet.Workbook
-                    {
-                        Sheets = new DocumentFormat.OpenXml.Spreadsheet.Sheets()
-                    };
-
-                uint sheetId = 1;
-
-                var sheetPart = objSpreadsheet.WorkbookPart.AddNewPart<WorksheetPart>();
-
-                var sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
-
-                sheetPart.Worksheet = new DocumentFormat.OpenXml.Spreadsheet.Worksheet(sheetData);
-
-                var sheets = objSpreadsheet.WorkbookPart.Workbook.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Sheets>();
-
-                var relationshipId = objSpreadsheet.WorkbookPart.GetIdOfPart(sheetPart);
-
-                if (sheets.Elements<DocumentFormat.OpenXml.Spreadsheet.Sheet>().Any())
-                {
-                    sheetId =
-                        sheets.Elements<DocumentFormat.OpenXml.Spreadsheet.Sheet>().Select(s => s.SheetId.Value).Max() + 1;
-                }
-
-                var sheet = new DocumentFormat.OpenXml.Spreadsheet.Sheet
-                {
-                    Id = relationshipId,
-                    SheetId = sheetId,
-                    Name = reportData.TableName
-                };
-
-                // ReSharper disable once PossiblyMistakenUseOfParamsMethod
-                sheets.Append(sheet);
-
-                var headerRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
-
-                var columns = new List<string>();
-
-                foreach (DataColumn column in reportData.Columns)
-                {
-                    columns.Add(column.ColumnName);
-
-                    var cell = new DocumentFormat.OpenXml.Spreadsheet.Cell
-                    {
-                        DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                        CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(column.ColumnName)
-                    };
-
-                    headerRow.AppendChild(cell);
-                }
-
-                sheetData.AppendChild(headerRow);
-
-                foreach (DataRow dsrow in reportData.Rows)
-                {
-                    var newRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
-
-                    foreach (var col in columns)
-                    {
-                        var cell = new DocumentFormat.OpenXml.Spreadsheet.Cell
-                        {
-                            DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                            CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(dsrow[col].ToString())
-                        };
-
-                        newRow.AppendChild(cell);
-                    }
-
-                    sheetData.AppendChild(newRow);
-                }
-
-                return memoryStream;
-            }
+            return _spreadsheetBuilder.GetSpreadsheetFromDataTable(reportData);
         }
 
+        #region private members
         private DataTable GetGirlsReportData(DateTime dateBegin, DateTime dateEnd)
         {
             var table = GenerateDataTable(dateBegin, dateEnd);
@@ -184,7 +109,7 @@ namespace PrimeDating.Reports
 
         private DataTable GenerateDataTable(DateTime dateBegin, DateTime dateEnd)
         {
-            var table = new DataTable($"Girls_{dateBegin:dd-MM}_{dateBegin:dd-MM-yyyy}");
+            var table = new DataTable($"Girls_{dateBegin:dd-MM}_{dateEnd:dd-MM-yyyy}");
 
             table.Columns.Add(new DataColumn("Name", typeof(string)));
             table.Columns.Add(new DataColumn("Id", typeof(string)));
@@ -208,5 +133,6 @@ namespace PrimeDating.Reports
         {
             return _reportsData.GetPaymentTypes().ToList();
         }
+        #endregion
     }
 }
