@@ -8,6 +8,7 @@ namespace PrimeDating.Models.Database
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Range(1, 999999999, ErrorMessage = "Value must be between 1 to 999999999")]
         public int Id { get; set; }
 
         [Required]

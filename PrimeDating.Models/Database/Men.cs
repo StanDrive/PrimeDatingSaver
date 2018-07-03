@@ -7,7 +7,7 @@ namespace PrimeDating.Models.Database
     public class Men : Entity
     {
         [Key]
-        [Range(1, 9999999, ErrorMessage = "Value must be between 1 to 9999999")]
+        [Range(1, 999999999, ErrorMessage = "Value must be between 1 to 999999999")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 

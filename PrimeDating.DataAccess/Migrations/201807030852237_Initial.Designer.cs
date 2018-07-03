@@ -13,7 +13,7 @@ namespace PrimeDating.DataAccess.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201806271916186_Initial"; }
+            get { return "201807030852237_Initial"; }
         }
         
         string IMigrationMetadata.Source

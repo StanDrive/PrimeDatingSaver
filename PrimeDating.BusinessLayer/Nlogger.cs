@@ -177,8 +177,12 @@ namespace PrimeDating.BusinessLayer
             {
                 lock (Locker)
                 {
-                    File.AppendAllText("NLog error report.txt",
-                         $@"{DateTime.Now}|||Incoming message: {message}, {ex?.Message}|||Shutdown message: {e.Message}");
+                    try
+                    {
+                        File.AppendAllText("C:\\Logs\\PrimeDatingSaver\\NLog error report.txt",
+                            $@"{DateTime.Now}|||Incoming message: {message}, {ex?.Message}|||Shutdown message: {e.Message}");
+                    }
+                    catch{ }
                 }
             }
         }
