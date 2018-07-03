@@ -100,7 +100,7 @@ namespace PrimeDating.Models.Database
         public string LookingFor { get; set; }
 
         [Required]
-        [MaxLength(2000)]
+        [MaxLength(3000)]
         public string Description { get; set; }
 
         [Required]
