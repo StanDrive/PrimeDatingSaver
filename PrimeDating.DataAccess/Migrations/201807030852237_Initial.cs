@@ -55,7 +55,7 @@ namespace PrimeDating.DataAccess.Migrations
                     {
                         Id = c.Int(nullable: false),
                         AssignedManagerId = c.Int(nullable: false),
-                        Passport = c.String(nullable: false, maxLength: 8),
+                        Passport = c.String(nullable: false, maxLength: 10),
                         LastName = c.String(maxLength: 100),
                         FirstName = c.String(nullable: false, maxLength: 100),
                         Patronymic = c.String(maxLength: 100),

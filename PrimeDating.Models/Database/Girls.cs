@@ -15,7 +15,7 @@ namespace PrimeDating.Models.Database
         public int AssignedManagerId { get; set; }
 
         [Required]
-        [MaxLength(8)]
+        [MaxLength(10)]
         public string Passport { get; set; }
 
         [MaxLength(100), MinLength(3)]
