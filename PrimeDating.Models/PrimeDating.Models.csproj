@@ -88,6 +88,8 @@
     <Compile Include="PaymentItemDto.cs" />
     <Compile Include="PaymentsStatisticDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Girl.cs" />
+    <Compile Include="Reports\Manager.cs" />
     <Compile Include="Reports\Payments.cs" />
   </ItemGroup>
   <ItemGroup>

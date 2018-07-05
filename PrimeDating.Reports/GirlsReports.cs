@@ -59,7 +59,9 @@ namespace PrimeDating.Reports
 
             var payments = _reportsData.GetPaymentsWithinRange(dateBegin, dateEnd);
 
-            foreach (var girl in payments.Select(t => new { t.GirlName, t.GirlId, t.AdminAreaName }).Distinct())
+            var girls = _reportsData.GetAllGirls();
+
+            foreach (var girl in girls)
             {
                 var managerDataRow = table.NewRow();
 
@@ -67,9 +69,9 @@ namespace PrimeDating.Reports
 
                 managerDataRow["Id"] = girl.GirlId;
 
-                managerDataRow["Admin"] = girl.AdminAreaName;
+                managerDataRow["Admin"] = girl.AdminArea;
 
-                GetGirlsData(girl.GirlId, girl.AdminAreaName, payments, managerDataRow);
+                GetGirlsData(girl.GirlId, girl.AdminArea, payments, managerDataRow);
 
                 table.Rows.Add(managerDataRow);
             }
@@ -86,7 +88,9 @@ namespace PrimeDating.Reports
 
             foreach (DataColumn column in girlDataRow.Table.Columns)
             {
-                if (!DateTime.TryParse(column.ColumnName, out var result))
+                if (!DateTime.TryParseExact(column.ColumnName, new[] { "dd.MM.yyyy" },
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    System.Globalization.DateTimeStyles.None, out var result))
                 {
                     continue;
                 }
