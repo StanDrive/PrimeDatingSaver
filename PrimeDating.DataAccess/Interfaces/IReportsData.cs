@@ -17,5 +17,7 @@ namespace PrimeDating.DataAccess.Interfaces
         List<Manager> GetAllManagers();
 
         List<Girl> GetAllGirls();
+
+        List<Gift> GetGiftsByPeriod(DateTime startDate, DateTime emdDate);
     }
 }

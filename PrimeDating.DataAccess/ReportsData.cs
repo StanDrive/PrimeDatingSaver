@@ -61,7 +61,9 @@ namespace PrimeDating.DataAccess
                         ManagerId = t.Id.ToString(),
                         ManagerName = t.Email,
                         AdminArea = t.AdminArea.Name
-                    }).ToList();
+                    })
+                    .OrderBy(t => t.AdminArea)
+                    .ToList();
             }
         }
 
@@ -71,11 +73,37 @@ namespace PrimeDating.DataAccess
             {
                 return context.Girls
                     .Include(t => t.AdminArea)
+                    .Include(t => t.AssignedManager)
                     .Select(t => new Girl
                     {
                         GirlId = t.Id.ToString(),
                         GirlName = t.FirstName,
-                        AdminArea = t.AdminArea.Name
+                        AdminArea = t.AdminArea.Name,
+                        AssignedManager = t.AssignedManager.Email,
+                        FullName = t.FirstName + " " + t.LastName
+                    })
+                    .OrderBy(t => t.AdminArea)
+                    .ToList();
+            }
+        }
+
+        public List<Gift> GetGiftsByPeriod(DateTime startDate, DateTime emdDate)
+        {
+            using (var context= new PrimeDatingContext())
+            {
+                return context.GiftOrders
+                    .Include(t => t.Gift)
+                    .Include(t => t.Gift.AdminArea)
+                    .Include(t => t.Order)
+                    .Select(t => new Gift
+                    {
+                        GiftName = t.Order.Name,
+                        GirlId = t.Gift.GirlId.ToString(),
+                        ManagerId = t.Gift.ManagerId.ToString(),
+                        Amount = t.Amount,
+                        GiftDate = t.Gift.GiftStatusUpdateDate,
+                        ManId = t.Gift.ManId.ToString(),
+                        Price = t.Price
                     }).ToList();
             }
         }
