@@ -79,7 +79,7 @@ namespace PrimeDating.DataAccess.Migrations
                         ColorEye = c.String(nullable: false, maxLength: 30),
                         ColorHair = c.String(nullable: false, maxLength: 30),
                         LookingFor = c.String(nullable: false, maxLength: 2000),
-                        Description = c.String(nullable: false, maxLength: 2000),
+                        Description = c.String(nullable: false, maxLength: 3000),
                         EngLevel = c.String(nullable: false, maxLength: 30),
                         OtherLangs = c.String(maxLength: 50),
                         WorkPlace = c.String(nullable: false, maxLength: 200),
@@ -421,6 +421,7 @@ namespace PrimeDating.DataAccess.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 200),
+                        Penalty = c.Byte(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

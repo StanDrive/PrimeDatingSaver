@@ -80,7 +80,7 @@ namespace PrimeDating.Reports
             return table;
         }
 
-        private void GetManagerData(string managerId, string adminAreaName, List<Payments> payments, DataRow managerDataRow)
+        private void GetManagerData(int managerId, string adminAreaName, List<Payments> payments, DataRow managerDataRow)
         {
             var sum = payments.Where(t => t.ManagerId == managerId && t.AdminAreaName == adminAreaName)
                 .Sum(payment => payment.Amount);
@@ -104,7 +104,7 @@ namespace PrimeDating.Reports
 
             foreach (var paymentType in _paymentTypes)
             {
-                var paymentTypeSum = payments.Where(t => t.ManagerId == managerId && t.AdminAreaName == adminAreaName && t.PaymentType == paymentType.Name)
+                var paymentTypeSum = payments.Where(t => t.ManagerId == managerId && t.AdminAreaName == adminAreaName && t.PaymentType == paymentType.Id)
                     .Sum(payment => payment.Amount);
 
                 managerDataRow[paymentType.Name] = paymentTypeSum;

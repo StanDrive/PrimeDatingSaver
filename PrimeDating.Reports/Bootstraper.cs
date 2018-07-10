@@ -10,6 +10,7 @@ namespace PrimeDating.Reports
             container.RegisterType<IGirlsReports, GirlsReports>();
             container.RegisterType<IReportsBuilder, ReportsBuilder>();
             container.RegisterType<ILoggingReports, LoggingReports>();
+            container.RegisterType<IReportsForHeadsOfQuestionnaire, ReportsForHeadsOfQuestionnaire>();
             container.RegisterType<ISpreadsheetBuilder, SpreadsheetBuilder>();
         }
     }

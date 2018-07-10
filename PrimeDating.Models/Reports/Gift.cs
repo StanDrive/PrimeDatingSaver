@@ -6,11 +6,13 @@ namespace PrimeDating.Models.Reports
     {
         public DateTime GiftDate { get; set; }
 
-        public string ManId { get; set; }
+        public int ManId { get; set; }
 
-        public string GirlId { get; set; }
+        public int GirlId { get; set; }
 
-        public string ManagerId { get; set; }
+        public int ManagerId { get; set; }
+
+        public string AdminArea { get; set; }
 
         public string GiftName { get; set; }
 

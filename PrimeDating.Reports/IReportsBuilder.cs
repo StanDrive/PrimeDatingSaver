@@ -19,5 +19,11 @@
         /// </summary>
         /// <returns></returns>
         ILoggingReports GetLoggingReports();
+
+        /// <summary>
+        /// Gets for heads of questionnaire reports.
+        /// </summary>
+        /// <returns></returns>
+        IReportsForHeadsOfQuestionnaire GetForHeadsOfQuestionnaireReports();
     }
 }

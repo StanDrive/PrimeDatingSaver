@@ -2,7 +2,9 @@
 using System.Data;
 using System.IO;
 using System.Linq;
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace PrimeDating.Reports
 {
@@ -27,9 +29,22 @@ namespace PrimeDating.Reports
 
                 var sheetPart = objSpreadsheet.WorkbookPart.AddNewPart<WorksheetPart>();
 
+                sheetPart.Worksheet = new DocumentFormat.OpenXml.Spreadsheet.Worksheet();
+
                 var sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
 
-                sheetPart.Worksheet = new DocumentFormat.OpenXml.Spreadsheet.Worksheet(sheetData);
+                //var spreadsheetcolumns = new DocumentFormat.OpenXml.Spreadsheet.Columns();
+
+                //var column1 = new Column() { Min = 1, Max = 2, Width = 30, CustomWidth = true };
+
+                //var column2 = new Column() { Min = 3, Max = 3, Width = 20, CustomWidth = true };
+
+                //spreadsheetcolumns.Append(column1);
+                //spreadsheetcolumns.Append(column2);
+
+                //sheetPart.Worksheet.AppendChild(spreadsheetcolumns);
+
+                sheetPart.Worksheet.AppendChild(sheetData);
 
                 var sheets = objSpreadsheet.WorkbookPart.Workbook.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Sheets>();
 
@@ -62,7 +77,7 @@ namespace PrimeDating.Reports
                     var cell = new DocumentFormat.OpenXml.Spreadsheet.Cell
                     {
                         DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                        CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(column.ColumnName)
+                        CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(string.IsNullOrWhiteSpace(column.Caption) ? column.ColumnName : column.Caption)
                     };
 
                     headerRow.AppendChild(cell);

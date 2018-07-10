@@ -1,6 +1,6 @@
 ﻿namespace PrimeDating.Reports
 {
-    public class ReportsBuilder : IReportsBuilder
+    internal class ReportsBuilder : IReportsBuilder
     {
         private readonly ITranslatorsReports _translatorsReports;
 
@@ -8,13 +8,17 @@
 
         private readonly ILoggingReports _loggingReports;
 
-        public ReportsBuilder(ITranslatorsReports translatorsReports, IGirlsReports girlsReports, ILoggingReports loggingReports)
+        private readonly IReportsForHeadsOfQuestionnaire _reportsForHeadsOfQuestionnaire;
+
+        public ReportsBuilder(ITranslatorsReports translatorsReports, IGirlsReports girlsReports, ILoggingReports loggingReports, IReportsForHeadsOfQuestionnaire reportsForHeadsOfQuestionnaire)
         {
             _translatorsReports = translatorsReports;
 
             _girlsReports = girlsReports;
 
             _loggingReports = loggingReports;
+
+            _reportsForHeadsOfQuestionnaire = reportsForHeadsOfQuestionnaire;
         }
 
         public ITranslatorsReports GetTranslatorsReports()
@@ -30,6 +34,11 @@
         public ILoggingReports GetLoggingReports()
         {
             return _loggingReports;
+        }
+
+        public IReportsForHeadsOfQuestionnaire GetForHeadsOfQuestionnaireReports()
+        {
+            return _reportsForHeadsOfQuestionnaire;
         }
     }
 }

@@ -38,22 +38,22 @@ namespace PrimeDating.DataAccess.Migrations
             context.GiftStatuses.AddOrUpdate(new GiftStatus{ Id = 1, Name = "received" });
 
             context.PaymentTypes.AddOrUpdate(new PaymentTypes {Id = 1, Name = "chat_message"},
-                new PaymentTypes {Id = 2, Name = "chat_photo"},
-                new PaymentTypes {Id = 3, Name = "chat_comment"},
-                new PaymentTypes {Id = 4, Name = "chat_wink"},
-                new PaymentTypes {Id = 5, Name = "chat_gift"},
-                new PaymentTypes {Id = 6, Name = "chat_sticker"},
-                new PaymentTypes {Id = 7, Name = "correspondence_female_send"},
-                new PaymentTypes {Id = 8, Name = "correspondence_watch_attachment"},
-                new PaymentTypes {Id = 9, Name = "real_gift_delivery_approved"},
-                new PaymentTypes {Id = 10, Name = "real_gift_delivery_failure"},
-                new PaymentTypes {Id = 11, Name = "video_stream"},
-                new PaymentTypes {Id = 12, Name = "video_intro"},
-                new PaymentTypes {Id = 13, Name = "mail_attachment_video"},
-                new PaymentTypes {Id = 14, Name = "acs_moderator_credits"},
-                new PaymentTypes {Id = 15, Name = "meeting_complete"},
-                new PaymentTypes {Id = 16, Name = "competition_vote"},
-                new PaymentTypes {Id = 17, Name = "request_contact_approved"});
+                new PaymentTypes {Id = 2, Name = "chat_photo", Penalty = 0},
+                new PaymentTypes {Id = 3, Name = "chat_comment", Penalty = 0},
+                new PaymentTypes {Id = 4, Name = "chat_wink", Penalty = 0},
+                new PaymentTypes {Id = 5, Name = "chat_gift", Penalty = 0},
+                new PaymentTypes {Id = 6, Name = "chat_sticker", Penalty = 0},
+                new PaymentTypes {Id = 7, Name = "correspondence_female_send", Penalty = 0},
+                new PaymentTypes {Id = 8, Name = "correspondence_watch_attachment", Penalty = 0},
+                new PaymentTypes {Id = 9, Name = "real_gift_delivery_approved", Penalty = 0},
+                new PaymentTypes {Id = 10, Name = "real_gift_delivery_failure", Penalty = 1},
+                new PaymentTypes {Id = 11, Name = "video_stream", Penalty = 0},
+                new PaymentTypes {Id = 12, Name = "video_intro", Penalty = 0},
+                new PaymentTypes {Id = 13, Name = "mail_attachment_video", Penalty = 0},
+                new PaymentTypes {Id = 14, Name = "acs_moderator_credits", Penalty = 0},
+                new PaymentTypes {Id = 15, Name = "meeting_complete", Penalty = 0},
+                new PaymentTypes {Id = 16, Name = "competition_vote", Penalty = 0},
+                new PaymentTypes {Id = 17, Name = "request_contact_approved", Penalty = 0});
 
             context.SaveChanges();
         }

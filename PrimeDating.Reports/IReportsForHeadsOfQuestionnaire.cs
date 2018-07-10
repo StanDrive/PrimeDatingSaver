@@ -2,7 +2,7 @@
 
 namespace PrimeDating.Reports
 {
-    interface IReportsForHeadsOfQuestionnaire
+    public interface IReportsForHeadsOfQuestionnaire
     {
         Stream GirlsReport(int year, int month);
     }

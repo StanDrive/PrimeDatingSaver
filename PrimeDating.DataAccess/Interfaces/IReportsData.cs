@@ -18,6 +18,6 @@ namespace PrimeDating.DataAccess.Interfaces
 
         List<Girl> GetAllGirls();
 
-        List<Gift> GetGiftsByPeriod(DateTime startDate, DateTime emdDate);
+        List<Gift> GetGiftsByPeriod(DateTime startDate, DateTime endDate);
     }
 }

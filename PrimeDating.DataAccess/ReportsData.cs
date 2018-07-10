@@ -22,11 +22,11 @@ namespace PrimeDating.DataAccess
                     .Where(t => t.Date >= startDate && t.Date <= endDate)
                     .Select(t => new Payments
                     {
-                        ManagerId = t.ManagerId.ToString(),
+                        ManagerId = t.ManagerId,
                         ManagerName = t.Manager.Email,
                         AdminAreaName = t.AdminArea.Name,
-                        PaymentType = t.PaymentType.Name,
-                        GirlId = t.GirlId.ToString(),
+                        PaymentType = t.PaymentTypeId,
+                        GirlId = t.GirlId,
                         GirlName = t.Girl.FirstName,
                         Date = t.Date,
                         Amount = t.Amount
@@ -58,7 +58,7 @@ namespace PrimeDating.DataAccess
                     .Include(t => t.AdminArea)
                     .Select(t => new Manager
                     {
-                        ManagerId = t.Id.ToString(),
+                        ManagerId = t.Id,
                         ManagerName = t.Email,
                         AdminArea = t.AdminArea.Name
                     })
@@ -76,10 +76,11 @@ namespace PrimeDating.DataAccess
                     .Include(t => t.AssignedManager)
                     .Select(t => new Girl
                     {
-                        GirlId = t.Id.ToString(),
+                        GirlId = t.Id,
                         GirlName = t.FirstName,
                         AdminArea = t.AdminArea.Name,
                         AssignedManager = t.AssignedManager.Email,
+                        AssignedManagerId = t.AssignedManagerId,
                         FullName = t.FirstName + " " + t.LastName
                     })
                     .OrderBy(t => t.AdminArea)
@@ -87,7 +88,7 @@ namespace PrimeDating.DataAccess
             }
         }
 
-        public List<Gift> GetGiftsByPeriod(DateTime startDate, DateTime emdDate)
+        public List<Gift> GetGiftsByPeriod(DateTime startDate, DateTime endDate)
         {
             using (var context= new PrimeDatingContext())
             {
@@ -95,15 +96,17 @@ namespace PrimeDating.DataAccess
                     .Include(t => t.Gift)
                     .Include(t => t.Gift.AdminArea)
                     .Include(t => t.Order)
+                    .Where(t => t.Gift.GiftStatusUpdateDate >= startDate && t.Gift.GiftStatusUpdateDate <= endDate)
                     .Select(t => new Gift
                     {
                         GiftName = t.Order.Name,
-                        GirlId = t.Gift.GirlId.ToString(),
-                        ManagerId = t.Gift.ManagerId.ToString(),
+                        GirlId = t.Gift.GirlId,
+                        ManagerId = t.Gift.ManagerId,
                         Amount = t.Amount,
                         GiftDate = t.Gift.GiftStatusUpdateDate,
-                        ManId = t.Gift.ManId.ToString(),
-                        Price = t.Price
+                        ManId = t.Gift.ManId,
+                        Price = t.Price,
+                        AdminArea = t.Gift.AdminArea.Name
                     }).ToList();
             }
         }

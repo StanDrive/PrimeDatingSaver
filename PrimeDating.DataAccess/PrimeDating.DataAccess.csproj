@@ -94,9 +94,9 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="ManagerDataService.cs" />
     <Compile Include="MenDataService.cs" />
-    <Compile Include="Migrations\201807030852237_Initial.cs" />
-    <Compile Include="Migrations\201807030852237_Initial.Designer.cs">
-      <DependentUpon>201807030852237_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201807101940248_Initial.cs" />
+    <Compile Include="Migrations\201807101940248_Initial.Designer.cs">
+      <DependentUpon>201807101940248_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="AdminAreaDataService.cs" />
@@ -119,8 +119,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807030852237_Initial.resx">
-      <DependentUpon>201807030852237_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807101940248_Initial.resx">
+      <DependentUpon>201807101940248_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

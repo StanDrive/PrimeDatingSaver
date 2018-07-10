@@ -12,5 +12,7 @@ namespace PrimeDating.Models.Database
         [Required]
         [MaxLength(200)]
         public string Name { get; set; }
+
+        public byte Penalty { get; set; }
     }
 }

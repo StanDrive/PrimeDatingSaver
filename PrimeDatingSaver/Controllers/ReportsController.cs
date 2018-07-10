@@ -33,6 +33,43 @@ namespace PrimeDatingSaver.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("HeadsOfQuestionnaire/girls/{year}/{month}")]
+        public HttpResponseMessage GetMonthlyGirlsReportForHeadsOfQuestionnaire(int year, int month)
+        {
+            _logger.Info($"ReportsFactory.GetMonthlyGirlsReportForHeadsOfQuestionnaire [year: {year}, month: {month}]");
+
+            try
+            {
+                var reportStream = _reportsBuilder.GetForHeadsOfQuestionnaireReports().GirlsReport(year, month);
+
+                reportStream.Position = 0;
+
+                var response = new HttpResponseMessage { Content = new StreamContent(reportStream) };
+                response.Content.Headers.ContentDisposition =
+                    new ContentDispositionHeaderValue("attachment") { FileName = $"HeadsOfQuestionnaire_Girls_{DateTime.Now:dd-MM-yyyy_HH-mm-ss}.xlsx" };
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+                return response;
+            }
+            catch (ArgumentException ex)
+            {
+                var message = $"ReportsController.GetMonthlyGirlsReportForHeadsOfQuestionnaire Error: {ex.GetErrorMessage()}";
+
+                _logger.ErrorException(message, ex);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, message);
+            }
+            catch (Exception ex)
+            {
+                var message = $"ReportsController.GetMonthlyGirlsReportForHeadsOfQuestionnaire Error: {ex.GetErrorMessage()}";
+
+                _logger.ErrorException(message, ex);
+
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, message);
+            }
+        }
+
         /// <summary>
         /// Gets the translators report.
         /// </summary>
