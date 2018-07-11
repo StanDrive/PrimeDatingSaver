@@ -23,7 +23,8 @@ namespace PrimeDating.DataAccess
                     .Select(t => new Payments
                     {
                         ManagerId = t.ManagerId,
-                        ManagerName = t.Manager.Email,
+                        ManagerEmail = t.Manager.Email,
+                        ManagerFullName = t.Manager.FirstName + " " + t.Manager.LastName,
                         AdminAreaName = t.AdminArea.Name,
                         PaymentType = t.PaymentTypeId,
                         GirlId = t.GirlId,

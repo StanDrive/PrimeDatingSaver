@@ -14,7 +14,9 @@ namespace PrimeDating.Reports
 {
     internal class HeadsOfQuestionnaireReportsBuilder : IHeadsOfQuestionnaireReportsBuilder
     {
-        private const int TotalSumColumnsCount = 9;
+        private const int GirlsReportTotalSumColumnsCount = 9;
+
+        private const int ManagersReportTotalSumColumnsCount = 5;
 
         private const int HeaderHeightSize = 60;
 
@@ -48,11 +50,11 @@ namespace PrimeDating.Reports
 
                 var sheetData = new SheetData();
 
-                sheetPart.Worksheet.AppendChild(GetSpreadsheetColumns(table));
+                sheetPart.Worksheet.AppendChild(GetGirlsReportSpreadsheetColumns(table));
 
                 sheetPart.Worksheet.AppendChild(sheetData);
 
-                sheetPart.Worksheet.InsertAfter(GetMergeCells(table),
+                sheetPart.Worksheet.InsertAfter(GetMergeCells(table, 5, GirlsReportTotalSumColumnsCount),
                     sheetPart.Worksheet.Elements<SheetData>().First());
 
                 var sheets = objSpreadsheet.WorkbookPart.Workbook.GetFirstChild<Sheets>();
@@ -79,7 +81,7 @@ namespace PrimeDating.Reports
 
                 var columns = new List<string>();
 
-                FillFirstHeaderRow(headerRow, table);
+                FillGirlsReportFirstHeaderRow(headerRow, table);
 
                 sheetData.AppendChild(headerRow);
 
@@ -133,10 +135,109 @@ namespace PrimeDating.Reports
         /// </summary>
         /// <param name="table">The table.</param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public Stream GetManagersMonthlyReport(DataTable table)
         {
-            throw new NotImplementedException();
+            var memoryStream = new MemoryStream();
+
+            using (var objSpreadsheet =
+                SpreadsheetDocument.Create(memoryStream, SpreadsheetDocumentType.Workbook))
+            {
+                objSpreadsheet.AddWorkbookPart();
+
+                AddStyleSheet(objSpreadsheet);
+
+                objSpreadsheet.WorkbookPart.Workbook =
+                    new Workbook
+                    {
+                        Sheets = new Sheets()
+                    };
+
+                uint sheetId = 1;
+
+                var sheetPart = objSpreadsheet.WorkbookPart.AddNewPart<WorksheetPart>();
+
+                sheetPart.Worksheet = new Worksheet();
+
+                var sheetData = new SheetData();
+
+                sheetPart.Worksheet.AppendChild(GetManagersReportSpreadsheetColumns(table));
+
+                sheetPart.Worksheet.AppendChild(sheetData);
+
+                sheetPart.Worksheet.InsertAfter(GetMergeCells(table, 4, ManagersReportTotalSumColumnsCount),
+                    sheetPart.Worksheet.Elements<SheetData>().First());
+
+                var sheets = objSpreadsheet.WorkbookPart.Workbook.GetFirstChild<Sheets>();
+
+                var relationshipId = objSpreadsheet.WorkbookPart.GetIdOfPart(sheetPart);
+
+                if (sheets.Elements<Sheet>().Any())
+                {
+                    sheetId =
+                        sheets.Elements<Sheet>().Select(s => s.SheetId.Value).Max() + 1;
+                }
+
+                var sheet = new Sheet
+                {
+                    Id = relationshipId,
+                    SheetId = sheetId,
+                    Name = table.TableName
+                };
+
+                // ReSharper disable once PossiblyMistakenUseOfParamsMethod
+                sheets.Append(sheet);
+
+                var headerRow = new Row();
+
+                var columns = new List<string>();
+
+                FillManagersReportFirstHeaderRow(headerRow, table);
+
+                sheetData.AppendChild(headerRow);
+
+                headerRow = new Row
+                {
+                    Height = HeaderHeightSize,
+                    CustomHeight = true,
+                    StyleIndex = 1
+                };
+
+                foreach (DataColumn column in table.Columns)
+                {
+                    columns.Add(column.ColumnName);
+
+                    var cell = new Cell
+                    {
+                        DataType = CellValues.String,
+                        CellValue = new CellValue(string.IsNullOrWhiteSpace(column.Caption) ? column.ColumnName : column.Caption),
+                        StyleIndex = 1
+                    };
+
+                    headerRow.AppendChild(cell);
+                }
+
+                sheetData.AppendChild(headerRow);
+
+                foreach (DataRow dsrow in table.Rows)
+                {
+                    var newRow = new Row();
+
+                    foreach (var col in columns)
+                    {
+                        var cell = new Cell
+                        {
+                            DataType = CellValues.String,
+                            CellValue = new CellValue(dsrow[col].ToString())
+                        };
+
+                        newRow.AppendChild(cell);
+                    }
+
+                    sheetData.AppendChild(newRow);
+                }
+
+                return memoryStream;
+            }
         }
 
         #region private
@@ -187,7 +288,7 @@ namespace PrimeDating.Reports
             stylesheet.Stylesheet.Save();
         }
 
-        private static void FillFirstHeaderRow(Row headerRow, DataTable table)
+        private static void FillGirlsReportFirstHeaderRow(Row headerRow, DataTable table)
         {
             headerRow.AppendChild(new Cell
             {
@@ -276,20 +377,94 @@ namespace PrimeDating.Reports
             headerRow.AppendChild(new Cell { DataType = CellValues.String, CellValue = new CellValue(table.Columns["Debt"].Caption), StyleIndex = 1 });
         }
 
-        private static MergeCells GetMergeCells(DataTable table)
+        private static void FillManagersReportFirstHeaderRow(Row headerRow, DataTable table)
         {
-            var mergeCellsList = new List<MergeCell>
+            headerRow.AppendChild(new Cell
             {
-                new MergeCell {Reference = new StringValue("A1:A2")},
-                new MergeCell {Reference = new StringValue("B1:B2")},
-                new MergeCell {Reference = new StringValue("C1:C2")},
-                new MergeCell {Reference = new StringValue("D1:D2")},
-                new MergeCell {Reference = new StringValue("E1:E2")}
-            };
+                DataType = CellValues.String,
+                CellValue = new CellValue(table.Columns["ManagerId"].Caption),
+                StyleIndex = 1
+            });
+
+            headerRow.AppendChild(new Cell
+            {
+                DataType = CellValues.String,
+                CellValue = new CellValue(table.Columns["FullName"].Caption),
+                StyleIndex = 1
+            });
+
+            headerRow.AppendChild(new Cell
+            {
+                DataType = CellValues.String,
+                CellValue = new CellValue(table.Columns["AdminArea"].Caption),
+                StyleIndex = 1
+            });
+
+            headerRow.AppendChild(new Cell
+            {
+                DataType = CellValues.String,
+                CellValue = new CellValue(table.Columns["GirlId"].Caption),
+                StyleIndex = 1
+            });
+
+            for (var i = 0; i < table.Columns.Count; i++)
+            {
+                if (table.Columns[i].ColumnName.StartsWith("Balance_"))
+                {
+                    headerRow.AppendChild(new Cell
+                    {
+                        DataType = CellValues.String,
+                        CellValue = new CellValue("Анкеты"),
+                        StyleIndex = 1
+                    });
+                }
+
+                if (table.Columns[i].ColumnName.StartsWith("Penalty_"))
+                {
+                    headerRow.AppendChild(new Cell
+                    {
+                        DataType = CellValues.String,
+                        CellValue = new CellValue("Штрафы"),
+                        StyleIndex = 1
+                    });
+                }
+
+                if (table.Columns[i].ColumnName.StartsWith("Gifts_"))
+                {
+                    headerRow.AppendChild(new Cell
+                    {
+                        DataType = CellValues.String,
+                        CellValue = new CellValue("Подарки"),
+                        StyleIndex = 1
+                    });
+                }
+            }
+
+            headerRow.AppendChild(new Cell { DataType = CellValues.String, CellValue = new CellValue(table.Columns["TotalMonthAmount"].Caption), StyleIndex = 1 });
+
+            headerRow.AppendChild(new Cell { DataType = CellValues.String, CellValue = new CellValue(table.Columns["MeetingsAmount"].Caption), StyleIndex = 1 });
+
+            headerRow.AppendChild(new Cell { DataType = CellValues.String, CellValue = new CellValue(table.Columns["TotalPaymentAmount"].Caption), StyleIndex = 1 });
+
+            headerRow.AppendChild(new Cell { DataType = CellValues.String, CellValue = new CellValue(table.Columns["Payed"].Caption), StyleIndex = 1 });
+
+            headerRow.AppendChild(new Cell { DataType = CellValues.String, CellValue = new CellValue(table.Columns["Debt"].Caption), StyleIndex = 1 });
+        }
+
+        private static MergeCells GetMergeCells(DataTable table, int firstMergeColumnCount, int lastMergeColumnCount)
+        {
+            var mergeCellsList = new List<MergeCell>();
+
+            for (var i = 1; i <= firstMergeColumnCount; i++)
+            {
+                var columnName = GetExcelColumnLetter(i);
+
+                mergeCellsList.Add(new MergeCell {Reference = new StringValue($"{columnName}1:{columnName}2")});
+            }
 
             var columnWithDays = table.Columns.Cast<DataColumn>().Count(column => column.ColumnName.StartsWith("Balance_"));
 
-            var lastOperatedColumnNumber = 6;
+            var lastOperatedColumnNumber = firstMergeColumnCount+1;
 
             mergeCellsList.Add(new MergeCell
             {
@@ -315,7 +490,7 @@ namespace PrimeDating.Reports
 
             lastOperatedColumnNumber += columnWithDays;
 
-            for (var i = 0; i < TotalSumColumnsCount; i++)
+            for (var i = 0; i < lastMergeColumnCount; i++)
             {
                 mergeCellsList.Add(new MergeCell
                 {
@@ -327,7 +502,7 @@ namespace PrimeDating.Reports
             return new MergeCells(mergeCellsList);
         }
 
-        private static Columns GetSpreadsheetColumns(DataTable table)
+        private static Columns GetGirlsReportSpreadsheetColumns(DataTable table)
         {
             uint columnCounter = 1;
 
@@ -346,7 +521,33 @@ namespace PrimeDating.Reports
                                        column.ColumnName.StartsWith("Gifts_")
                                  select new Column { Min = columnCounter, Max = columnCounter++, Width = 10, CustomWidth = true });
 
-            for (var i = 0; i < TotalSumColumnsCount; i++)
+            for (var i = 0; i < GirlsReportTotalSumColumnsCount; i++)
+            {
+                columnsList.Add(new Column { Min = columnCounter, Max = columnCounter++, Width = 14, CustomWidth = true });
+            }
+
+            return new Columns(columnsList);
+        }
+
+        private static Columns GetManagersReportSpreadsheetColumns(DataTable table)
+        {
+            uint columnCounter = 1;
+
+            var columnsList = new List<Column>
+            {
+                new Column {Min = columnCounter, Max = columnCounter++, Width = 13, CustomWidth = true},
+                new Column {Min = columnCounter, Max = columnCounter++, Width = 15, CustomWidth = true},
+                new Column {Min = columnCounter, Max = columnCounter++, Width = 15, CustomWidth = true},
+                new Column {Min = columnCounter, Max = columnCounter++, Width = 13, CustomWidth = true},
+            };
+
+            columnsList.AddRange(from DataColumn column in table.Columns
+                where column.ColumnName.StartsWith("Balance_") ||
+                      column.ColumnName.StartsWith("Penalty_") ||
+                      column.ColumnName.StartsWith("Gifts_")
+                select new Column { Min = columnCounter, Max = columnCounter++, Width = 10, CustomWidth = true });
+
+            for (var i = 0; i < ManagersReportTotalSumColumnsCount; i++)
             {
                 columnsList.Add(new Column { Min = columnCounter, Max = columnCounter++, Width = 14, CustomWidth = true });
             }

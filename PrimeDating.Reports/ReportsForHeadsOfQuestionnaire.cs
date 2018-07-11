@@ -77,10 +77,188 @@ namespace PrimeDating.Reports
             return _headsOfQuestionnaireReportsBuilder.GetGirlsMonthlyReport(reportData);
         }
 
+        /// <summary>
+        /// Managerses the report.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="month">The month.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        /// Year can't be lower than 1900 or bigger then 2100
+        /// or
+        /// Month can't be lower than 1 or bigger then 12
+        /// </exception>
+        public Stream ManagersReport(int year, int month)
+        {
+            _logger.Debug($"ReportsForHeadsOfQuestionnaire.ManagersReport [year: {year}, month: {month}]");
+
+            if (year < 1900 || year > 2100)
+            {
+                throw new ArgumentException("Year can't be lower than 1900 or bigger then 2100");
+            }
+
+            if (month < 1 || month > 12)
+            {
+                throw new ArgumentException("Month can't be lower than 1 or bigger then 12");
+            }
+
+            var startDate = new DateTime(year, month, 1);
+
+            var endDate = startDate.AddMonths(1).AddDays(-1);
+
+            var reportData = GetManagersReportData(startDate, endDate);
+
+            return _headsOfQuestionnaireReportsBuilder.GetManagersMonthlyReport(reportData);
+        }
+
+        private DataTable GetManagersReportData(DateTime startDate, DateTime endDate)
+        {
+            var table = GenerateManagersDataTable(startDate, endDate);
+
+            var payments = _reportsData.GetPaymentsWithinRange(startDate, endDate);
+
+            var gifts = _reportsData.GetGiftsByPeriod(startDate, endDate);
+
+            var managersWithGirls = payments
+                .Select(t => new {t.ManagerId, t.GirlId, t.AdminAreaName, t.ManagerFullName}).Distinct()
+                .OrderBy(t => t.ManagerId);
+
+            foreach (var managerWithGirl in managersWithGirls)
+            {
+                var managerWithGirlDataRow = table.NewRow();
+
+                managerWithGirlDataRow["ManagerId"] = managerWithGirl.ManagerId;
+
+                managerWithGirlDataRow["FullName"] = managerWithGirl.ManagerFullName;
+
+                managerWithGirlDataRow["AdminArea"] = managerWithGirl.AdminAreaName;
+
+                managerWithGirlDataRow["GirlId"] = managerWithGirl.GirlId;
+
+                FillManagerWithGirlBalanceInfo(startDate, endDate, managerWithGirl.GirlId,
+                    managerWithGirl.AdminAreaName, managerWithGirl.ManagerId, payments, managerWithGirlDataRow);
+
+                FillManagerWithGirlPenaltyInfo(startDate, endDate, managerWithGirl.GirlId,
+                    managerWithGirl.AdminAreaName, managerWithGirl.ManagerId, payments, managerWithGirlDataRow);
+
+                FillManagerWithGirlGiftInfo(startDate, endDate, managerWithGirl.GirlId, managerWithGirl.AdminAreaName,
+                    managerWithGirl.ManagerId, gifts,
+                    managerWithGirlDataRow);
+
+                FillTotalManagerWithGirlAmount(managerWithGirlDataRow);
+
+                table.Rows.Add(managerWithGirlDataRow);
+            }
+
+            return table;
+        }
+
+        private static void FillTotalManagerWithGirlAmount(DataRow managerWithGirlDataRow)
+        {
+            managerWithGirlDataRow["TotalMonthAmount"] =
+            (from DataColumn column in managerWithGirlDataRow.Table.Columns
+                where column.ColumnName.StartsWith("Gifts_") || column.ColumnName.StartsWith("Penalty_") ||
+                      column.ColumnName.StartsWith("Balance_")
+                select Convert.ToDecimal(managerWithGirlDataRow[column.ColumnName])).Sum();
+
+            managerWithGirlDataRow["TotalPaymentAmount"] = managerWithGirlDataRow["TotalMonthAmount"];
+        }
+
+        private static void FillManagerWithGirlGiftInfo(DateTime startDate, DateTime endDate, int girlId,
+            string adminArea, int managerId, List<Gift> gifts, DataRow girlDataRow)
+        {
+            for (var i = 0; i <= (endDate - startDate).Days; i++)
+            {
+                girlDataRow[$"Gifts_{startDate.AddDays(i):dd.MM.yyyy}"] =
+                    gifts.Where(t =>
+                            t.GiftDate.Date == startDate.AddDays(i).Date &&
+                            t.GirlId == girlId &&
+                            t.ManagerId == managerId &&
+                            t.AdminArea == adminArea)
+                        .Sum(t => t.Price);
+            }
+        }
+
+        private void FillManagerWithGirlPenaltyInfo(DateTime startDate, DateTime endDate, int girlId, string adminArea,
+            int managerId, List<Payments> payments, DataRow managerWithGirlDataRow)
+        {
+            for (var i = 0; i <= (endDate - startDate).Days; i++)
+            {
+                managerWithGirlDataRow[$"Penalty_{startDate.AddDays(i):dd.MM.yyyy}"] =
+                    payments.Where(t =>
+                            t.Date == startDate.AddDays(i).Date &&
+                            t.GirlId == girlId &&
+                            t.ManagerId == managerId &&
+                            t.AdminAreaName == adminArea &&
+                            _penaltyPaymentTypes.Exists(p => p == t.PaymentType) &&
+                            t.Amount < 0)
+                        .Sum(t => t.Amount);
+            }
+        }
+
+        private static void FillManagerWithGirlBalanceInfo(DateTime startDate, DateTime endDate, int girlId,
+            string adminArea, int managerId, List<Payments> payments, DataRow managerWithGirlDataRow)
+        {
+            for (var i = 0; i <= (endDate - startDate).Days; i++)
+            {
+                managerWithGirlDataRow[$"Balance_{startDate.AddDays(i):dd.MM.yyyy}"] =
+                    payments.Where(t =>
+                            t.Date == startDate.AddDays(i).Date &&
+                            t.GirlId == girlId &&
+                            t.ManagerId == managerId &&
+                            t.AdminAreaName == adminArea)
+                        .Sum(t => t.Amount);
+            }
+        }
+
+        private static DataTable GenerateManagersDataTable(DateTime startDate, DateTime endDate)
+        {
+            var table = new DataTable($"Managers_{startDate:MM-yyyy}");
+
+            table.Columns.Add(new DataColumn("ManagerId", typeof(string)) { Caption = "ID переводчика" });
+
+            table.Columns.Add(new DataColumn("FullName", typeof(string)) { Caption = "Ф.И.О." });
+
+            table.Columns.Add(new DataColumn("AdminArea", typeof(string)) { Caption = "Админка" });
+
+            table.Columns.Add(new DataColumn("GirlId", typeof(string)) { Caption = "ID анкеты" });
+
+            for (var i = 0; i <= (endDate - startDate).Days; i++)
+            {
+                table.Columns.Add(
+                    new DataColumn($"Balance_{startDate.AddDays(i):dd.MM.yyyy}", typeof(decimal))
+                    {
+                        Caption = $"{startDate.AddDays(i):dd.MM.yyyy}"
+                    });
+            }
+
+            for (var i = 0; i <= (endDate - startDate).Days; i++)
+            {
+                table.Columns.Add(new DataColumn($"Penalty_{startDate.AddDays(i):dd.MM.yyyy}", typeof(decimal)) { Caption = $"{startDate.AddDays(i):dd.MM.yyyy}" });
+            }
+
+            for (var i = 0; i <= (endDate - startDate).Days; i++)
+            {
+                table.Columns.Add(new DataColumn($"Gifts_{startDate.AddDays(i):dd.MM.yyyy}", typeof(decimal)) { Caption = $"{startDate.AddDays(i):dd.MM.yyyy}" });
+            }
+
+            table.Columns.Add(new DataColumn("TotalMonthAmount", typeof(decimal)) { Caption = "Баланс по переводчику за месяц" });
+
+            table.Columns.Add(new DataColumn("MeetingsAmount", typeof(decimal)) { Caption = "Баланс по встречам" });
+
+            table.Columns.Add(new DataColumn("TotalPaymentAmount", typeof(decimal)) { Caption = "Итоговая сумма к выплате" });
+
+            table.Columns.Add(new DataColumn("Payed", typeof(decimal)) { Caption = "Выплачено" });
+
+            table.Columns.Add(new DataColumn("Debt", typeof(decimal)) { Caption = "Долг" });
+
+            return table;
+        }
+
         #region private
         private DataTable GetGirlsReportData(DateTime startDate, DateTime endDate)
         {
-            var table = GenerateDataTable(startDate, endDate);
+            var table = GenerateGirlsDataTable(startDate, endDate);
 
             var payments = _reportsData.GetPaymentsWithinRange(startDate, endDate);
 
@@ -107,7 +285,7 @@ namespace PrimeDating.Reports
                 FillGirlGiftInfo(startDate, endDate, girl.GirlId, girl.AdminArea, girl.AssignedManagerId, gifts,
                     girlDataRow);
 
-                FillTotalGiftAmount(startDate, endDate, girlDataRow);
+                FillTotalGirlsGiftAmount(startDate, endDate, girlDataRow);
 
                 table.Rows.Add(girlDataRow);
             }
@@ -115,7 +293,7 @@ namespace PrimeDating.Reports
             return table;
         }
 
-        private static void FillTotalGiftAmount(DateTime startDate, DateTime endDate, DataRow girlDataRow)
+        private static void FillTotalGirlsGiftAmount(DateTime startDate, DateTime endDate, DataRow girlDataRow)
         {
             decimal totalGiftAmount = 0;
 
@@ -187,7 +365,7 @@ namespace PrimeDating.Reports
             girlDataRow["TotalMonthAmount"] = monthBalanceAmount;
         }
 
-        private static DataTable GenerateDataTable(DateTime startDate, DateTime endDate)
+        private static DataTable GenerateGirlsDataTable(DateTime startDate, DateTime endDate)
         {
             var table = new DataTable($"Girls_{startDate:MM-yyyy}");
 
@@ -244,3 +422,4 @@ namespace PrimeDating.Reports
         #endregion
     }
 }
+

@@ -77,6 +77,49 @@ namespace PrimeDatingSaver.Controllers
         }
 
         /// <summary>
+        /// Gets the monthly managers report for heads of questionnaire.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="month">The month.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("HeadsOfQuestionnaire/managers/{year}/{month}")]
+        public HttpResponseMessage GetMonthlyManagersReportForHeadsOfQuestionnaire(int year, int month)
+        {
+            _logger.Info($"ReportsFactory.GetMonthlyManagersReportForHeadsOfQuestionnaire [year: {year}, month: {month}]");
+
+            try
+            {
+                var reportStream = _reportsBuilder.GetForHeadsOfQuestionnaireReports().ManagersReport(year, month);
+
+                reportStream.Position = 0;
+
+                var response = new HttpResponseMessage { Content = new StreamContent(reportStream) };
+                response.Content.Headers.ContentDisposition =
+                    new ContentDispositionHeaderValue("attachment") { FileName = $"HeadsOfQuestionnaire_Managers_{DateTime.Now:dd-MM-yyyy_HH-mm-ss}.xlsx" };
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+                return response;
+            }
+            catch (ArgumentException ex)
+            {
+                var message = $"ReportsController.GetMonthlyManagersReportForHeadsOfQuestionnaire Error: {ex.GetErrorMessage()}";
+
+                _logger.ErrorException(message, ex);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, message);
+            }
+            catch (Exception ex)
+            {
+                var message = $"ReportsController.GetMonthlyManagersReportForHeadsOfQuestionnaire Error: {ex.GetErrorMessage()}";
+
+                _logger.ErrorException(message, ex);
+
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, message);
+            }
+        }
+
+        /// <summary>
         /// Gets the translators report.
         /// </summary>
         /// <param name="startDate">The start date.</param>

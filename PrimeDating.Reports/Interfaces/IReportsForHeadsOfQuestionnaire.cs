@@ -11,5 +11,12 @@ namespace PrimeDating.Reports.Interfaces
         /// <param name="month">The month.</param>
         /// <returns></returns>
         Stream GirlsReport(int year, int month);
-    }
+
+        /// <summary>
+        /// Managerses the report.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="month">The month.</param>
+        /// <returns></returns>
+        Stream ManagersReport(int year, int month);}
 }

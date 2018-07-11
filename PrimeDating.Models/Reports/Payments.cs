@@ -4,7 +4,9 @@ namespace PrimeDating.Models.Reports
 {
     public class Payments
     {
-        public string ManagerName { get; set; }
+        public string ManagerEmail { get; set; }
+
+        public string ManagerFullName { get; set; }
 
         public int ManagerId { get; set; }
 

@@ -813,7 +813,7 @@
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
-        <member name="M:PrimeDatingSaver.Controllers.LoggingController.#ctor(PrimeDating.BusinessLayer.Interfaces.ILogger,PrimeDating.Reports.IReportsBuilder)">
+        <member name="M:PrimeDatingSaver.Controllers.LoggingController.#ctor(PrimeDating.BusinessLayer.Interfaces.ILogger,PrimeDating.Reports.Interfaces.IReportsBuilder)">
             <summary>
             Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.LoggingController" /> class.
             </summary>
@@ -1382,7 +1382,7 @@
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
-        <member name="M:PrimeDatingSaver.Controllers.ReportsController.#ctor(PrimeDating.Reports.IReportsBuilder,PrimeDating.BusinessLayer.Interfaces.ILogger)">
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.#ctor(PrimeDating.Reports.Interfaces.IReportsBuilder,PrimeDating.BusinessLayer.Interfaces.ILogger)">
             <summary>
             Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.ReportsController" /> class.
             </summary>
@@ -1392,6 +1392,14 @@
         <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetMonthlyGirlsReportForHeadsOfQuestionnaire(System.Int32,System.Int32)">
             <summary>
             Gets the monthly girls report for heads of questionnaire.
+            </summary>
+            <param name="year">The year.</param>
+            <param name="month">The month.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetMonthlyManagersReportForHeadsOfQuestionnaire(System.Int32,System.Int32)">
+            <summary>
+            Gets the monthly managers report for heads of questionnaire.
             </summary>
             <param name="year">The year.</param>
             <param name="month">The month.</param>
