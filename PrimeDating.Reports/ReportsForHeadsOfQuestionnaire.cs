@@ -6,11 +6,16 @@ using System.Linq;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.DataAccess.Interfaces;
 using PrimeDating.Models.Reports;
+using PrimeDating.Reports.Interfaces;
 using ArgumentException = System.ArgumentException;
 using Payments = PrimeDating.Models.Reports.Payments;
 
 namespace PrimeDating.Reports
 {
+    /// <summary>
+    /// ReportsForHeadsOfQuestionnaire
+    /// </summary>
+    /// <seealso cref="IReportsForHeadsOfQuestionnaire" />
     internal class ReportsForHeadsOfQuestionnaire : IReportsForHeadsOfQuestionnaire
     {
         private readonly IReportsData _reportsData;
@@ -21,6 +26,12 @@ namespace PrimeDating.Reports
 
         private readonly List<int> _penaltyPaymentTypes;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReportsForHeadsOfQuestionnaire"/> class.
+        /// </summary>
+        /// <param name="reportsData">The reports data.</param>
+        /// <param name="logger">The logger.</param>
+        /// <param name="headsOfQuestionnaireReportsBuilder">The heads of questionnaire reports builder.</param>
         public ReportsForHeadsOfQuestionnaire(IReportsData reportsData, ILogger logger, IHeadsOfQuestionnaireReportsBuilder headsOfQuestionnaireReportsBuilder)
         {
             _reportsData = reportsData;
@@ -32,6 +43,17 @@ namespace PrimeDating.Reports
             _penaltyPaymentTypes = GetPenaltyPaymentTypes();
         }
 
+        /// <summary>
+        /// Girlses the report.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="month">The month.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        /// Year can't be lower than 1900 or bigger then 2100
+        /// or
+        /// Month can't be lower than 1 or bigger then 12
+        /// </exception>
         public Stream GirlsReport(int year, int month)
         {
             _logger.Debug($"ReportsForHeadsOfQuestionnaire.GirlsReport [year: {year}, month: {month}]");
@@ -55,6 +77,7 @@ namespace PrimeDating.Reports
             return _headsOfQuestionnaireReportsBuilder.GetGirlsMonthlyReport(reportData);
         }
 
+        #region private
         private DataTable GetGirlsReportData(DateTime startDate, DateTime endDate)
         {
             var table = GenerateDataTable(startDate, endDate);
@@ -92,7 +115,7 @@ namespace PrimeDating.Reports
             return table;
         }
 
-        private void FillTotalGiftAmount(DateTime startDate, DateTime endDate, DataRow girlDataRow)
+        private static void FillTotalGiftAmount(DateTime startDate, DateTime endDate, DataRow girlDataRow)
         {
             decimal totalGiftAmount = 0;
 
@@ -130,7 +153,7 @@ namespace PrimeDating.Reports
             girlDataRow["TotalPenaltiesAmount"] = monthPenaltyAmount;
         }
 
-        private void FillGirlGiftInfo(DateTime startDate, DateTime endDate, int girlId, string adminArea, int assignedManagerId, List<Gift> gifts, DataRow girlDataRow)
+        private static void FillGirlGiftInfo(DateTime startDate, DateTime endDate, int girlId, string adminArea, int assignedManagerId, List<Gift> gifts, DataRow girlDataRow)
         {
             for (var i = 0; i <= (endDate - startDate).Days; i++)
             {
@@ -144,7 +167,7 @@ namespace PrimeDating.Reports
             }
         }
 
-        private void FillGirlBalanceInfo(DateTime startDate, DateTime endDate, int girlId, string adminArea, int assignedManagerId, List<Payments> payments, DataRow girlDataRow)
+        private static void FillGirlBalanceInfo(DateTime startDate, DateTime endDate, int girlId, string adminArea, int assignedManagerId, List<Payments> payments, DataRow girlDataRow)
         {
             decimal monthBalanceAmount = 0;
 
@@ -168,19 +191,19 @@ namespace PrimeDating.Reports
         {
             var table = new DataTable($"Girls_{startDate:MM-yyyy}");
 
-            table.Columns.Add(new DataColumn("GirlId", typeof(string)){Caption = "ID девушки" });
+            table.Columns.Add(new DataColumn("GirlId", typeof(string)) { Caption = "ID девушки" });
 
-            table.Columns.Add(new DataColumn("FullName", typeof(string)){Caption = "Ф.И.О." });
+            table.Columns.Add(new DataColumn("FullName", typeof(string)) { Caption = "Ф.И.О." });
 
-            table.Columns.Add(new DataColumn("Manager", typeof(string)){Caption = "Переводчик" });
+            table.Columns.Add(new DataColumn("Manager", typeof(string)) { Caption = "Переводчик" });
 
-            table.Columns.Add(new DataColumn("AdminArea", typeof(string)){Caption = "Админка"});
+            table.Columns.Add(new DataColumn("AdminArea", typeof(string)) { Caption = "Админка" });
 
-            table.Columns.Add(new DataColumn("Site", typeof(string)) {Caption = "Сайт"});
+            table.Columns.Add(new DataColumn("Site", typeof(string)) { Caption = "Сайт" });
 
             for (var i = 0; i <= (endDate - startDate).Days; i++)
             {
-                table.Columns.Add(new DataColumn($"Balance_{startDate.AddDays(i):dd.MM.yyyy}", typeof(decimal)){Caption = $"{startDate.AddDays(i):dd.MM.yyyy}" });
+                table.Columns.Add(new DataColumn($"Balance_{startDate.AddDays(i):dd.MM.yyyy}", typeof(decimal)) { Caption = $"{startDate.AddDays(i):dd.MM.yyyy}" });
             }
 
             for (var i = 0; i <= (endDate - startDate).Days; i++)
@@ -193,23 +216,23 @@ namespace PrimeDating.Reports
                 table.Columns.Add(new DataColumn($"Gifts_{startDate.AddDays(i):dd.MM.yyyy}", typeof(decimal)) { Caption = $"{startDate.AddDays(i):dd.MM.yyyy}" });
             }
 
-            table.Columns.Add(new DataColumn("TotalMonthAmount", typeof(decimal)){Caption = "Общая сумма по балансам за месяц" });
+            table.Columns.Add(new DataColumn("TotalMonthAmount", typeof(decimal)) { Caption = "Общая сумма по балансам за месяц" });
 
-            table.Columns.Add(new DataColumn("TotalPenaltiesAmount", typeof(decimal)){Caption = "Общая сумма штрафов, за месяц" });
+            table.Columns.Add(new DataColumn("TotalPenaltiesAmount", typeof(decimal)) { Caption = "Общая сумма штрафов, за месяц" });
 
-            table.Columns.Add(new DataColumn("TotalGiftAmountToClient", typeof(decimal)){Caption = "Сумма подарков, которая озвучена клиентке" });
+            table.Columns.Add(new DataColumn("TotalGiftAmountToClient", typeof(decimal)) { Caption = "Сумма подарков, которая озвучена клиентке" });
 
-            table.Columns.Add(new DataColumn("TotalGiftAmount", typeof(decimal)){Caption = "Общая сумма по подаркам в месяц" });
+            table.Columns.Add(new DataColumn("TotalGiftAmount", typeof(decimal)) { Caption = "Общая сумма по подаркам в месяц" });
 
-            table.Columns.Add(new DataColumn("FormPercentOfPayment", typeof(decimal)){Caption = "Процент выплаты за анкету" });
+            table.Columns.Add(new DataColumn("FormPercentOfPayment", typeof(decimal)) { Caption = "Процент выплаты за анкету" });
 
-            table.Columns.Add(new DataColumn("GiftPercentOfPayment", typeof(decimal)){Caption = "Процент выплаты за подарок" });
+            table.Columns.Add(new DataColumn("GiftPercentOfPayment", typeof(decimal)) { Caption = "Процент выплаты за подарок" });
 
-            table.Columns.Add(new DataColumn("TotalPaymentAmount", typeof(decimal)){Caption = "Итоговая сумма к выплате" });
+            table.Columns.Add(new DataColumn("TotalPaymentAmount", typeof(decimal)) { Caption = "Итоговая сумма к выплате" });
 
-            table.Columns.Add(new DataColumn("AlreadyPayed", typeof(decimal)){Caption = "Выплачено"});
+            table.Columns.Add(new DataColumn("AlreadyPayed", typeof(decimal)) { Caption = "Выплачено" });
 
-            table.Columns.Add(new DataColumn("Debt", typeof(decimal)){Caption = "Долг"});
+            table.Columns.Add(new DataColumn("Debt", typeof(decimal)) { Caption = "Долг" });
 
             return table;
         }
@@ -218,5 +241,6 @@ namespace PrimeDating.Reports
         {
             return _reportsData.GetPaymentTypes().Where(t => t.Penalty == 1).Select(t => t.Id).ToList();
         }
+        #endregion
     }
 }

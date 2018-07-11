@@ -1,9 +1,14 @@
-﻿using Unity;
+﻿using PrimeDating.Reports.Interfaces;
+using Unity;
 
 namespace PrimeDating.Reports
 {
     public static class Bootstraper
     {
+        /// <summary>
+        /// Registers the specified container.
+        /// </summary>
+        /// <param name="container">The container.</param>
         public static void Register(IUnityContainer container)
         {
             container.RegisterType<ITranslatorsReports, TranslatorsReports>();

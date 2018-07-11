@@ -5,6 +5,7 @@ using System.IO;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.DataAccess.Interfaces;
 using PrimeDating.Models.Database;
+using PrimeDating.Reports.Interfaces;
 
 namespace PrimeDating.Reports
 {

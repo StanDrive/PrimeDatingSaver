@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -8,8 +7,15 @@ using Unity;
 
 namespace PrimeDatingSaver
 {
+    /// <summary>
+    /// WebApiApplication
+    /// </summary>
+    /// <seealso cref="System.Web.HttpApplication" />
     public class WebApiApplication : System.Web.HttpApplication
     {
+        /// <summary>
+        /// Applications the start.
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -21,6 +27,10 @@ namespace PrimeDatingSaver
             GlobalConfiguration.Configure(Register);
         }
 
+        /// <summary>
+        /// Registers the specified configuration.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
         private static void Register(HttpConfiguration config)
         {
             var container = new UnityContainer();

@@ -6,6 +6,7 @@ using System.Linq;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.DataAccess.Interfaces;
 using PrimeDating.Models.Database;
+using PrimeDating.Reports.Interfaces;
 using Payments = PrimeDating.Models.Reports.Payments;
 
 namespace PrimeDating.Reports
@@ -109,7 +110,6 @@ namespace PrimeDating.Reports
                 girlDataRow[paymentType.Name] = paymentTypeSum;
             }
         }
-
 
         private DataTable GenerateDataTable(DateTime dateBegin, DateTime dateEnd)
         {

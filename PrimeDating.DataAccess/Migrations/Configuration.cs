@@ -50,10 +50,11 @@ namespace PrimeDating.DataAccess.Migrations
                 new PaymentTypes {Id = 11, Name = "video_stream", Penalty = 0},
                 new PaymentTypes {Id = 12, Name = "video_intro", Penalty = 0},
                 new PaymentTypes {Id = 13, Name = "mail_attachment_video", Penalty = 0},
-                new PaymentTypes {Id = 14, Name = "acs_moderator_credits", Penalty = 0},
+                new PaymentTypes {Id = 14, Name = "acs_moderator_credits", Penalty = 1},
                 new PaymentTypes {Id = 15, Name = "meeting_complete", Penalty = 0},
                 new PaymentTypes {Id = 16, Name = "competition_vote", Penalty = 0},
-                new PaymentTypes {Id = 17, Name = "request_contact_approved", Penalty = 0});
+                new PaymentTypes {Id = 17, Name = "request_contact_approved", Penalty = 0},
+                new PaymentTypes {Id = 18, Name = "request_contact_expired", Penalty = 1 });
 
             context.SaveChanges();
         }

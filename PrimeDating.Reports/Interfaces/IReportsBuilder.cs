@@ -1,4 +1,4 @@
-﻿namespace PrimeDating.Reports
+﻿namespace PrimeDating.Reports.Interfaces
 {
     public interface IReportsBuilder
     {

@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using PrimeDating.BusinessLayer;
 using PrimeDating.BusinessLayer.Interfaces;
-using PrimeDating.Reports;
+using PrimeDating.Reports.Interfaces;
 
 namespace PrimeDatingSaver.Controllers
 {

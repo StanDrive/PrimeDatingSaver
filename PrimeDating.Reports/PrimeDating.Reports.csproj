@@ -131,26 +131,22 @@
   <ItemGroup>
     <Compile Include="Bootstraper.cs" />
     <Compile Include="HeadsOfQuestionnaireReportsBuilder.cs" />
-    <Compile Include="IHeadsOfQuestionnaireReportsBuilder.cs" />
-    <Compile Include="ILoggingReports.cs" />
-    <Compile Include="IReportsForHeadsOfQuestionnaire.cs" />
-    <Compile Include="ISpreadsheetBuilder.cs" />
+    <Compile Include="Interfaces\IHeadsOfQuestionnaireReportsBuilder.cs" />
+    <Compile Include="Interfaces\ILoggingReports.cs" />
+    <Compile Include="Interfaces\IReportsForHeadsOfQuestionnaire.cs" />
+    <Compile Include="Interfaces\ISpreadsheetBuilder.cs" />
     <Compile Include="LoggingReports.cs" />
     <Compile Include="ReportsBuilder.cs" />
     <Compile Include="GirlsReports.cs" />
-    <Compile Include="IGirlsReports.cs" />
-    <Compile Include="IReportsBuilder.cs" />
-    <Compile Include="ITranslatorsReports.cs" />
+    <Compile Include="Interfaces\IGirlsReports.cs" />
+    <Compile Include="Interfaces\IReportsBuilder.cs" />
+    <Compile Include="Interfaces\ITranslatorsReports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsForHeadsOfQuestionnaire.cs" />
     <Compile Include="SimpleSpreadsheetBuilder.cs" />
     <Compile Include="TranslatorsReports.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExcelTools\ExcelTools.csproj">
-      <Project>{5ac2d32e-75ae-43ef-bdf1-bec9f752007e}</Project>
-      <Name>ExcelTools</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PrimeDating.BusinessLayer\PrimeDating.BusinessLayer.csproj">
       <Project>{F9F01070-66B1-4711-B130-B98444EE8762}</Project>
       <Name>PrimeDating.BusinessLayer</Name>

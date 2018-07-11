@@ -6,6 +6,9 @@ using System.Linq;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
+using PrimeDating.Reports.Interfaces;
+
+// ReSharper disable PossiblyMistakenUseOfParamsMethod
 
 namespace PrimeDating.Reports
 {
@@ -15,30 +18,35 @@ namespace PrimeDating.Reports
 
         private const int HeaderHeightSize = 60;
 
+        /// <summary>
+        /// Gets the girls monthly report.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns></returns>
         public Stream GetGirlsMonthlyReport(DataTable table)
         {
             var memoryStream = new MemoryStream();
 
             using (var objSpreadsheet =
-                SpreadsheetDocument.Create(memoryStream, DocumentFormat.OpenXml.SpreadsheetDocumentType.Workbook))
+                SpreadsheetDocument.Create(memoryStream, SpreadsheetDocumentType.Workbook))
             {
                 objSpreadsheet.AddWorkbookPart();
 
                 AddStyleSheet(objSpreadsheet);
 
                 objSpreadsheet.WorkbookPart.Workbook =
-                    new DocumentFormat.OpenXml.Spreadsheet.Workbook
+                    new Workbook
                     {
-                        Sheets = new DocumentFormat.OpenXml.Spreadsheet.Sheets()
+                        Sheets = new Sheets()
                     };
 
                 uint sheetId = 1;
 
                 var sheetPart = objSpreadsheet.WorkbookPart.AddNewPart<WorksheetPart>();
 
-                sheetPart.Worksheet = new DocumentFormat.OpenXml.Spreadsheet.Worksheet();
+                sheetPart.Worksheet = new Worksheet();
 
-                var sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
+                var sheetData = new SheetData();
 
                 sheetPart.Worksheet.AppendChild(GetSpreadsheetColumns(table));
 
@@ -47,17 +55,17 @@ namespace PrimeDating.Reports
                 sheetPart.Worksheet.InsertAfter(GetMergeCells(table),
                     sheetPart.Worksheet.Elements<SheetData>().First());
 
-                var sheets = objSpreadsheet.WorkbookPart.Workbook.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Sheets>();
+                var sheets = objSpreadsheet.WorkbookPart.Workbook.GetFirstChild<Sheets>();
 
                 var relationshipId = objSpreadsheet.WorkbookPart.GetIdOfPart(sheetPart);
 
-                if (sheets.Elements<DocumentFormat.OpenXml.Spreadsheet.Sheet>().Any())
+                if (sheets.Elements<Sheet>().Any())
                 {
                     sheetId =
-                        sheets.Elements<DocumentFormat.OpenXml.Spreadsheet.Sheet>().Select(s => s.SheetId.Value).Max() + 1;
+                        sheets.Elements<Sheet>().Select(s => s.SheetId.Value).Max() + 1;
                 }
 
-                var sheet = new DocumentFormat.OpenXml.Spreadsheet.Sheet
+                var sheet = new Sheet
                 {
                     Id = relationshipId,
                     SheetId = sheetId,
@@ -67,7 +75,7 @@ namespace PrimeDating.Reports
                 // ReSharper disable once PossiblyMistakenUseOfParamsMethod
                 sheets.Append(sheet);
 
-                var headerRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
+                var headerRow = new Row();
 
                 var columns = new List<string>();
 
@@ -75,7 +83,7 @@ namespace PrimeDating.Reports
 
                 sheetData.AppendChild(headerRow);
 
-                headerRow = new DocumentFormat.OpenXml.Spreadsheet.Row
+                headerRow = new Row
                 {
                     Height = HeaderHeightSize,
                     CustomHeight = true,
@@ -86,10 +94,10 @@ namespace PrimeDating.Reports
                 {
                     columns.Add(column.ColumnName);
 
-                    var cell = new DocumentFormat.OpenXml.Spreadsheet.Cell
+                    var cell = new Cell
                     {
-                        DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                        CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(string.IsNullOrWhiteSpace(column.Caption) ? column.ColumnName : column.Caption),
+                        DataType = CellValues.String,
+                        CellValue = new CellValue(string.IsNullOrWhiteSpace(column.Caption) ? column.ColumnName : column.Caption),
                         StyleIndex = 1
                     };
 
@@ -100,14 +108,14 @@ namespace PrimeDating.Reports
 
                 foreach (DataRow dsrow in table.Rows)
                 {
-                    var newRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
+                    var newRow = new Row();
 
                     foreach (var col in columns)
                     {
-                        var cell = new DocumentFormat.OpenXml.Spreadsheet.Cell
+                        var cell = new Cell
                         {
-                            DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                            CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(dsrow[col].ToString())
+                            DataType = CellValues.String,
+                            CellValue = new CellValue(dsrow[col].ToString())
                         };
 
                         newRow.AppendChild(cell);
@@ -120,7 +128,19 @@ namespace PrimeDating.Reports
             }
         }
 
-        private WorkbookStylesPart AddStyleSheet(SpreadsheetDocument spreadsheet)
+        /// <summary>
+        /// Gets the managers monthly report.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Stream GetManagersMonthlyReport(DataTable table)
+        {
+            throw new NotImplementedException();
+        }
+
+        #region private
+        private static void AddStyleSheet(SpreadsheetDocument spreadsheet)
         {
             var stylesheet = spreadsheet.WorkbookPart.AddNewPart<WorkbookStylesPart>();
 
@@ -165,44 +185,42 @@ namespace PrimeDating.Reports
             stylesheet.Stylesheet = workbookstylesheet;
 
             stylesheet.Stylesheet.Save();
-
-            return stylesheet;
         }
 
-        private void FillFirstHeaderRow(Row headerRow, DataTable table)
+        private static void FillFirstHeaderRow(Row headerRow, DataTable table)
         {
-            headerRow.AppendChild(new DocumentFormat.OpenXml.Spreadsheet.Cell
+            headerRow.AppendChild(new Cell
             {
-                DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(table.Columns["GirlId"].Caption),
+                DataType = CellValues.String,
+                CellValue = new CellValue(table.Columns["GirlId"].Caption),
                 StyleIndex = 1
             });
 
-            headerRow.AppendChild(new DocumentFormat.OpenXml.Spreadsheet.Cell
+            headerRow.AppendChild(new Cell
             {
-                DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(table.Columns["FullName"].Caption),
+                DataType = CellValues.String,
+                CellValue = new CellValue(table.Columns["FullName"].Caption),
                 StyleIndex = 1
             });
 
-            headerRow.AppendChild(new DocumentFormat.OpenXml.Spreadsheet.Cell
+            headerRow.AppendChild(new Cell
             {
-                DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(table.Columns["Manager"].Caption),
+                DataType = CellValues.String,
+                CellValue = new CellValue(table.Columns["Manager"].Caption),
                 StyleIndex = 1
             });
 
-            headerRow.AppendChild(new DocumentFormat.OpenXml.Spreadsheet.Cell
+            headerRow.AppendChild(new Cell
             {
-                DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(table.Columns["AdminArea"].Caption),
+                DataType = CellValues.String,
+                CellValue = new CellValue(table.Columns["AdminArea"].Caption),
                 StyleIndex = 1
             });
 
-            headerRow.AppendChild(new DocumentFormat.OpenXml.Spreadsheet.Cell
+            headerRow.AppendChild(new Cell
             {
-                DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String,
-                CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(table.Columns["Site"].Caption),
+                DataType = CellValues.String,
+                CellValue = new CellValue(table.Columns["Site"].Caption),
                 StyleIndex = 1
             });
 
@@ -258,7 +276,7 @@ namespace PrimeDating.Reports
             headerRow.AppendChild(new Cell { DataType = CellValues.String, CellValue = new CellValue(table.Columns["Debt"].Caption), StyleIndex = 1 });
         }
 
-        private MergeCells GetMergeCells(DataTable table)
+        private static MergeCells GetMergeCells(DataTable table)
         {
             var mergeCellsList = new List<MergeCell>
             {
@@ -309,7 +327,7 @@ namespace PrimeDating.Reports
             return new MergeCells(mergeCellsList);
         }
 
-        private DocumentFormat.OpenXml.Spreadsheet.Columns GetSpreadsheetColumns(DataTable table)
+        private static Columns GetSpreadsheetColumns(DataTable table)
         {
             uint columnCounter = 1;
 
@@ -333,15 +351,10 @@ namespace PrimeDating.Reports
                 columnsList.Add(new Column { Min = columnCounter, Max = columnCounter++, Width = 14, CustomWidth = true });
             }
 
-            return new DocumentFormat.OpenXml.Spreadsheet.Columns(columnsList);
+            return new Columns(columnsList);
         }
 
-        public Stream GetManagersMonthlyReport(DataTable table)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string GetExcelColumnLetter(int columnNumber)
+        private static string GetExcelColumnLetter(int columnNumber)
         {
             var dividend = columnNumber;
             var columnName = string.Empty;
@@ -357,5 +370,6 @@ namespace PrimeDating.Reports
 
             return columnName;
         }
+        #endregion
     }
 }

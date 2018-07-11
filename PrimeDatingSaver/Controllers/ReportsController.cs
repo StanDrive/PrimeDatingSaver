@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using PrimeDating.BusinessLayer;
 using PrimeDating.BusinessLayer.Interfaces;
-using PrimeDating.Reports;
+using PrimeDating.Reports.Interfaces;
 
 namespace PrimeDatingSaver.Controllers
 {
@@ -33,6 +33,12 @@ namespace PrimeDatingSaver.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Gets the monthly girls report for heads of questionnaire.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="month">The month.</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("HeadsOfQuestionnaire/girls/{year}/{month}")]
         public HttpResponseMessage GetMonthlyGirlsReportForHeadsOfQuestionnaire(int year, int month)

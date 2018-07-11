@@ -1,4 +1,6 @@
-﻿namespace PrimeDating.Reports
+﻿using PrimeDating.Reports.Interfaces;
+
+namespace PrimeDating.Reports
 {
     internal class ReportsBuilder : IReportsBuilder
     {

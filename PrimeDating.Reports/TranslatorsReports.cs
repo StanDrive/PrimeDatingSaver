@@ -6,6 +6,7 @@ using System.Linq;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.DataAccess.Interfaces;
 using PrimeDating.Models.Database;
+using PrimeDating.Reports.Interfaces;
 using DataTable = System.Data.DataTable;
 using Payments = PrimeDating.Models.Reports.Payments;
 

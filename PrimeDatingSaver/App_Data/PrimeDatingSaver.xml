@@ -4,10 +4,125 @@
         <name>PrimeDatingSaver</name>
     </assembly>
     <members>
+        <member name="T:PrimeDatingSaver.BundleConfig">
+            <summary>
+            BundleConfig
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.BundleConfig.RegisterBundles(System.Web.Optimization.BundleCollection)">
+            <summary>
+            Registers the bundles.
+            </summary>
+            <param name="bundles">The bundles.</param>
+        </member>
+        <member name="T:PrimeDatingSaver.FilterConfig">
+            <summary>
+            FilterConfig
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.FilterConfig.RegisterGlobalFilters(System.Web.Mvc.GlobalFilterCollection)">
+            <summary>
+            Registers the global filters.
+            </summary>
+            <param name="filters">The filters.</param>
+        </member>
+        <member name="T:PrimeDatingSaver.IocControllerFactory">
+            <summary>
+            IocControllerFactory
+            </summary>
+            <seealso cref="T:System.Web.Mvc.DefaultControllerFactory" />
+        </member>
+        <member name="M:PrimeDatingSaver.IocControllerFactory.#ctor(Unity.IUnityContainer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.IocControllerFactory"/> class.
+            </summary>
+            <param name="container">The container.</param>
+        </member>
+        <member name="M:PrimeDatingSaver.IocControllerFactory.GetControllerInstance(System.Web.Routing.RequestContext,System.Type)">
+            <summary>
+            Извлекает экземпляр контроллера для заданного контекста запроса и типа контроллера.
+            </summary>
+            <param name="requestContext">Контекст HTTP-запроса, включающий в себя контекст HTTP и данные маршрута.</param>
+            <param name="controllerType">Тип контроллера.</param>
+            <returns>
+            Экземпляр контроллера.
+            </returns>
+        </member>
+        <member name="T:PrimeDatingSaver.RouteConfig">
+            <summary>
+            RouteConfig
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.RouteConfig.RegisterRoutes(System.Web.Routing.RouteCollection)">
+            <summary>
+            Registers the routes.
+            </summary>
+            <param name="routes">The routes.</param>
+        </member>
         <member name="T:PrimeDatingSaver.SwaggerConfig">
             <summary>
             SwaggerConfig
             </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.SwaggerConfig.Register">
+            <summary>
+            Registers this instance.
+            </summary>
+        </member>
+        <member name="T:PrimeDatingSaver.UnityResolver">
+            <summary>
+            UnityResolver
+            </summary>
+            <seealso cref="T:System.Web.Http.Dependencies.IDependencyResolver" />
+        </member>
+        <member name="M:PrimeDatingSaver.UnityResolver.#ctor(Unity.IUnityContainer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.UnityResolver"/> class.
+            </summary>
+            <param name="container">The container.</param>
+            <exception cref="T:System.ArgumentNullException">container</exception>
+        </member>
+        <member name="M:PrimeDatingSaver.UnityResolver.BeginScope">
+            <summary>
+            Открывает область разрешения.
+            </summary>
+            <returns>
+            Область зависимостей.
+            </returns>
+        </member>
+        <member name="M:PrimeDatingSaver.UnityResolver.Dispose">
+            <summary>
+            Выполняет определяемые приложением задачи, связанные с удалением, высвобождением или сбросом неуправляемых ресурсов.
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.UnityResolver.GetService(System.Type)">
+            <summary>
+            Извлекает службу из области.
+            </summary>
+            <param name="serviceType">Извлекаемая служба.</param>
+            <returns>
+            Извлеченная служба.
+            </returns>
+        </member>
+        <member name="M:PrimeDatingSaver.UnityResolver.GetServices(System.Type)">
+            <summary>
+            Извлекает коллекцию служб из области.
+            </summary>
+            <param name="serviceType">Коллекция извлекаемых служб.</param>
+            <returns>
+            Коллекция извлеченных служб.
+            </returns>
+        </member>
+        <member name="T:PrimeDatingSaver.WebApiConfig">
+            <summary>
+            WebApiConfig
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.WebApiConfig.Register(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Registers the specified configuration.
+            </summary>
+            <param name="config">The configuration.</param>
         </member>
         <member name="T:PrimeDatingSaver.Controllers.AdminAreasServiceController">
             <summary>
@@ -1274,6 +1389,14 @@
             <param name="reportsBuilder">The reports builder.</param>
             <param name="logger">The logger.</param>
         </member>
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetMonthlyGirlsReportForHeadsOfQuestionnaire(System.Int32,System.Int32)">
+            <summary>
+            Gets the monthly girls report for heads of questionnaire.
+            </summary>
+            <param name="year">The year.</param>
+            <param name="month">The month.</param>
+            <returns></returns>
+        </member>
         <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetTranslatorsReport(System.String,System.String)">
             <summary>
             Gets the translators report.
@@ -1353,6 +1476,23 @@
             Gets all entities.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:PrimeDatingSaver.WebApiApplication">
+            <summary>
+            WebApiApplication
+            </summary>
+            <seealso cref="T:System.Web.HttpApplication" />
+        </member>
+        <member name="M:PrimeDatingSaver.WebApiApplication.Application_Start">
+            <summary>
+            Applications the start.
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.WebApiApplication.Register(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Registers the specified configuration.
+            </summary>
+            <param name="config">The configuration.</param>
         </member>
     </members>
 </doc>
