@@ -8,7 +8,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace PrimeDating.Reports
 {
-    internal class SpreadsheetBuilder : ISpreadsheetBuilder
+    internal class SimpleSpreadsheetBuilder : ISpreadsheetBuilder
     {
         public Stream GetSpreadsheetFromDataTable(DataTable table)
         {

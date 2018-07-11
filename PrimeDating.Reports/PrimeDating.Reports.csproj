@@ -130,6 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstraper.cs" />
+    <Compile Include="HeadsOfQuestionnaireReportsBuilder.cs" />
+    <Compile Include="IHeadsOfQuestionnaireReportsBuilder.cs" />
     <Compile Include="ILoggingReports.cs" />
     <Compile Include="IReportsForHeadsOfQuestionnaire.cs" />
     <Compile Include="ISpreadsheetBuilder.cs" />
@@ -141,7 +143,7 @@
     <Compile Include="ITranslatorsReports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsForHeadsOfQuestionnaire.cs" />
-    <Compile Include="SpreadsheetBuilder.cs" />
+    <Compile Include="SimpleSpreadsheetBuilder.cs" />
     <Compile Include="TranslatorsReports.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,17 +17,17 @@ namespace PrimeDating.Reports
 
         private readonly ILogger _logger;
 
-        private readonly ISpreadsheetBuilder _spreadsheetBuilder;
+        private readonly IHeadsOfQuestionnaireReportsBuilder _headsOfQuestionnaireReportsBuilder;
 
         private readonly List<int> _penaltyPaymentTypes;
 
-        public ReportsForHeadsOfQuestionnaire(IReportsData reportsData, ILogger logger, ISpreadsheetBuilder spreadsheetBuilder)
+        public ReportsForHeadsOfQuestionnaire(IReportsData reportsData, ILogger logger, IHeadsOfQuestionnaireReportsBuilder headsOfQuestionnaireReportsBuilder)
         {
             _reportsData = reportsData;
 
             _logger = logger;
 
-            _spreadsheetBuilder = spreadsheetBuilder;
+            _headsOfQuestionnaireReportsBuilder = headsOfQuestionnaireReportsBuilder;
 
             _penaltyPaymentTypes = GetPenaltyPaymentTypes();
         }
@@ -52,7 +52,7 @@ namespace PrimeDating.Reports
 
             var reportData = GetGirlsReportData(startDate, endDate);
 
-            return _spreadsheetBuilder.GetSpreadsheetFromDataTable(reportData);
+            return _headsOfQuestionnaireReportsBuilder.GetGirlsMonthlyReport(reportData);
         }
 
         private DataTable GetGirlsReportData(DateTime startDate, DateTime endDate)
@@ -136,7 +136,7 @@ namespace PrimeDating.Reports
             {
                 girlDataRow[$"Gifts_{startDate.AddDays(i):dd.MM.yyyy}"] =
                     gifts.Where(t =>
-                            t.GiftDate == startDate.AddDays(i).Date &&
+                            t.GiftDate.Date == startDate.AddDays(i).Date &&
                             t.GirlId == girlId &&
                             t.ManagerId == assignedManagerId &&
                             t.AdminArea == adminArea)
