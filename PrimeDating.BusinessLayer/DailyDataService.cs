@@ -168,6 +168,11 @@ namespace PrimeDating.BusinessLayer
         {
             var validationMessage = new StringBuilder();
 
+            if (gifts == null || !gifts.Any())
+            {
+                return new List<GiftOrders>();
+            }
+
             var giftOrders = (from gift in gifts
                 from giftOrder in gift.Orders
                 select new GiftOrders
@@ -189,6 +194,11 @@ namespace PrimeDating.BusinessLayer
         private List<Orders> ValidateAndReturnOrders(List<GiftDto> gifts)
         {
             var orders = new List<Orders>();
+
+            if (gifts == null || !gifts.Any())
+            {
+                return new List<Orders>();
+            }
 
             foreach (var order in gifts.SelectMany(t => t.Orders))
             {
@@ -380,7 +390,7 @@ namespace PrimeDating.BusinessLayer
 
             if (gifts == null || !gifts.Any())
             {
-                throw new PrimeDatingException("Gifts entities validation error: Gifts data is empty");
+                return new List<Gifts>();
             }
 
             var result = gifts.Select(giftDto => new Gifts
