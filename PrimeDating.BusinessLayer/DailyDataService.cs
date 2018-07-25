@@ -335,7 +335,7 @@ namespace PrimeDating.BusinessLayer
 
             if (men == null || !men.Any())
             {
-                throw new PrimeDatingException("Men entities validation error: Men data is empty");
+                return new List<Men>();
             }
 
             var result = men.Select(menDto => new Men
