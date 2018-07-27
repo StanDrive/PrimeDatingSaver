@@ -11,6 +11,7 @@ namespace PrimeDating.DataAccess
         {
             container.RegisterType<IDictionaryDataService, DictionaryDataService>();
             container.RegisterType<IAdminAreaDataService, AdminAreaDataService>();
+            container.RegisterType<IAuthenticationData, AuthenticationData>();
             container.RegisterType<IGirlsDataService, GirlsDataService>();
             container.RegisterType<IManagerDataService, ManagerDataService>();
             container.RegisterType<IDataAccessFactory, DataAccessFactory>();

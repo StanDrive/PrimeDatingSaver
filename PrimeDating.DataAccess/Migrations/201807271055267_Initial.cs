@@ -86,7 +86,8 @@ namespace PrimeDating.DataAccess.Migrations
                         Hobby = c.String(maxLength: 500),
                         AdminAreaId = c.Int(nullable: false),
                         Avatar = c.String(maxLength: 2000),
-                        CanReceiveGifts = c.Boolean(nullable: false),
+                    Creation = c.DateTime(defaultValueSql: "GETUTCDATE()"),
+                    CanReceiveGifts = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AdminAreas", t => t.AdminAreaId)
@@ -115,7 +116,8 @@ namespace PrimeDating.DataAccess.Migrations
                         BankCard = c.String(maxLength: 16),
                         Bank = c.String(maxLength: 400),
                         RoleId = c.Int(nullable: false),
-                    })
+                    Creation = c.DateTime(defaultValueSql: "GETUTCDATE()"),
+                })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AdminAreas", t => t.AdminAreaId)
                 .ForeignKey("dbo.Dictionary_Roles", t => t.RoleId)
@@ -149,7 +151,8 @@ namespace PrimeDating.DataAccess.Migrations
                         WorkPlace = c.String(nullable: false, maxLength: 100),
                         Drinking = c.String(nullable: false, maxLength: 50),
                         Smoking = c.String(nullable: false, maxLength: 50),
-                    })
+                    Creation = c.DateTime(defaultValueSql: "GETUTCDATE()"),
+                })
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
@@ -444,6 +447,19 @@ namespace PrimeDating.DataAccess.Migrations
                 .Index(t => t.GirlId)
                 .Index(t => t.ManagerId);
             
+            CreateTable(
+                "dbo.Users",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Login = c.String(nullable: false, maxLength: 50),
+                        Password = c.String(nullable: false, maxLength: 50),
+                        IsBlock = c.Boolean(nullable: false),
+                        Description = c.String(maxLength: 500),
+                        LastLogin = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
@@ -528,6 +544,7 @@ namespace PrimeDating.DataAccess.Migrations
             DropIndex("dbo.ContactsRequests", new[] { "ManagerId" });
             DropIndex("dbo.ContactsRequests", new[] { "GirlId" });
             DropIndex("dbo.ContactsRequests", new[] { "AdminAreaId" });
+            DropTable("dbo.Users");
             DropTable("dbo.Penalties");
             DropTable("dbo.Dictionary_PaymentTypes");
             DropTable("dbo.Payments");

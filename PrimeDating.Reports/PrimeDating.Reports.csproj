@@ -129,8 +129,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminAreasReports.cs" />
     <Compile Include="Bootstraper.cs" />
     <Compile Include="HeadsOfQuestionnaireReportsBuilder.cs" />
+    <Compile Include="Interfaces\IAdminAreasReports.cs" />
     <Compile Include="Interfaces\IHeadsOfQuestionnaireReportsBuilder.cs" />
     <Compile Include="Interfaces\ILoggingReports.cs" />
     <Compile Include="Interfaces\IReportsForHeadsOfQuestionnaire.cs" />

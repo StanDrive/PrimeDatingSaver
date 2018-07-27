@@ -111,5 +111,29 @@ namespace PrimeDating.DataAccess
                     }).ToList();
             }
         }
+
+        public List<AdminAreaStatistic> GetAdminAreasStatistics()
+        {
+            using (var context = new PrimeDatingContext())
+            {
+                var totalPayments = context.Payments.Sum(t => t.Amount);
+
+                var result = context.Payments.Include(t => t.AdminArea)
+                    .GroupBy(t => t.AdminArea.Name)
+                    .Select(t => new AdminAreaStatistic
+                    {
+                        AdminAreaName = t.Key,
+                        PaymentsSum = t.Sum(s => s.Amount)
+                    }).ToList();
+
+                foreach (var adminAreaStatistic in result)
+                {
+                    adminAreaStatistic.Percentage =
+                        totalPayments == 0 ? 0 : adminAreaStatistic.PaymentsSum / totalPayments * 100;
+                }
+
+                return result;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Web.Http;
 using PrimeDating.BusinessLayer;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.Reports.Interfaces;
+using PrimeDatingSaver.Filters;
 
 namespace PrimeDatingSaver.Controllers
 {
@@ -15,6 +16,7 @@ namespace PrimeDatingSaver.Controllers
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
     [RoutePrefix("api/logging")]
+    [BasicAuthenticationFilter]
     public class LoggingController : ApiController
     {
         private readonly ILogger _logger;

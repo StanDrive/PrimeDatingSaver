@@ -2,8 +2,10 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using CommonServiceLocator;
 using PrimeDating.BusinessLayer;
 using Unity;
+using Unity.ServiceLocation;
 
 namespace PrimeDatingSaver
 {
@@ -42,6 +44,10 @@ namespace PrimeDatingSaver
             GlobalConfiguration.Configuration.DependencyResolver = new UnityResolver(container);
 
             ControllerBuilder.Current.SetControllerFactory(new IocControllerFactory(container));
+
+            var locator = new UnityServiceLocator(container);
+
+            ServiceLocator.SetLocatorProvider(() => locator);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Web.Http;
 using PrimeDating.BusinessLayer;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.Models;
+using PrimeDatingSaver.Filters;
 
 namespace PrimeDatingSaver.Controllers
 {
@@ -15,6 +16,7 @@ namespace PrimeDatingSaver.Controllers
     /// DataSaverController
     /// </summary>
     [RoutePrefix("api/datasaver")]
+    [BasicAuthenticationFilter]
     public class DataSaverController : ApiController
     {
         private readonly IDailyDataService _dailyDataService;

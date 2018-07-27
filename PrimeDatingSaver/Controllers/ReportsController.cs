@@ -7,6 +7,7 @@ using System.Web.Http;
 using PrimeDating.BusinessLayer;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.Reports.Interfaces;
+using PrimeDatingSaver.Filters;
 
 namespace PrimeDatingSaver.Controllers
 {
@@ -15,6 +16,7 @@ namespace PrimeDatingSaver.Controllers
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
     [RoutePrefix("api/reports")]
+    [BasicAuthenticationFilter]
     public class ReportsController : ApiController
     {
         private readonly ILogger _logger;
@@ -69,6 +71,47 @@ namespace PrimeDatingSaver.Controllers
             catch (Exception ex)
             {
                 var message = $"ReportsController.GetMonthlyGirlsReportForHeadsOfQuestionnaire Error: {ex.GetErrorMessage()}";
+
+                _logger.ErrorException(message, ex);
+
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, message);
+            }
+        }
+
+        /// <summary>
+        /// Admins the areas payments statistic.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("AdminAreasPaymentsStatistic")]
+        public HttpResponseMessage AdminAreasPaymentsStatistic()
+        {
+            _logger.Info("ReportsFactory.AdminAreasPaymentsStatistic");
+
+            try
+            {
+                var reportStream = _reportsBuilder.GetAdminAreasReports().GetAdminAreasPercentageStatistics();
+
+                reportStream.Position = 0;
+
+                var response = new HttpResponseMessage { Content = new StreamContent(reportStream) };
+                response.Content.Headers.ContentDisposition =
+                    new ContentDispositionHeaderValue("attachment") { FileName = $"AdminAreasPaymentsStatistic_{DateTime.Now:dd-MM-yyyy_HH-mm-ss}.xlsx" };
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+                return response;
+            }
+            catch (ArgumentException ex)
+            {
+                var message = $"ReportsController.AdminAreasPaymentsStatistic Error: {ex.GetErrorMessage()}";
+
+                _logger.ErrorException(message, ex);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, message);
+            }
+            catch (Exception ex)
+            {
+                var message = $"ReportsController.AdminAreasPaymentsStatistic Error: {ex.GetErrorMessage()}";
 
                 _logger.ErrorException(message, ex);
 

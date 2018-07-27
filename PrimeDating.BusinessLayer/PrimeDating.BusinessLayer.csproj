@@ -80,11 +80,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticationService.cs" />
     <Compile Include="Bootstraper.cs" />
+    <Compile Include="Credentials.cs" />
     <Compile Include="DailyData.cs" />
     <Compile Include="DailyDataService.cs" />
     <Compile Include="EntityService.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="HashEncryptor.cs" />
+    <Compile Include="HashEncryptorBase.cs" />
+    <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Interfaces\IDailyDataService.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\IEntityService.cs" />

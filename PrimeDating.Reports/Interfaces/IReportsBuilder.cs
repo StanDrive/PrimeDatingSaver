@@ -25,5 +25,11 @@
         /// </summary>
         /// <returns></returns>
         IReportsForHeadsOfQuestionnaire GetForHeadsOfQuestionnaireReports();
+
+        /// <summary>
+        /// Gets the admin areas reports.
+        /// </summary>
+        /// <returns></returns>
+        IAdminAreasReports GetAdminAreasReports();
     }
 }

@@ -17,22 +17,10 @@ namespace PrimeDating.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var startDate = new DateTime(2018, 2, 1);
+            var reportService = new ReportsData();
 
-            var endDate = startDate.AddMonths(1).AddDays(-1);
-
-            var days = (endDate - startDate).Days;
-
-            for (var i = 0; i <= (endDate - startDate).Days; i++)
-            {
-                var asds = startDate.AddDays(i);
-            }
-
-
-            //var service = new TranslatorsReports(new ReportsData(), new Nlogger());
-
-                //var res = service.GetTranslatorsReportData(new DateTime(2018, 5, 25), new DateTime(2018, 6, 1));
-            }
+            var a = reportService.GetAdminAreasStatistics();
+        }
 
     }
 }

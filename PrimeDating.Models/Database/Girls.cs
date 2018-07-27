@@ -123,6 +123,9 @@ namespace PrimeDating.Models.Database
         [MaxLength(2000)]
         public string Avatar { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? Creation { get; set; }
+
         [Required]
         public bool CanReceiveGifts { get; set; }
 

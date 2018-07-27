@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Web.Http;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.Models.Database;
+using PrimeDatingSaver.Filters;
 
 namespace PrimeDatingSaver.Controllers
 {
@@ -10,6 +11,7 @@ namespace PrimeDatingSaver.Controllers
     /// PaymentTypesServiceController
     /// </summary>
     [RoutePrefix("api/paymenttypes")]
+    [BasicAuthenticationFilter]
     public class PaymentTypesServiceController : BaseServiceController<PaymentTypes>
     {
         /// <summary>

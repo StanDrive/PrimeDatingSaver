@@ -16,6 +16,7 @@ namespace PrimeDating.Reports
             container.RegisterType<IReportsBuilder, ReportsBuilder>();
             container.RegisterType<ILoggingReports, LoggingReports>();
             container.RegisterType<IReportsForHeadsOfQuestionnaire, ReportsForHeadsOfQuestionnaire>();
+            container.RegisterType<IAdminAreasReports, AdminAreasReports>();
             container.RegisterType<IHeadsOfQuestionnaireReportsBuilder, HeadsOfQuestionnaireReportsBuilder>();
             container.RegisterType<ISpreadsheetBuilder, SimpleSpreadsheetBuilder>();
         }

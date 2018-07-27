@@ -12,7 +12,11 @@ namespace PrimeDating.Reports
 
         private readonly IReportsForHeadsOfQuestionnaire _reportsForHeadsOfQuestionnaire;
 
-        public ReportsBuilder(ITranslatorsReports translatorsReports, IGirlsReports girlsReports, ILoggingReports loggingReports, IReportsForHeadsOfQuestionnaire reportsForHeadsOfQuestionnaire)
+        private readonly IAdminAreasReports _adminAreasReports;
+
+        public ReportsBuilder(ITranslatorsReports translatorsReports, IGirlsReports girlsReports,
+            ILoggingReports loggingReports, IReportsForHeadsOfQuestionnaire reportsForHeadsOfQuestionnaire,
+            IAdminAreasReports adminAreasReports)
         {
             _translatorsReports = translatorsReports;
 
@@ -21,6 +25,8 @@ namespace PrimeDating.Reports
             _loggingReports = loggingReports;
 
             _reportsForHeadsOfQuestionnaire = reportsForHeadsOfQuestionnaire;
+
+            _adminAreasReports = adminAreasReports;
         }
 
         public ITranslatorsReports GetTranslatorsReports()
@@ -41,6 +47,11 @@ namespace PrimeDating.Reports
         public IReportsForHeadsOfQuestionnaire GetForHeadsOfQuestionnaireReports()
         {
             return _reportsForHeadsOfQuestionnaire;
+        }
+
+        public IAdminAreasReports GetAdminAreasReports()
+        {
+            return _adminAreasReports;
         }
     }
 }

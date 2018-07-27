@@ -211,6 +211,7 @@
     <Compile Include="App_Start\UnityResolver.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminAreasServiceController.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\BaseServiceController.cs" />
     <Compile Include="Controllers\GiftOrdersController.cs" />
     <Compile Include="Controllers\GiftsController.cs" />
@@ -234,10 +235,12 @@
     <Compile Include="Controllers\PenaltiesServiceController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RolesServiceController.cs" />
+    <Compile Include="Filters\BasicAuthenticationFilter .cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\PrimeDatingSaver.xml" />

@@ -11,6 +11,7 @@ namespace PrimeDating.BusinessLayer
             DataAccess.Bootstraper.Register(container);
 
             container.RegisterType<IDailyDataService, DailyDataService>();
+            container.RegisterType<IAuthenticationService, AuthenticationService>();
             container.RegisterType<ILogger, Nlogger>();
 
             container.RegisterType<IEntityService<Logging>, EntityService<Logging>>();

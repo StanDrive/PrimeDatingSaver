@@ -184,6 +184,81 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:PrimeDatingSaver.Controllers.AuthenticationController">
+            <summary>
+            AuthenticationController
+            </summary>
+            <seealso cref="T:System.Web.Http.ApiController" />
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AuthenticationController.#ctor(PrimeDating.BusinessLayer.Interfaces.ILogger,PrimeDating.BusinessLayer.Interfaces.IAuthenticationService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.AuthenticationController"/> class.
+            </summary>
+            <param name="logger">The logger.</param>
+            <param name="authenticationService">The authentication service.</param>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AuthenticationController.BlockUnlockUser(System.String)">
+            <summary>
+            Block or unlock user.
+            </summary>
+            <param name="login">The login.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AuthenticationController.CreateUser(PrimeDating.Models.UserDto)">
+            <summary>
+            Creates the user.
+            </summary>
+            <param name="user">The user.</param>
+            <returns></returns>
+            <exception cref="T:PrimeDating.BusinessLayer.PrimeDatingException">
+            User model is null
+            or
+            User login is null or empty
+            or
+            User login can't be bigger than 50 symbols
+            or
+            User password is null or empty
+            or
+            User password can't be bigger than 50 symbols
+            or
+            User description is null or empty
+            or
+            User description can't be bigger than 500 symbols
+            </exception>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AuthenticationController.GetAllUsers">
+            <summary>
+            Gets all users.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AuthenticationController.GenerateRandomPassword(System.Int32)">
+            <summary>
+            Generates the random password.
+            </summary>
+            <param name="length">The length.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.AuthenticationController.UpdateUser(PrimeDating.Models.UserDto)">
+            <summary>
+            Updates the user.
+            </summary>
+            <param name="user">The user.</param>
+            <returns></returns>
+            <exception cref="T:PrimeDating.BusinessLayer.PrimeDatingException">
+            User model is null
+            or
+            User login is null or empty
+            or
+            User password is null or empty
+            or
+            User password can't be bigger than 50 symbols
+            or
+            User description is null or empty
+            or
+            User description can't be bigger than 500 symbols
+            </exception>
+        </member>
         <member name="T:PrimeDatingSaver.Controllers.BaseServiceController`1">
             <summary>
             
@@ -1397,6 +1472,12 @@
             <param name="month">The month.</param>
             <returns></returns>
         </member>
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.AdminAreasPaymentsStatistic">
+            <summary>
+            Admins the areas payments statistic.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetMonthlyManagersReportForHeadsOfQuestionnaire(System.Int32,System.Int32)">
             <summary>
             Gets the monthly managers report for heads of questionnaire.
@@ -1485,6 +1566,24 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:PrimeDatingSaver.Filters.BasicAuthenticationFilter">
+            <summary>
+            BasicAuthenticationFilter
+            </summary>
+            <seealso cref="T:System.Web.Http.Filters.AuthorizationFilterAttribute" />
+        </member>
+        <member name="M:PrimeDatingSaver.Filters.BasicAuthenticationFilter.OnAuthorization(System.Web.Http.Controllers.HttpActionContext)">
+            <summary>
+            Override to Web API filter method to handle Basic Auth check
+            </summary>
+            <param name="actionContext">Контекст действия, инкапсулирующий сведения для использования объекта <see cref="T:System.Web.Http.Filters.AuthorizationFilterAttribute" />.</param>
+        </member>
+        <member name="M:PrimeDatingSaver.Filters.BasicAuthenticationFilter.Challenge(System.Web.Http.Controllers.HttpActionContext)">
+            <summary>
+            Send the Authentication Challenge request
+            </summary>
+            <param name="actionContext">The action context.</param>
+        </member>
         <member name="T:PrimeDatingSaver.WebApiApplication">
             <summary>
             WebApiApplication
@@ -1501,6 +1600,30 @@
             Registers the specified configuration.
             </summary>
             <param name="config">The configuration.</param>
+        </member>
+        <member name="T:PrimeDatingSaver.SecurityHelper">
+            <summary>
+            SecurityHelper
+            </summary>
+        </member>
+        <member name="F:PrimeDatingSaver.SecurityHelper.PasswordPrefix">
+            <summary>
+            The password container pattern
+            </summary>
+        </member>
+        <member name="M:PrimeDatingSaver.SecurityHelper.GeneratePassword(System.Int32)">
+            <summary>
+            Generates the password.
+            </summary>
+            <param name="length">The length.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:PrimeDatingSaver.SecurityHelper.GetPasswordWithPrefix(System.String)">
+            <summary>
+            Gets the password with prefix.
+            </summary>
+            <param name="password">The password.</param>
+            <returns></returns>
         </member>
     </members>
 </doc>

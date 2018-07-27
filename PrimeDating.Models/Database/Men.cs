@@ -56,5 +56,7 @@ namespace PrimeDating.Models.Database
         [MaxLength(50)]
         public string Smoking { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? Creation { get; set; }
     }
 }

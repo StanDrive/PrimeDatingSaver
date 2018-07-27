@@ -74,12 +74,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticationData.cs" />
     <Compile Include="Bootstraper.cs" />
     <Compile Include="DataAccessFactory.cs" />
     <Compile Include="DictionaryDataService.cs" />
     <Compile Include="GiftsDataService.cs" />
     <Compile Include="GirlsDataService.cs" />
     <Compile Include="Interfaces\IAdminAreaDataService.cs" />
+    <Compile Include="Interfaces\IAuthenticationData.cs" />
     <Compile Include="Interfaces\IDataAccessFactory.cs" />
     <Compile Include="Interfaces\IDictionaryDataService.cs" />
     <Compile Include="Interfaces\IGiftsDataService.cs" />
@@ -94,9 +96,9 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="ManagerDataService.cs" />
     <Compile Include="MenDataService.cs" />
-    <Compile Include="Migrations\201807101940248_Initial.cs" />
-    <Compile Include="Migrations\201807101940248_Initial.Designer.cs">
-      <DependentUpon>201807101940248_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201807271055267_Initial.cs" />
+    <Compile Include="Migrations\201807271055267_Initial.Designer.cs">
+      <DependentUpon>201807271055267_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="AdminAreaDataService.cs" />
@@ -119,8 +121,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807101940248_Initial.resx">
-      <DependentUpon>201807101940248_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807271055267_Initial.resx">
+      <DependentUpon>201807271055267_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

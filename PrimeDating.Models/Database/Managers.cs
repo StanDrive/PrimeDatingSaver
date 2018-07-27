@@ -61,6 +61,9 @@ namespace PrimeDating.Models.Database
         [Required]
         public int RoleId { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? Creation { get; set; }
+
         [ForeignKey("RoleId")]
         public Roles Role { get; set; }
 

@@ -11,6 +11,8 @@ namespace PrimeDating.DataAccess
             Database.SetInitializer(new CreateDatabaseIfNotExists<PrimeDatingContext>());
         }
 
+        public DbSet<Users> Users { get; set; }
+
         public DbSet<AdminAreas> AdminAreases { get; set; }
 
         public DbSet<ContactsRequests> ContactsRequests { get; set; }
