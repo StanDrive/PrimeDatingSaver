@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Http;
+using Newtonsoft.Json;
 using PrimeDating.BusinessLayer;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.Models;
@@ -21,16 +22,22 @@ namespace PrimeDatingSaver.Controllers
     {
         private readonly IDailyDataService _dailyDataService;
 
+        private readonly IDailySaverLogService _dailySaverLogService;
+
         private readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataSaverController"/> class.
+        /// Initializes a new instance of the <see cref="DataSaverController" /> class.
         /// </summary>
         /// <param name="dailyDataService">The daily data service.</param>
         /// <param name="logger">The logger.</param>
-        public DataSaverController(IDailyDataService dailyDataService, ILogger logger)
+        /// <param name="dailySaverLogService">The daily saver log service.</param>
+        public DataSaverController(IDailyDataService dailyDataService, ILogger logger,
+            IDailySaverLogService dailySaverLogService)
         {
             _dailyDataService = dailyDataService;
+
+            _dailySaverLogService = dailySaverLogService;
 
             _logger = logger;
         }
@@ -45,6 +52,8 @@ namespace PrimeDatingSaver.Controllers
         public HttpResponseMessage UploadDailyData(DailyDataDto data)
         {
             _logger.Info("DataSaverController.UploadDailyData");
+
+            _dailySaverLogService.LogEntry(JsonConvert.SerializeObject(data));
 
             try
             {

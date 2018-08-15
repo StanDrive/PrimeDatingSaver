@@ -20,6 +20,7 @@ namespace PrimeDating.DataAccess
             container.RegisterType<IGiftsDataService, GiftsDataService>();
             container.RegisterType<IPaymentsDataService, PaymentsDataService>();
             container.RegisterType<IReportsData, ReportsData>();
+            container.RegisterType<IDailySaverLogDataService, DailySaverLogDataService>();
             container.RegisterType<DbContext, PrimeDatingContext>();
 
             container.RegisterType<IRepository<Girls>, Repository<Girls>>();

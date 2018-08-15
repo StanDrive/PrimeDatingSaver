@@ -13,6 +13,7 @@ namespace PrimeDating.BusinessLayer
             container.RegisterType<IDailyDataService, DailyDataService>();
             container.RegisterType<IAuthenticationService, AuthenticationService>();
             container.RegisterType<ILogger, Nlogger>();
+            container.RegisterType<IDailySaverLogService, DailySaverLogService>();
 
             container.RegisterType<IEntityService<Logging>, EntityService<Logging>>();
             container.RegisterType<IEntityService<Girls>, EntityService<Girls>>();

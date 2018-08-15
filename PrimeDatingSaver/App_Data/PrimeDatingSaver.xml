@@ -688,12 +688,13 @@
             DataSaverController
             </summary>
         </member>
-        <member name="M:PrimeDatingSaver.Controllers.DataSaverController.#ctor(PrimeDating.BusinessLayer.Interfaces.IDailyDataService,PrimeDating.BusinessLayer.Interfaces.ILogger)">
+        <member name="M:PrimeDatingSaver.Controllers.DataSaverController.#ctor(PrimeDating.BusinessLayer.Interfaces.IDailyDataService,PrimeDating.BusinessLayer.Interfaces.ILogger,PrimeDating.BusinessLayer.Interfaces.IDailySaverLogService)">
             <summary>
-            Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.DataSaverController"/> class.
+            Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.DataSaverController" /> class.
             </summary>
             <param name="dailyDataService">The daily data service.</param>
             <param name="logger">The logger.</param>
+            <param name="dailySaverLogService">The daily saver log service.</param>
         </member>
         <member name="M:PrimeDatingSaver.Controllers.DataSaverController.UploadDailyData(PrimeDating.Models.DailyDataDto)">
             <summary>
@@ -1457,12 +1458,13 @@
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
-        <member name="M:PrimeDatingSaver.Controllers.ReportsController.#ctor(PrimeDating.Reports.Interfaces.IReportsBuilder,PrimeDating.BusinessLayer.Interfaces.ILogger)">
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.#ctor(PrimeDating.Reports.Interfaces.IReportsBuilder,PrimeDating.BusinessLayer.Interfaces.ILogger,PrimeDating.BusinessLayer.Interfaces.IDailySaverLogService)">
             <summary>
             Initializes a new instance of the <see cref="T:PrimeDatingSaver.Controllers.ReportsController" /> class.
             </summary>
             <param name="reportsBuilder">The reports builder.</param>
             <param name="logger">The logger.</param>
+            <param name="dailySaverLogService">The daily saver log service.</param>
         </member>
         <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetMonthlyGirlsReportForHeadsOfQuestionnaire(System.String,System.String)">
             <summary>
@@ -1509,6 +1511,14 @@
             <returns></returns>
             <exception cref="T:System.ArgumentException">
             </exception>
+        </member>
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetDailyDataSaverLogs(System.String,System.String)">
+            <summary>
+            Gets the daily data saver logs.
+            </summary>
+            <param name="startDate">The start date.</param>
+            <param name="endDate">The end date.</param>
+            <returns></returns>
         </member>
         <member name="T:PrimeDatingSaver.Controllers.RolesServiceController">
             <summary>

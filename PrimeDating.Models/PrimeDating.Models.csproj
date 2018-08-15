@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="AdminArea.cs" />
     <Compile Include="DailyDataDto.cs" />
+    <Compile Include="DailyDataLogEntry.cs" />
+    <Compile Include="Database\DailyDataSaverLog.cs" />
     <Compile Include="Database\Users.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="GiftDto.cs" />

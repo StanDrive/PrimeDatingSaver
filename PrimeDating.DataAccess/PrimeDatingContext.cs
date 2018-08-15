@@ -68,5 +68,7 @@ namespace PrimeDating.DataAccess
         public DbSet<ManagersMen> ManagersMen { get; set; }
 
         public DbSet<Logging> Logging { get; set; }
+
+        public DbSet<DailyDataSaverLog> DailyDataSaverLog { get; set; }
     }
 }

@@ -23,16 +23,22 @@ namespace PrimeDatingSaver.Controllers
 
         private readonly IReportsBuilder _reportsBuilder;
 
+        private readonly IDailySaverLogService _dailySaverLogService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ReportsController" /> class.
         /// </summary>
         /// <param name="reportsBuilder">The reports builder.</param>
         /// <param name="logger">The logger.</param>
-        public ReportsController(IReportsBuilder reportsBuilder, ILogger logger)
+        /// <param name="dailySaverLogService">The daily saver log service.</param>
+        public ReportsController(IReportsBuilder reportsBuilder, ILogger logger,
+            IDailySaverLogService dailySaverLogService)
         {
             _reportsBuilder = reportsBuilder;
 
             _logger = logger;
+
+            _dailySaverLogService = dailySaverLogService;
         }
 
         /// <summary>
@@ -47,7 +53,7 @@ namespace PrimeDatingSaver.Controllers
         [Route(@"HeadsOfQuestionnaire/girls/{startDate:regex(^\d{2}-\d{2}-\d{4}$)}/{endDate:regex(^\d{2}-\d{2}-\d{4}$)}")]
         public HttpResponseMessage GetMonthlyGirlsReportForHeadsOfQuestionnaire(string startDate, string endDate)
         {
-            _logger.Info($"ReportsFactory.GetMonthlyGirlsReportForHeadsOfQuestionnaire [StartDate: {startDate}, EndDate: {endDate}]");
+            _logger.Info($"ReportsController.GetMonthlyGirlsReportForHeadsOfQuestionnaire [StartDate: {startDate}, EndDate: {endDate}]");
 
             const string dateFormat = "dd-MM-yyyy";
 
@@ -102,7 +108,7 @@ namespace PrimeDatingSaver.Controllers
         [Route("AdminAreasPaymentsStatistic")]
         public HttpResponseMessage AdminAreasPaymentsStatistic()
         {
-            _logger.Info("ReportsFactory.AdminAreasPaymentsStatistic");
+            _logger.Info("ReportsController.AdminAreasPaymentsStatistic");
 
             try
             {
@@ -147,7 +153,7 @@ namespace PrimeDatingSaver.Controllers
         [Route(@"HeadsOfQuestionnaire/managers/{startDate:regex(^\d{2}-\d{2}-\d{4}$)}/{endDate:regex(^\d{2}-\d{2}-\d{4}$)}")]
         public HttpResponseMessage GetMonthlyManagersReportForHeadsOfQuestionnaire(string startDate, string endDate)
         {
-            _logger.Info($"ReportsFactory.GetMonthlyManagersReportForHeadsOfQuestionnaire [StartDate: {startDate}, EndDate: {endDate}]");
+            _logger.Info($"ReportsController.GetMonthlyManagersReportForHeadsOfQuestionnaire [StartDate: {startDate}, EndDate: {endDate}]");
 
             const string dateFormat = "dd-MM-yyyy";
 
@@ -206,7 +212,7 @@ namespace PrimeDatingSaver.Controllers
         [Route(@"translators/{startDate:regex(^\d{2}-\d{2}-\d{4}$)}/{endDate:regex(^\d{2}-\d{2}-\d{4}$)}")]
         public HttpResponseMessage GetTranslatorsReport(string startDate, string endDate)
         {
-            _logger.Info($"ReportsFactory.GetTranslatorsReport [startPeriod: {startDate}, endPeriod: {endDate}]");
+            _logger.Info($"ReportsController.GetTranslatorsReport [startPeriod: {startDate}, endPeriod: {endDate}]");
 
             const string dateFormat = "dd-MM-yyyy";
             try
@@ -264,7 +270,7 @@ namespace PrimeDatingSaver.Controllers
         [Route(@"girls/{startDate:regex(^\d{2}-\d{2}-\d{4}$)}/{endDate:regex(^\d{2}-\d{2}-\d{4}$)}")]
         public HttpResponseMessage GetGirlsReport(string startDate, string endDate)
         {
-            _logger.Info($"ReportsFactory.GetGirlsReport [startPeriod: {startDate}, endPeriod: {endDate}]");
+            _logger.Info($"ReportsController.GetGirlsReport [startPeriod: {startDate}, endPeriod: {endDate}]");
 
             const string dateFormat = "dd-MM-yyyy";
             try
@@ -303,6 +309,56 @@ namespace PrimeDatingSaver.Controllers
             catch (Exception ex)
             {
                 var message = $"ReportsController.GetGirlsReport Error: {ex.GetErrorMessage()}";
+
+                _logger.ErrorException(message, ex);
+
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, message);
+            }
+        }
+
+        /// <summary>
+        /// Gets the daily data saver logs.
+        /// </summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route(@"dailydatasaverlogs/{startDate:regex(^\d{2}-\d{2}-\d{4} \d{2}-\d{2}-\d{2}$)}/{endDate:regex(^\d{2}-\d{2}-\d{4} \d{2}-\d{2}-\d{2}$)}")]
+        public HttpResponseMessage GetDailyDataSaverLogs(string startDate, string endDate)
+        {
+            _logger.Info($"ReportsController.GetDailyDataSaverLogs [startPeriod: {startDate}, endPeriod: {endDate}]");
+
+            const string dateFormat = "dd-MM-yyyy HH-mm-ss";
+
+            try
+            {
+                if (!DateTime.TryParseExact(startDate, dateFormat, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var start))
+                {
+                    throw new ArgumentException($"Can't parse argument startDate: '{startDate}'. Format: {dateFormat}");
+                }
+
+                if (!DateTime.TryParseExact(endDate, dateFormat, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var end))
+                {
+                    throw new ArgumentException($"Can't parse argument endDate: '{endDate}'. Format: {dateFormat}");
+                }
+
+                var result = _dailySaverLogService.GetEntries(start, end);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (ArgumentException ex)
+            {
+                var message = $"ReportsController.GetDailyDataSaverLogs Error: {ex.GetErrorMessage()}";
+
+                _logger.ErrorException(message, ex);
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, message);
+            }
+            catch (Exception ex)
+            {
+                var message = $"ReportsController.GetDailyDataSaverLogs Error: {ex.GetErrorMessage()}";
 
                 _logger.ErrorException(message, ex);
 

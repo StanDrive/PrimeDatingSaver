@@ -7,13 +7,13 @@ namespace PrimeDating.DataAccess.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class DailyDataLogging : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DailyDataLogging));
         
         string IMigrationMetadata.Id
         {
-            get { return "201807271055267_Initial"; }
+            get { return "201808150949287_DailyDataLogging"; }
         }
         
         string IMigrationMetadata.Source
