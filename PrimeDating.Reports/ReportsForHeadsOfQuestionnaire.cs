@@ -46,33 +46,20 @@ namespace PrimeDating.Reports
         /// <summary>
         /// Girlses the report.
         /// </summary>
-        /// <param name="year">The year.</param>
-        /// <param name="month">The month.</param>
+        /// <param name="startPeriod">The start period.</param>
+        /// <param name="endPeriod">The end period.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">
-        /// Year can't be lower than 1900 or bigger then 2100
-        /// or
-        /// Month can't be lower than 1 or bigger then 12
-        /// </exception>
-        public Stream GirlsReport(int year, int month)
+        /// <exception cref="ArgumentException">startPeriod can't be bigger than endPeriod</exception>
+        public Stream GirlsReport(DateTime startPeriod, DateTime endPeriod)
         {
-            _logger.Debug($"ReportsForHeadsOfQuestionnaire.GirlsReport [year: {year}, month: {month}]");
+            _logger.Debug($"ReportsForHeadsOfQuestionnaire.GirlsReport [StartPeriod: {startPeriod.ToShortDateString()}, EndPeriod: {endPeriod.ToShortDateString()}]");
 
-            if (year < 1900 || year > 2100)
+            if (startPeriod > endPeriod)
             {
-                throw new ArgumentException("Year can't be lower than 1900 or bigger then 2100");
+                throw new ArgumentException("startPeriod can't be bigger than endPeriod");
             }
 
-            if (month < 1 || month > 12)
-            {
-                throw new ArgumentException("Month can't be lower than 1 or bigger then 12");
-            }
-
-            var startDate = new DateTime(year, month, 1);
-
-            var endDate = startDate.AddMonths(1).AddDays(-1);
-
-            var reportData = GetGirlsReportData(startDate, endDate);
+            var reportData = GetGirlsReportData(startPeriod, endPeriod);
 
             return _headsOfQuestionnaireReportsBuilder.GetGirlsMonthlyReport(reportData);
         }
@@ -80,33 +67,20 @@ namespace PrimeDating.Reports
         /// <summary>
         /// Managerses the report.
         /// </summary>
-        /// <param name="year">The year.</param>
-        /// <param name="month">The month.</param>
+        /// <param name="startPeriod">The start period.</param>
+        /// <param name="endPeriod">The end period.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">
-        /// Year can't be lower than 1900 or bigger then 2100
-        /// or
-        /// Month can't be lower than 1 or bigger then 12
-        /// </exception>
-        public Stream ManagersReport(int year, int month)
+        /// <exception cref="ArgumentException">startPeriod can't be bigger than endPeriod</exception>
+        public Stream ManagersReport(DateTime startPeriod, DateTime endPeriod)
         {
-            _logger.Debug($"ReportsForHeadsOfQuestionnaire.ManagersReport [year: {year}, month: {month}]");
+            _logger.Debug($"ReportsForHeadsOfQuestionnaire.ManagersReport [StartPeriod: {startPeriod.ToShortDateString()}, EndPeriod: {endPeriod.ToShortDateString()}]");
 
-            if (year < 1900 || year > 2100)
+            if (startPeriod > endPeriod)
             {
-                throw new ArgumentException("Year can't be lower than 1900 or bigger then 2100");
+                throw new ArgumentException("startPeriod can't be bigger than endPeriod");
             }
 
-            if (month < 1 || month > 12)
-            {
-                throw new ArgumentException("Month can't be lower than 1 or bigger then 12");
-            }
-
-            var startDate = new DateTime(year, month, 1);
-
-            var endDate = startDate.AddMonths(1).AddDays(-1);
-
-            var reportData = GetManagersReportData(startDate, endDate);
+            var reportData = GetManagersReportData(startPeriod, endPeriod);
 
             return _headsOfQuestionnaireReportsBuilder.GetManagersMonthlyReport(reportData);
         }

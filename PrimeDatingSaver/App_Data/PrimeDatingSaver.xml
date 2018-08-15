@@ -1464,13 +1464,15 @@
             <param name="reportsBuilder">The reports builder.</param>
             <param name="logger">The logger.</param>
         </member>
-        <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetMonthlyGirlsReportForHeadsOfQuestionnaire(System.Int32,System.Int32)">
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetMonthlyGirlsReportForHeadsOfQuestionnaire(System.String,System.String)">
             <summary>
             Gets the monthly girls report for heads of questionnaire.
             </summary>
-            <param name="year">The year.</param>
-            <param name="month">The month.</param>
+            <param name="startDate">The start date.</param>
+            <param name="endDate">The end date.</param>
             <returns></returns>
+            <exception cref="T:System.ArgumentException">
+            </exception>
         </member>
         <member name="M:PrimeDatingSaver.Controllers.ReportsController.AdminAreasPaymentsStatistic">
             <summary>
@@ -1478,13 +1480,15 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetMonthlyManagersReportForHeadsOfQuestionnaire(System.Int32,System.Int32)">
+        <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetMonthlyManagersReportForHeadsOfQuestionnaire(System.String,System.String)">
             <summary>
             Gets the monthly managers report for heads of questionnaire.
             </summary>
-            <param name="year">The year.</param>
-            <param name="month">The month.</param>
+            <param name="startDate">The start date.</param>
+            <param name="endDate">The end date.</param>
             <returns></returns>
+            <exception cref="T:System.ArgumentException">
+            </exception>
         </member>
         <member name="M:PrimeDatingSaver.Controllers.ReportsController.GetTranslatorsReport(System.String,System.String)">
             <summary>

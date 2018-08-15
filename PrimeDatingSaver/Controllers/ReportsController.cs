@@ -38,18 +38,34 @@ namespace PrimeDatingSaver.Controllers
         /// <summary>
         /// Gets the monthly girls report for heads of questionnaire.
         /// </summary>
-        /// <param name="year">The year.</param>
-        /// <param name="month">The month.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        /// </exception>
         [HttpGet]
-        [Route("HeadsOfQuestionnaire/girls/{year}/{month}")]
-        public HttpResponseMessage GetMonthlyGirlsReportForHeadsOfQuestionnaire(int year, int month)
+        [Route(@"HeadsOfQuestionnaire/girls/{startDate:regex(^\d{2}-\d{2}-\d{4}$)}/{endDate:regex(^\d{2}-\d{2}-\d{4}$)}")]
+        public HttpResponseMessage GetMonthlyGirlsReportForHeadsOfQuestionnaire(string startDate, string endDate)
         {
-            _logger.Info($"ReportsFactory.GetMonthlyGirlsReportForHeadsOfQuestionnaire [year: {year}, month: {month}]");
+            _logger.Info($"ReportsFactory.GetMonthlyGirlsReportForHeadsOfQuestionnaire [StartDate: {startDate}, EndDate: {endDate}]");
+
+            const string dateFormat = "dd-MM-yyyy";
 
             try
             {
-                var reportStream = _reportsBuilder.GetForHeadsOfQuestionnaireReports().GirlsReport(year, month);
+                if (!DateTime.TryParseExact(startDate, dateFormat, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var start))
+                {
+                    throw new ArgumentException($"Can't parse argument startDate: '{startDate}'. Format: {dateFormat}");
+                }
+
+                if (!DateTime.TryParseExact(endDate, dateFormat, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var end))
+                {
+                    throw new ArgumentException($"Can't parse argument endDate: '{endDate}'. Format: {dateFormat}");
+                }
+
+                var reportStream = _reportsBuilder.GetForHeadsOfQuestionnaireReports().GirlsReport(start, end);
 
                 reportStream.Position = 0;
 
@@ -122,18 +138,34 @@ namespace PrimeDatingSaver.Controllers
         /// <summary>
         /// Gets the monthly managers report for heads of questionnaire.
         /// </summary>
-        /// <param name="year">The year.</param>
-        /// <param name="month">The month.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        /// </exception>
         [HttpGet]
-        [Route("HeadsOfQuestionnaire/managers/{year}/{month}")]
-        public HttpResponseMessage GetMonthlyManagersReportForHeadsOfQuestionnaire(int year, int month)
+        [Route(@"HeadsOfQuestionnaire/managers/{startDate:regex(^\d{2}-\d{2}-\d{4}$)}/{endDate:regex(^\d{2}-\d{2}-\d{4}$)}")]
+        public HttpResponseMessage GetMonthlyManagersReportForHeadsOfQuestionnaire(string startDate, string endDate)
         {
-            _logger.Info($"ReportsFactory.GetMonthlyManagersReportForHeadsOfQuestionnaire [year: {year}, month: {month}]");
+            _logger.Info($"ReportsFactory.GetMonthlyManagersReportForHeadsOfQuestionnaire [StartDate: {startDate}, EndDate: {endDate}]");
+
+            const string dateFormat = "dd-MM-yyyy";
 
             try
             {
-                var reportStream = _reportsBuilder.GetForHeadsOfQuestionnaireReports().ManagersReport(year, month);
+                if (!DateTime.TryParseExact(startDate, dateFormat, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var start))
+                {
+                    throw new ArgumentException($"Can't parse argument startDate: '{startDate}'. Format: {dateFormat}");
+                }
+
+                if (!DateTime.TryParseExact(endDate, dateFormat, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var end))
+                {
+                    throw new ArgumentException($"Can't parse argument endDate: '{endDate}'. Format: {dateFormat}");
+                }
+
+                var reportStream = _reportsBuilder.GetForHeadsOfQuestionnaireReports().ManagersReport(start, end);
 
                 reportStream.Position = 0;
 

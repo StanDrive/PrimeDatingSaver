@@ -44,11 +44,6 @@ namespace PrimeDating.Reports
                 throw new ArgumentException("startPeriod can't be bigger than endPeriod");
             }
 
-            if (endPeriod - startPeriod > TimeSpan.FromDays(31))
-            {
-                throw new ArgumentException("Report period can't be bigger than 31 days");
-            }
-
             var reportData = GetTranslatorsReportData(startPeriod, endPeriod);
 
             return _spreadsheetBuilder.GetSpreadsheetFromDataTable(reportData);

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace PrimeDating.Reports.Interfaces
 {
@@ -7,16 +8,17 @@ namespace PrimeDating.Reports.Interfaces
         /// <summary>
         /// Girlses the report.
         /// </summary>
-        /// <param name="year">The year.</param>
-        /// <param name="month">The month.</param>
+        /// <param name="startPeriod">The start period.</param>
+        /// <param name="endPeriod">The end period.</param>
         /// <returns></returns>
-        Stream GirlsReport(int year, int month);
+        Stream GirlsReport(DateTime startPeriod, DateTime endPeriod);
 
         /// <summary>
         /// Managerses the report.
         /// </summary>
-        /// <param name="year">The year.</param>
-        /// <param name="month">The month.</param>
+        /// <param name="startPeriod">The start period.</param>
+        /// <param name="endPeriod">The end period.</param>
         /// <returns></returns>
-        Stream ManagersReport(int year, int month);}
+        Stream ManagersReport(DateTime startPeriod, DateTime endPeriod);
+    }
 }
