@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using PrimeDating.BusinessLayer.Interfaces;
 using PrimeDating.DataAccess.Interfaces;
 using PrimeDating.Models;
@@ -10,9 +11,13 @@ namespace PrimeDating.BusinessLayer
     {
         private readonly IDailySaverLogDataService _dailySaverLogDataService;
 
-        public DailySaverLogService(IDailySaverLogDataService dailySaverLogDataService)
+        private readonly ILogger _logger;
+
+        public DailySaverLogService(IDailySaverLogDataService dailySaverLogDataService, ILogger logger)
         {
             _dailySaverLogDataService = dailySaverLogDataService;
+
+            _logger = logger;
         }
 
         /// <summary>
@@ -22,6 +27,23 @@ namespace PrimeDating.BusinessLayer
         public void LogEntry(string message)
         {
             _dailySaverLogDataService.LogEntry(message);
+
+            try
+            {
+                var path = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["DailyUploadFilesLog"],
+                    "DailyUploadFilesLogs");
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                File.WriteAllText(Path.Combine(path, $"{DateTime.Now:yyyyMMdd_hhmmss}.log"), message);
+            }
+            catch (Exception ex)
+            {
+                _logger.WarningException($"DailySaverLogService.LogEntry: {ex.Message}", ex);
+            }
         }
 
         /// <summary>
