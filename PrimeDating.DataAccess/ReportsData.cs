@@ -61,6 +61,7 @@ namespace PrimeDating.DataAccess
                     {
                         ManagerId = t.Id,
                         ManagerName = t.Email,
+                        CreationDate = t.Creation,
                         AdminArea = t.AdminArea.Name
                     })
                     .OrderBy(t => t.AdminArea)

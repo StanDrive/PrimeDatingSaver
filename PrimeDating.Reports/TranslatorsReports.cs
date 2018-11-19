@@ -66,6 +66,8 @@ namespace PrimeDating.Reports
 
                 managerDataRow["Id"] = manager.ManagerId;
 
+                managerDataRow["TranslatorsCreationDate"] = manager.CreationDate;
+
                 managerDataRow["Admin"] = manager.AdminArea;
 
                 GetManagerData(manager.ManagerId, manager.AdminArea, payments, managerDataRow);
@@ -113,6 +115,7 @@ namespace PrimeDating.Reports
             var table = new DataTable($"Translators_{dateBegin:dd-MM}_{dateEnd:dd-MM-yyyy}");
 
             table.Columns.Add(new DataColumn("Name", typeof(string)));
+            table.Columns.Add(new DataColumn("TranslatorsCreationDate", typeof(string)));
             table.Columns.Add(new DataColumn("Id", typeof(string)));
             table.Columns.Add(new DataColumn("Admin", typeof(string)));
             table.Columns.Add(new DataColumn("All", typeof(decimal)));
